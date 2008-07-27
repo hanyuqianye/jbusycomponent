@@ -12,24 +12,24 @@ import org.jdesktop.jxlayer.plaf.LayerUI;
  * Component decorator that enhance <strong>any swing components</strong> with
  * <strong>busy</strong> feature.
  * <p>
- * This decorator take a component to enhance as a view (like JViewPort).
+ * This decorator manage a component to enhance as a view (like JViewPort do).
  * After what, you need to put on your container this decorator instead of your
  * original component.
  * <p>
  * Your component still the same as before and keep all of theses features and
  * behaviour. The main difference is that now you can refer a <code>BusyModel</code>
  * from the <code>JBusyComponent</code>. <br>
- * This model allow you to control the <strong>busy states</strong> of your
+ * This model allow you to control a <strong>busy property</strong> of your
  * original component.
  * <p>
  * Typically, a busy component is locked (can't be accessed anymore) and show
- * on an overlay a animation describing this busy state. Regarding the 
+ * on an overlay a smart animation showing this busy state. Regarding the 
  * <code>BusyModel</code> configuration, you can have also a progress bar (if
- * the <code>BusyModel</code> is in a determinate state) and/or a cancel button 
+ * the <code>BusyModel</code> is on a determinate state) and/or a cancel button 
  * (if the <code>BusyModel</code> is cancellable</code).
  * <p>
  * <code>JBusyComponent</code> is at the top of this API.
- * But in fact, it's just a wrapper of <code>JXlayer</code> and a <code>BusyLayerUI</code>.<br>
+ * But in fact, it's just a wrapper of <code>JXLayer</code> and a <code>LayerUI</code> implementation.<br>
  * All business implementation are done by the <code>LayerUI</code> and you can use directly
  * a <code>JXLayer</code> instead of a <code>JBusyComponent</code>.
  * <p>
