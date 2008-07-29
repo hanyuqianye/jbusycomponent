@@ -65,10 +65,27 @@ public class JBusyComponent<C extends JComponent> extends JComponent {
     private JXLayer<JComponent> layer = null;
     private BusyLayerUI         ui    = null;
     
+    /** 
+     * Create a <code>JBusyComponent</code> with no view
+     * @see #setView
+     */
+    public JBusyComponent() {
+        this(null);
+    }
+    
+    /** 
+     * Create a <code>JBusyComponent</code> with a specified view
+     * @param view The view of this component
+     */
     public JBusyComponent( C view ) {
         this( view , new BasicBusyLayerUI() );
     }
     
+    /** 
+     * Create a <code>JBusyComponent</code> with a specified view and a BusyLayerUI
+     * @param view The view of this component
+     * @param ui The ui of this component
+     */
     public JBusyComponent( C view  , BusyLayerUI ui) {
         
         /** Create the layer
@@ -96,6 +113,14 @@ public class JBusyComponent<C extends JComponent> extends JComponent {
      */
     public C getView() {
         return (C)this.layer.getView();
+    }
+    
+    /**
+     * Define the view of this JBusyComponent
+     * @param view the new view of this component
+     */
+    public void setView(C view) {
+        this.layer.setView(view);
     }
     
     /** 
