@@ -341,7 +341,6 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
                 synchronized( BasicBusyLayerUI.this ) {
                     updateBackgroundPainter();
                     if( ! isBackgroundPainterDirty() ) {
-                        System.out.println("STOPPING TIMER");
                         ((Timer)e.getSource()).stop();
                     }
                 }
