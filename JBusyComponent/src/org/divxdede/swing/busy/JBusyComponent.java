@@ -12,15 +12,17 @@ import org.jdesktop.jxlayer.plaf.LayerUI;
  * Component decorator that enhance <strong>any swing components</strong> with
  * <strong>busy</strong> feature.
  * <p>
- * This decorator manage a component to enhance as a view (like JViewPort do).
- * After what, you need to put on your container this decorator instead of your
- * original component.
+ * This decorator enhance a view (swing component) that provide a smart animation
+ * when it's view is busy and restrict any acces to it.
+ * The decorator take parts on the components hierarchy and must be added to the 
+ * container instead of the original component that is now a simple view of the 
+ * <code>JBusyComponent</code>
  * <p>
  * Your component still the same as before and keep all of theses features and
- * behaviour. The main difference is that now you can refer a <code>BusyModel</code>
- * from the <code>JBusyComponent</code>. <br>
- * This model allow you to control a <strong>busy property</strong> of your
- * original component.
+ * behaviour. The main difference is that now you can refer and use a 
+ * <code>BusyModel</code> from the <code>JBusyComponent</code> decorator.<br>
+ * This model allow you to control the <strong>busy property</strong> and some
+ * other related informations.
  * <p>
  * Typically, a busy component is locked (can't be accessed anymore) and show
  * on an overlay a smart animation showing this busy state. Regarding the 
