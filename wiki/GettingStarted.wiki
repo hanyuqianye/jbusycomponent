@@ -1,9 +1,8 @@
-#summary One-sentence summary of this page.
+#summary First step using JBusyComponent
 
 = Introduction =
 
-Add your content here.
-
+We will introduce how use JBusyComponent easily. This 
 
 = Details =
 
@@ -11,3 +10,5 @@ Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
+
+<pre> * // your component to enhance * JTree comp = .....; *  * // Create the JBusyComponent enhancer * JBusyComponent<JTree> busyComp = new JXLayer<JTree>(comp); *  * // Add our JBusyComponent to the container instead of our component * myContainer.add( layer ); *  * // Use the BusyModel for control the busy state on our component * BusyModel model = busyComp.getBusyModel(); *  * // Let's got to put our original component to a busy state * model.setBusy(true); // an animation over our component is shown * </pre> 
