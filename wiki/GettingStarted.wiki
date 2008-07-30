@@ -90,7 +90,7 @@ We provide a *really cool* `BusyModel` implementation that can track a `Future` 
 >            catch(InterruptedException ie) {
 >                // Canceled task
 >                // In a morecomplex task, see also the 
->                //   Thread.currentThread().isInterrupted() flag
+>                // Thread.currentThread().isInterrupted() flag
 >            }
 >         }
 >     };
