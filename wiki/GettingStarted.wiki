@@ -14,27 +14,22 @@ Let's see how to set busy a JTree :
 >        */
 >       JFrame frame = new JFrame();
 >       frame.setDefaultCloseOperation( frame.EXIT_ON_CLOSE );
->
 >       
 >       /** Create the JTree that will be our view
 >        */
 >       JTree tree = new JTree();
 >
->       
 >       /** Create our JBusyComponent that wrap the JTree 
 >        */
 >       JBusyComponent<JTree> busyComponent = new JBusyComponent<JTree>(tree);
 >
->
 >       /** Add the JBusyComponent instead of the JTree to the frame
 >        */
 >       frame.getContentPane().add( busyComponent );
->
 >       
 >       /** Set our JTree busy !!!!
 >        */
 >       busyComponent.setBusy(true);
->
 >       
 >       /** show it
 >        */
