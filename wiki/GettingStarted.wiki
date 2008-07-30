@@ -49,7 +49,6 @@ A JBusyComponent refer a `BusyModel` to provide more functionnality:
 >     model.setCancellable(true);
 >     model.setBusy(true);
 }}}
-
 == Using a determinate `BusyModel` ==
 A `BusyModel` extends `BoundedRangeModel`.
 That means that a `BusyModel` can manage the busy progression like any JProgressBar do.
