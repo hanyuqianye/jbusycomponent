@@ -1,4 +1,4 @@
-#summary First step using JBusyComponent
+#summary First steps with JBusyComponent
 
 = Introduction =
 
