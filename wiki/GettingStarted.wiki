@@ -1,4 +1,5 @@
 #summary First steps with JBusyComponent
+#labels Featured
 
 = Introduction =
 
