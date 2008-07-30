@@ -2,13 +2,48 @@
 
 = Introduction =
 
-We will introduce how use JBusyComponent easily. This 
+We will introduce how use JBusyComponent easily. 
+JBusyComponent wrap any swing component (called `view`) and take place on the components hierarchy. 
 
-= Details =
+The JBusyComponent let you to manage `busy` properties on the `view` with a *`BusyModel`*
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== The first busy component ==
+Let's see how to set busy a JTree :
+{{{
+>       /** The frame of our example
+>        */
+>       JFrame frame = new JFrame();
+>       frame.setDefaultCloseOperation( frame.EXIT_ON_CLOSE );
+>
+>       
+>       /** Create the JTree that will be our view
+>        */
+>       JTree tree = new JTree();
+>
+>       
+>       /** Create our JBusyComponent that wrap the JTree 
+>        */
+>       JBusyComponent<JTree> busyComponent = new JBusyComponent<JTree>(tree);
+>
+>
+>       /** Add the JBusyComponent instead of the JTree to the frame
+>        */
+>       frame.getContentPane().add( busyComponent );
+>
+>       
+>       /** Set our JTree busy !!!!
+>        */
+>       busyComponent.setBusy(true);
+>
+>       
+>       /** show it
+>        */
+>       frame.pack();
+>       frame.setVisible(true);
+}}}
 
-<pre> * // your component to enhance * JTree comp = .....; *  * // Create the JBusyComponent enhancer * JBusyComponent<JTree> busyComp = new JXLayer<JTree>(comp); *  * // Add our JBusyComponent to the container instead of our component * myContainer.add( layer ); *  * // Use the BusyModel for control the busy state on our component * BusyModel model = busyComp.getBusyModel(); *  * // Let's got to put our original component to a busy state * model.setBusy(true); // an animation over our component is shown * </pre> 
+== Use the `BusyModel` for more functionnality ==
+A JBusyComponent refer a `BusyModel` to provide more functionnality:
+ * *Start / Stop* the busy state with `setBusy( boolean )`
+ * *Cancellable* property tells if the busy state can be cancelled `setCancellable( boolean )`
+ * *Determinate* property tells if the bust state can be tracked `setDeterminate( boolean )`
