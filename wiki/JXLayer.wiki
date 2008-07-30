@@ -1,15 +1,32 @@
-#summary One-sentence summary of this page.
-
+#summary Use this busy implementation directly with JXLayer
 = Introduction =
 
-Add your content here.
+JBusyComponent class is just a wrapper, you can use instead JXLayer directly.
+We use JXlayer for manage a translucent layer (overlay) on any swing components.
+
+The Busy animation (and all business methods) are implemented in the JXLayer's UI.
 
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+{{{ 
+ // your component to enhance 
+ JComponent comp = ...; 
 
-/** * A Default implementation of BusyLayerUI. * <p> * This UI provide a busy animation, progress bar and cancellation button * regarding the <code>BusyModel</code>. * <p> * You can enhance any swing components with busy fonctionnality like it: * <pre> * // your component to enhance * JComponent comp = .....; * * // Create the JXLayer decorator * JXLayer<JComponent> layer = new JXLayer<JComponent>(comp); * * // Create the Busy Layer UI delegate * BusyLayerUI ui = new BasicBusyLayerUI(); * * // Attach the UI to the decorator * layer.setUI( (LayerUI)ui ); * * // Add the decorator to the container instead of our component * myContainer.add( layer ); * * // Use the BusyModel for control the busy state on our component * // If multiple components share the same BusyModel, all of theses will be * // triggered by the same model * BusyModel model = ui.getBusyModel(); * model.setBusy(true); // an animation over our component is shown * </pre> * * @author André Sébastien 
+ // Create the JXLayer decorator 
+ JXLayer<JComponent> layer = new JXLayer<JComponent>(comp); 
+
+ // Create the Busy Layer UI delegate * BusyLayerUI ui = new BasicBusyLayerUI(); 
+ // Attach the UI to the decorator 
+ layer.setUI( (LayerUI)ui ); 
+
+ // Add the decorator to the container instead of our component 
+ myContainer.add( layer ); 
+
+ // Use the BusyModel for control the busy state on our component 
+ // If multiple components share the same BusyModel, all of theses will be 
+ // triggered by the same model 
+ BusyModel model = ui.getBusyModel(); 
+
+ model.setBusy(true); // an animation over our component is shown 
+}}}
