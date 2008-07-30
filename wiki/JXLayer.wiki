@@ -5,6 +5,7 @@
 We use `JXlayer` for manage a translucent layer (overlay) on any swing components.
 
 The Busy animation (and all business methods) are implemented in the `JXLayer`'s UI.
+
 The `BasicBusyLayerUI` hold a `BusyModel` to let you control the busy state like any `JBusyComponent`
 
 = Details =
