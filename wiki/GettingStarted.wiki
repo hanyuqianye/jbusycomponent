@@ -54,4 +54,13 @@ A JBusyComponent refer a `BusyModel` to provide more functionnality:
 A `BusyModel` extends `BoundedRangeModel`.
 That means that a `BusyModel` can manage the busy progression like any JProgressBar do.
 
-Before all, for enable this feature you need to set the `BusyModel` in a determinate mode `BusyModel.setDeterminate(true)`
+Before all, for enable this feature you need to set the `BusyModel` in a determinate mode `BusyModel.setDeterminate(true)` and you can control the range of the progression and the current value.
+
+This exemple set the `BusyModel` determinate to 50%:
+{{{
+>    model.setDeterminate(true);
+>    model.setMinimum(0);
+>    model.setMaximum(200);
+>    model.setValue(100);  // 100 is at 50% from the range [0 - 200]
+>    model.setBusy(true);
+}}}
