@@ -3,9 +3,7 @@
 = Introduction =
 
 We will introduce how use JBusyComponent easily. 
-JBusyComponent wrap any swing component (called `view`) and take place on the components hierarchy. 
-
-The JBusyComponent let you to manage `busy` properties on the `view` with a *`BusyModel`*
+JBusyComponent wrap any swing component (called `view`) and take place on the components hierarchy. The JBusyComponent let you to manage `busy` properties on the `view` and provide *`BusyModel`*.
 
 == The first busy component ==
 Let's see how to set busy a JTree :
