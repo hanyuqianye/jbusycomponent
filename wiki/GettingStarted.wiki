@@ -43,6 +43,7 @@ A JBusyComponent refer a `BusyModel` to provide more functionnality:
  * *Cancellable* property tells if the busy state can be cancelled `setCancellable( boolean )`
  * *Determinate* property tells if the bust state can be tracked `setDeterminate( boolean )`
 
+Exemple with a cancellable `BusyModel`:
 {{{
 >     /** Set our JTree busy but cancellable
 >      */
@@ -63,4 +64,45 @@ This exemple set the `BusyModel` determinate to 50%:
 >    model.setMaximum(200);
 >    model.setValue(100);  // 100 is at 50% from the range [0 - 200]
 >    model.setBusy(true);
+}}}
+
+== Track a concurrent task with a `FutureBusyModel` ==
+One from the coolest package that came with the JDK 1.5 is the package `java.util.concurrent`.
+When you use some `ExecutorService`, you can enqueue some tasks to execute when it is possible. The `ExecutorService` implementation is responsible to manage theses tasks (use one or more threads, manage the pool size and so more).
+
+The nice design with theses `ExecutorService` is the `Future` instance resulting in the task submitting. This object allow to monitor and control the enqueued task. You can know if the task is completed or not and you can also cancel it.
+
+We provide a *really cool* `BusyModel` implementation that can track a `Future` like it:
+{{{
+>     /** Create our BusyModel that can track a Future
+>      *  And bound it to our JBusyComponent
+>      */
+>     FutureBusyModel model = new FutureBusyModel();
+>     busyComponent.setBusyModel( model );
+>        
+>     /** Create a dummy task that sleep 5s with a Runnable
+>      */
+>     Runnable task = new Runnable() {
+>         public void run() {
+>            try { 
+>                 Thread.sleep(5000);
+>            }
+>            catch(InterruptedException ie) {
+>                // Canceled task
+>                // In a morecomplex task, see also the 
+>                //   Thread.currentThread().isInterrupted() flag
+>            }
+>         }
+>     };
+>       
+>     /** Create an ExecutorService and submit our task
+>      */
+>     ExecutorService service = Executors.newSingleThreadExecutor();
+>     Future          future  = service.submit(task);
+>       
+>     /** Let our model to reflet this task
+>      *  The Model will be set to a Bust State until the task will complete or be cancelled
+>      *  This method will set automatically the model cancellable.
+>      */
+>     model.setFuture( future );
 }}}
