@@ -1,13 +1,10 @@
-#Getting Starting with matisse designer (Netbeans)
+#summary Getting Starting with matisse designer (Netbeans)
+#labels TODO
 
 = Introduction =
-
-Add your content here.
-
+We will introduce how use the `JBusyComponent` as a JavaBean in the palette manager.
+And layout and configure the `JBusyComponent` with Matisse
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+TODO
