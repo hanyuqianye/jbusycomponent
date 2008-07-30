@@ -64,6 +64,37 @@ This exemple set the `BusyModel` determinate to 50%:
 >    model.setBusy(true);
 }}}
 
+The `DefaultBusyModel` implementation help you to use determinate model with the `auto-completion` property. how it works ?
+ * When the busy state is set to `true`, the `current value` is set to the `minimum`
+ * When the `current value` reach the `maximum`, the busy state is set to `false`
+
+Here an example:
+{{{
+>    /** Create our determinate BusyModel 
+>     */
+>    DefaultBusyModel model = new DefaultBusyModel();
+>    busyComponent.setBusyModel( model );
+>     
+>    /** configure it as determinate and auto-completion
+>     */
+>    model.setAutoCompletionEnabled(true);
+>    model.setDeterminate(true);
+>    model.setMinimum(0);
+>    model.setMaximum(200);
+>       
+>    /** Start a busy state, 
+>     *  The current value will be set to 0 (minimum)
+>     */
+>    model.setBusy(true);
+>     
+>    while( model.isBusy() ) {
+>        /** When the value reach the maximum, the model will stop automatically
+>         *  the busy state
+>         */
+>        model.setValue( model.getValue() + 1 );
+>    }
+}}}
+
 == Track a concurrent task with a `FutureBusyModel` ==
 One from the coolest package that came with the JDK 1.5 is the package `java.util.concurrent`.
 When you use some `ExecutorService`, you can enqueue some tasks to execute when it is possible. The `ExecutorService` implementation is responsible to manage theses tasks (use one or more threads, manage the pool size and so more).
