@@ -16,7 +16,9 @@ The Busy animation (and all business methods) are implemented in the JXLayer's U
  // Create the JXLayer decorator 
  JXLayer<JComponent> layer = new JXLayer<JComponent>(comp); 
 
- // Create the Busy Layer UI delegate * BusyLayerUI ui = new BasicBusyLayerUI(); 
+ // Create the Busy Layer UI delegate 
+ BusyLayerUI ui = new BasicBusyLayerUI(); 
+
  // Attach the UI to the decorator 
  layer.setUI( (LayerUI)ui ); 
 
