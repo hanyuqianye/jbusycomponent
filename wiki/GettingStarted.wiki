@@ -45,7 +45,7 @@ Let's see how to set busy a JTree :
 A JBusyComponent refer a `BusyModel` to provide more functionnality:
  * *Start / Stop* the busy state: `setBusy( boolean )`
  * *Cancellable* property tells if the busy state can be cancelled: `setCancellable( boolean )`
- * *Determinate* property tells if the bust state can be tracked:  `setDeterminate( boolean )`
+ * *Determinate* property tells if the busy state can be tracked:  `setDeterminate( boolean )`
  * *Cancel* the task (only if it is cancellable) that is implementation dependant: `cancel()`
 
 Exemple with a cancellable `BusyModel`:
