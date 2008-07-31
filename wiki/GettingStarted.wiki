@@ -136,7 +136,7 @@ We provide a *really cool* `BusyModel` implementation that can track a `Future` 
 >     Future          future  = service.submit(task);
 >       
 >     /** Let our model to reflet this task
->      *  The Model will be set to a Bust State until the task will complete or be cancelled
+>      *  The Model will be busy until the task will complete or be cancelled
 >      *  This method will set automatically the model cancellable.
 >      */
 >     model.setFuture( future );
