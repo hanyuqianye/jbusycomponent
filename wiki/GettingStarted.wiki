@@ -105,7 +105,7 @@ Here an example:
 One from the coolest package that came with the JDK 1.5 is the package `java.util.concurrent`.
 When you use some `ExecutorService`, you can enqueue some tasks to execute when it is possible. The `ExecutorService` implementation is responsible to manage theses tasks (use one or more threads, manage the pool size and so more).
 
-The nice design with theses `ExecutorService` is the `Future` instance resulting in the task submitting. This object allow to monitor and control the enqueued task. You can know if the task is completed or not and you can also cancel it.
+The nice design with theses `ExecutorService` is the `Future` instance resulting in the task submitted. This object allow to monitor and control the enqueued task. You can know if the task is completed or not and you can also cancel it.
 
 We provide a *really cool* `BusyModel` implementation that can track a `Future` like it:
 {{{
