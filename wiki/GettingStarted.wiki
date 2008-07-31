@@ -71,7 +71,7 @@ This exemple set the `BusyModel` determinate to 50%:
 >    model.setBusy(true);
 }}}
 
-The `DefaultBusyModel` implementation help you to use determinate model with the `auto-completion` property. how it works ?
+The `DefaultBusyModel` implementation help you to use determinate model with the `auto-completion` property as follow :
  * When the busy state is set to `true`, the `current value` is set to the `minimum`
  * When the `current value` reach the `maximum`, the busy state is set to `false`
 Here an example:
