@@ -7,7 +7,7 @@ We will introduce how use JBusyComponent easily.
 JBusyComponent wrap any swing component (called `view`) and take place on the components hierarchy. The JBusyComponent let you to manage `busy` properties on the `view` and provide *`BusyModel`*.
 
 == This Library requires some dependancies ==
-You need to download independently theses library in order to use `JBusyComponent`
+You need to download independently theses libraries in order to use `JBusyComponent`
  * [http://swinglabs.org/ SwingX]
  * [https://jxlayer.dev.java.net/ JXLayer 3.0]
 
