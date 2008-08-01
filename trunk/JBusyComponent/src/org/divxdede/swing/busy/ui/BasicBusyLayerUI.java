@@ -202,7 +202,13 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
          */
         this.jXBusyLabel.setVisible( isBusy );
         this.jProgressBar.setVisible( isBusy && myModel.isDeterminate() );
-        this.jXHyperlinkCancel.setVisible( isBusy && myModel.isCancellable() );
+
+        { boolean hyperlinkVisible = isBusy && myModel.isCancellable();
+          if( hyperlinkVisible && !this.jXHyperlinkCancel.isVisible() ) 
+              this.jXHyperlinkCancel.setClicked(false);
+        
+          this.jXHyperlinkCancel.setVisible( hyperlinkVisible );
+        }
 
         /** Busy animation (start or stop)
          */
