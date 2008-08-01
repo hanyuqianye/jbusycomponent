@@ -1,0 +1,10 @@
+#summary Releases Notes
+#labels Featured
+
+= Version 1.0.1 (incoming) =
+
+== Bug Fix == 
+ * Now the `BasicBusyLayerUI` render the cancel button as unvisited when the animation is showing.
+
+= Version 1.0 (31/07/2008) =
+ * First release of *JBusyComponent*
