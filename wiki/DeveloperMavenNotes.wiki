@@ -1,0 +1,39 @@
+#How to setup an environment to build this project with maven and eclipse.
+
+= Software installation =
+
+  * install eclipse: http://www.eclipse.org/downloads/
+  * install subeclipse (svn): http://subclipse.tigris.org/
+  * install sonatype naven-eclipse plugin: http://m2eclipse.codehaus.org/
+  * Optional: install maven command line tool: http://maven.apache.org/download.html
+
+= Configuration =
+
+Create or update your ${user.home}/.m2/settings.xml
+<settings xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+	<profiles>
+		<profile>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>javanet</id>
+					<name>Java.net Repository for Maven 2</name>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+						<checksumPolicy>fail</checksumPolicy>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+					<url>http://download.java.net/maven/2/</url>
+					<layout>default</layout>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+</settings>
