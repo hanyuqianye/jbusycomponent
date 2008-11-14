@@ -50,3 +50,6 @@ Create or update your ${user.home}/.m2/settings.xml
      File > New > Other
       Select Maven > Checkout Maven Project From SCM ... and enter project information.
 
+= Don't panic =
+
+first import / activation is much slower. All is fine, it's because maven need to initialize its local repository and it download some dependency.
