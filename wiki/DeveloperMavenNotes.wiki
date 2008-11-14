@@ -8,6 +8,7 @@
   * install sonatype naven-eclipse plugin: http://m2eclipse.codehaus.org/
   * Optional: install maven command line tool: http://maven.apache.org/download.html
 
+
 = Configuration =
 Create or update your ${user.home}/.m2/settings.xml
 {{{
@@ -39,3 +40,13 @@ Create or update your ${user.home}/.m2/settings.xml
 	</profiles>
 </settings>
 }}}
+
+
+= Usage =
+
+  * If you already have the project into your workspace, just active it:
+     Right click on project item > Maven > Enabled Dependency Management
+  * import from scratch:
+     File > New > Other
+      Select Maven > Checkout Maven Project From SCM ... and enter project information.
+
