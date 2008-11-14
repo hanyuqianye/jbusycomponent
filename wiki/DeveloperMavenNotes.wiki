@@ -1,4 +1,4 @@
-#How to setup an environment to build this project with maven and eclipse.
+#summary How to setup an environment to build this project with maven and eclipse.
 
 = Software installation =
 
