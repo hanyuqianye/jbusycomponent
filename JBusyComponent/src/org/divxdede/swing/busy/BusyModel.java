@@ -44,7 +44,7 @@ public interface BusyModel extends BoundedRangeModel {
      * Define if the model is on a "busy" state
      * @param value true to going in a busy state
      */
-    public void setBusy(boolean value);
+    public void setBusy(final boolean value);
     
     /**
      * Returns true if the model is currently on a <code>busy</code> state
@@ -56,7 +56,7 @@ public interface BusyModel extends BoundedRangeModel {
      * Define if the model is in a <code>determinate mode</code> or not
      * @param value true for change this model in a determinate mode
      */
-    public void setDeterminate(boolean value);
+    public void setDeterminate(final boolean value);
     
     /** 
      * Returns true if the model is in a <code>determinate mode</code>.
@@ -74,7 +74,7 @@ public interface BusyModel extends BoundedRangeModel {
      * Define if this model is <code>cancellable</code>
      * @param value true for set this model cancellable.
      */
-    public void setCancellable(boolean value);
+    public void setCancellable(final boolean value);
     
     /** Invoke this method to cancel the current job responsible of the <code>busy</code> state.
      *  You need to override this method for implements you own cancellation process.
