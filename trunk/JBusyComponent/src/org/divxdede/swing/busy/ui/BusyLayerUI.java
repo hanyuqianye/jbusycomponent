@@ -39,7 +39,7 @@ public interface BusyLayerUI {
      *  Define the BusyModel used by this ui
      *  @param model New BusyModel to use by this ui
      */
-    public void setBusyModel(BusyModel model);
+    public void setBusyModel(final BusyModel model);
     
     /** 
      *  Returns the BusyModel used by this ui

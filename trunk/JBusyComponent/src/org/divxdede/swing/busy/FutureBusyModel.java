@@ -45,26 +45,26 @@ public class FutureBusyModel extends DefaultBusyModel {
      * This model will be set as <code>undeterminate</code> but <code>cancellable</code> model.
      * @param future New Future to reflet.
      */
-    public synchronized void setFuture(Future future ) {
+    public synchronized void setFuture(final Future future ) {
         setFuture(future,true);
     }
 
     @Override
-    public void setBusy(boolean value) {
+    public void setBusy(final boolean value) {
         this.setBusyImpl(value);
     }
     
     /** Change a busy state and return a ticket identifier of this attempt
      */
-    private synchronized int setBusyImpl(boolean value) {
+    private synchronized int setBusyImpl(final boolean value) {
         super.setBusy(value);
-        return (++ticket);
+        return (++this.ticket);
     }
     
     /** Change a busy state only if the ticket parameter is always the last given ticket
      */
-    private synchronized boolean compareAndSetBusy( boolean value , int ticketValue ) {
-        if( ticketValue == ticket ) {
+    private synchronized boolean compareAndSetBusy( final boolean value , final int ticketValue ) {
+        if( ticketValue == this.ticket ) {
             setBusy(value);
             return true;
         }
@@ -77,8 +77,8 @@ public class FutureBusyModel extends DefaultBusyModel {
      * @param future New Future to reflet.
      * @param cancellable true for let this future cancellable by the JBusyComponent
      */
-    public synchronized void setFuture(Future future , boolean cancellable ) {
-        if( service == null ) service = Executors.newSingleThreadExecutor();
+    public synchronized void setFuture(final Future future , final boolean cancellable ) {
+        if( this.service == null ) this.service = Executors.newSingleThreadExecutor();
         if( future == null ) return;
         
         /** Hold the tracked future
@@ -99,19 +99,19 @@ public class FutureBusyModel extends DefaultBusyModel {
 
         /** Tracker job to execute on our dedicated thread
          */
-        Runnable tracker = new Runnable() {
+        final Runnable tracker = new Runnable() {
             
             public void run() {
                 int myTicket = 0;
                 try {
-                    Future myFuture = trackedFuture;
+                    final Future myFuture = FutureBusyModel.this.trackedFuture;
                     while( ! myFuture.isDone() ) {
                         myTicket = setBusyImpl(true);
                         try {
                             myFuture.get();
                         }
-                        catch(Exception e) {
-                           if( myFuture != trackedFuture ) {
+                        catch(final Exception e) {
+                           if( myFuture != FutureBusyModel.this.trackedFuture ) {
                                /** probably the model must reflet now a different Future
                                 *  We must stop to reflet this one
                                 */
@@ -126,17 +126,18 @@ public class FutureBusyModel extends DefaultBusyModel {
             }
         };
         
-        this.trackerFuture = service.submit(tracker);
+        this.trackerFuture = this.service.submit(tracker);
     }
 
     /** Cancel the current <code>future</code> under process
      */
-    public synchronized void cancel() {
-        Future toCancel = trackedFuture;
+    @Override
+	public synchronized void cancel() {
+        final Future toCancel = this.trackedFuture;
         if( toCancel != null ) {
             toCancel.cancel(true);
         }
-        trackedFuture = null;
-        trackerFuture = null;
+        this.trackedFuture = null;
+        this.trackerFuture = null;
     }
 }

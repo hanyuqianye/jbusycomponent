@@ -61,9 +61,9 @@ public abstract class AbstractBusyLayerUI extends LockableUI implements BusyLaye
      *  Define the BusyModel used by this ui
      *  @param model New BusyModel to use by this ui
      */
-    public void setBusyModel( BusyModel model ) {
+    public void setBusyModel( final BusyModel model ) {
         
-        BusyModel oldValue = this.getBusyModel();
+        final BusyModel oldValue = this.getBusyModel();
         if( getBusyModel() != null ) {
             getBusyModel().removeChangeListener( this.modelListener );
         }
@@ -90,7 +90,7 @@ public abstract class AbstractBusyLayerUI extends LockableUI implements BusyLaye
     protected final void updateUI() {
        if( SwingUtilities.isEventDispatchThread() ) updateUIImpl();
        else {
-           Runnable doRun = new Runnable() {
+           final Runnable doRun = new Runnable() {
                public void run() {
                    updateUIImpl();
                }
@@ -100,7 +100,7 @@ public abstract class AbstractBusyLayerUI extends LockableUI implements BusyLaye
     }
     
     @Override
-    public void updateUI(JXLayer<JComponent> l) {
+    public void updateUI(final JXLayer<JComponent> l) {
         this.updateUI();
         super.updateUI(l);
     }    
@@ -123,7 +123,7 @@ public abstract class AbstractBusyLayerUI extends LockableUI implements BusyLaye
      */
     private ChangeListener createModelListener() {
         return new ChangeListener() {
-           public void stateChanged(ChangeEvent e) {
+           public void stateChanged(final ChangeEvent e) {
               updateUI();
            }
         };

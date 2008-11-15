@@ -123,7 +123,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      *  @param veilAlpha Alpha ratio to use for the veil when the model is <code>busy</code>
      *  @param veilColor Color to use for render the veil
      */ 
-    public BasicBusyLayerUI(int shadeDelay , int shadeFps , float veilAlpha  , Color veilColor) {
+    public BasicBusyLayerUI(final int shadeDelay , final int shadeFps , final float veilAlpha  , final Color veilColor) {
         
         this.cancelListener     = createCancelListener();
         this.timer              = createBackgroundShadingTimer();
@@ -131,24 +131,24 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
         
         
         this.shadeDelayTotal    = shadeDelay;
-        this.shadeDelayInterval = ( shadeDelayTotal <= 0 ? 0 : (int)(1000f / shadeFps) );
+        this.shadeDelayInterval = ( this.shadeDelayTotal <= 0 ? 0 : (int)(1000f / shadeFps) );
         
         this.veilAlpha          = veilAlpha;
         this.veilColor          = veilColor;
     }
     
     @Override
-    public void installUI(JComponent c) {
+    public void installUI(final JComponent c) {
         super.installUI(c);
         
-        JXLayer layer = (JXLayer)c;
+        final JXLayer layer = (JXLayer)c;
         layer.setGlassPane( this.jXGlassPane );
     }
 
     @Override
-    public void uninstallUI(JComponent c) {
+    public void uninstallUI(final JComponent c) {
         super.uninstallUI(c);
-        JXLayer layer = (JXLayer)c;
+        final JXLayer layer = (JXLayer)c;
         layer.setGlassPane( null );
     }
 
@@ -164,7 +164,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      * Define the busy painter to use for render the friendly busy animation
      * @param busyPainter New busy painter to use for render the friendly busy animation
      */
-    public void setBusyPainter(BusyPainter busyPainter) {
+    public void setBusyPainter(final BusyPainter busyPainter) {
         this.setBusyPainter(busyPainter,null);
     }
     
@@ -173,7 +173,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      * @param busyPainter New busy painter to use for render the friendly busy animation
      * @param preferredSize Preferred Size to use for this painter animation
      */
-    public void setBusyPainter(BusyPainter busyPainter , Dimension preferredSize ) {
+    public void setBusyPainter(final BusyPainter busyPainter , final Dimension preferredSize ) {
         if( preferredSize != null ) {
             this.jXBusyLabel.setIcon( new EmptyIcon( preferredSize.width , preferredSize.height ) );
         }
@@ -185,9 +185,9 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     }
     
     @Override
-    protected void paintLayer(Graphics2D g2, JXLayer<JComponent> l) {
+    protected void paintLayer(final Graphics2D g2, final JXLayer<JComponent> l) {
         super.paintLayer(g2, l);
-        Painter painter = getBackGroundPainter();
+        final Painter painter = getBackGroundPainter();
         if( painter != null ) {
             painter.paint(g2, null , l.getWidth(), l.getHeight() );
         }
@@ -195,15 +195,15 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     
     @Override
     protected void updateUIImpl() {
-        BusyModel myModel = getBusyModel();
-        boolean   isBusy  = myModel == null ? false : myModel.isBusy();
+        final BusyModel myModel = getBusyModel();
+        final boolean   isBusy  = myModel == null ? false : myModel.isBusy();
 
         /** Visible states
          */
         this.jXBusyLabel.setVisible( isBusy );
         this.jProgressBar.setVisible( isBusy && myModel.isDeterminate() );
 
-        { boolean hyperlinkVisible = isBusy && myModel.isCancellable();
+        { final boolean hyperlinkVisible = isBusy && myModel.isCancellable();
           if( hyperlinkVisible && !this.jXHyperlinkCancel.isVisible() ) 
               this.jXHyperlinkCancel.setClicked(false);
         
@@ -232,52 +232,52 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     }
 
     @Override
-    public void setBusyModel(BusyModel model) {
+    public void setBusyModel(final BusyModel model) {
         super.setBusyModel(model);
         
         if( getBusyModel() != null ) 
-            jProgressBar.setModel( model );
+            this.jProgressBar.setModel( model );
     }
 
     /** Create our glasspane
      */
     private JComponent createGlassPane() {
         
-        GridBagLayout layout = new GridBagLayout();
-        jXGlassPane.setLayout( layout );
-        jXGlassPane.setOpaque(false);
+        final GridBagLayout layout = new GridBagLayout();
+        this.jXGlassPane.setLayout( layout );
+        this.jXGlassPane.setOpaque(false);
 
-        Insets emptyInsets = new Insets(0,0,0,0);
-        GridBagConstraints gbcLabel = new GridBagConstraints(1,1,2,1,0,0, GridBagConstraints.CENTER , GridBagConstraints.NONE , emptyInsets , 0 , 0 );
-        GridBagConstraints gbcBar   = new GridBagConstraints(1,2,1,1,0,0, GridBagConstraints.CENTER , GridBagConstraints.NONE , emptyInsets , 0 , 0 );
-        GridBagConstraints gbcLink  = new GridBagConstraints(2,2,1,1,0,0, GridBagConstraints.CENTER , GridBagConstraints.NONE , emptyInsets , 0 , 0 );
+        final Insets emptyInsets = new Insets(0,0,0,0);
+        final GridBagConstraints gbcLabel = new GridBagConstraints(1,1,2,1,0,0, GridBagConstraints.CENTER , GridBagConstraints.NONE , emptyInsets , 0 , 0 );
+        final GridBagConstraints gbcBar   = new GridBagConstraints(1,2,1,1,0,0, GridBagConstraints.CENTER , GridBagConstraints.NONE , emptyInsets , 0 , 0 );
+        final GridBagConstraints gbcLink  = new GridBagConstraints(2,2,1,1,0,0, GridBagConstraints.CENTER , GridBagConstraints.NONE , emptyInsets , 0 , 0 );
         
-        jXGlassPane.add( jXBusyLabel , gbcLabel );
-        jXGlassPane.add( jProgressBar , gbcBar );
-        jXGlassPane.add( jXHyperlinkCancel , gbcLink );
+        this.jXGlassPane.add( this.jXBusyLabel , gbcLabel );
+        this.jXGlassPane.add( this.jProgressBar , gbcBar );
+        this.jXGlassPane.add( this.jXHyperlinkCancel , gbcLink );
 
-        jXBusyLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jXBusyLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jXBusyLabel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        this.jXBusyLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        this.jXBusyLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        this.jXBusyLabel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jXHyperlinkCancel.setText( UIManager.getString("OptionPane.cancelButtonText") );
-        jXHyperlinkCancel.addActionListener( this.cancelListener );
+        this.jXHyperlinkCancel.setText( UIManager.getString("OptionPane.cancelButtonText") );
+        this.jXHyperlinkCancel.addActionListener( this.cancelListener );
 
         updateUI();
-        return jXGlassPane;
+        return this.jXGlassPane;
     }
     
     /** Return the percent progression string
      */
     private String getPercentProgressionString() {
-        BusyModel myModel = getBusyModel();
-        boolean   isBusy  = myModel == null ? false : myModel.isBusy();
+        final BusyModel myModel = getBusyModel();
+        final boolean   isBusy  = myModel == null ? false : myModel.isBusy();
         if( ! isBusy )                 return null;
         if( !myModel.isDeterminate() ) return null;
         
-        int   range   = myModel.getMaximum() - myModel.getMinimum();
-        int   value   = myModel.getValue();
-        float percent = ( 100f / (float)range ) * (float)( value - myModel.getMinimum() );
+        final int   range   = myModel.getMaximum() - myModel.getMinimum();
+        final int   value   = myModel.getValue();
+        final float percent = ( 100f / range ) * ( value - myModel.getMinimum() );
         
         return  ((int)percent) + " %";
     }
@@ -286,11 +286,11 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      */
     private ActionListener createCancelListener() {
         return new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 try {
                     getBusyModel().cancel();
                 }
-                catch(Exception e2) {
+                catch(final Exception e2) {
                     e2.printStackTrace();
                 }
             }
@@ -320,7 +320,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      *  @param alpha The alpha value (0 ~ 255) requested for the painter
      *  @return painter the new painter with the correct alpha value
      */
-    protected Painter createBackgroundPainter( int alpha ) {
+    protected Painter createBackgroundPainter( final int alpha ) {
         return new MattePainter( 
                 new Color( this.veilColor.getRed() ,
                            this.veilColor.getGreen() ,
@@ -347,8 +347,8 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
             this.updateBackgroundPainter();
         }
         else {
-            if( timer.isRunning() ) return;
-            timer.start();
+            if( this.timer.isRunning() ) return;
+            this.timer.start();
         }
     }
     
@@ -360,9 +360,9 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      *  When the shading is completed, this timer stop itself.
      */
     private synchronized Timer createBackgroundShadingTimer() {
-        ActionListener actionListener = new ActionListener() {
+        final ActionListener actionListener = new ActionListener() {
 
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 synchronized( BasicBusyLayerUI.this ) {
                     updateBackgroundPainter();
                     if( ! isBackgroundPainterDirty() ) {
@@ -371,7 +371,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
                 }
             }
         };
-        return new Timer(shadeDelayInterval , actionListener );
+        return new Timer(this.shadeDelayInterval , actionListener );
     }
     
     /** Indicate if the background painter is dirty.
@@ -386,11 +386,11 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     private synchronized boolean isBackgroundPainterDirty() {
         if( this.veilColor == null || this.veilAlpha == 0f ) return false;
         
-        BusyModel myModel = getBusyModel();
-        boolean   isBusy  = myModel == null ? false : myModel.isBusy();
+        final BusyModel myModel = getBusyModel();
+        final boolean   isBusy  = myModel == null ? false : myModel.isBusy();
         
-        if( isBusy  && alpha < 255 ) return true;
-        if( !isBusy && alpha > 0 )   return true;
+        if( isBusy  && this.alpha < 255 ) return true;
+        if( !isBusy && this.alpha > 0 )   return true;
         return false;
     }
     
@@ -401,33 +401,33 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      *  and <code>shadeDelayInterval</code> delay
      */
     private synchronized void updateBackgroundPainter() {
-        BusyModel myModel = getBusyModel();
-        boolean   isBusy  = myModel == null ? false : myModel.isBusy();
+        final BusyModel myModel = getBusyModel();
+        final boolean   isBusy  = myModel == null ? false : myModel.isBusy();
         
-        Painter oldPainter = this.painter;
+        final Painter oldPainter = this.painter;
         
-        if( isBusy && alpha < 255 ) {
-            if( shadeDelayTotal <= 0 ) {
-                alpha = 255;
+        if( isBusy && this.alpha < 255 ) {
+            if( this.shadeDelayTotal <= 0 ) {
+                this.alpha = 255;
             }
             else {
-                alpha += 255 / (shadeDelayTotal / shadeDelayInterval);
-                if( alpha > 255 ) alpha = 255;
+                this.alpha += 255 / (this.shadeDelayTotal / this.shadeDelayInterval);
+                if( this.alpha > 255 ) this.alpha = 255;
             }
-            this.painter = createBackgroundPainter( (int)(alpha * veilAlpha) );
+            this.painter = createBackgroundPainter( (int)(this.alpha * this.veilAlpha) );
         }
-        else if( !isBusy && alpha > 0 ) {
-            if( shadeDelayTotal <= 0 ) {
-                alpha = 0;
+        else if( !isBusy && this.alpha > 0 ) {
+            if( this.shadeDelayTotal <= 0 ) {
+                this.alpha = 0;
             }
             else {
-                alpha-= 255 / (shadeDelayTotal / shadeDelayInterval );
+                this.alpha-= 255 / (this.shadeDelayTotal / this.shadeDelayInterval );
             }
             
-            if( alpha > 0 )
-                this.painter = createBackgroundPainter( (int)(alpha * veilAlpha) );
+            if( this.alpha > 0 )
+                this.painter = createBackgroundPainter( (int)(this.alpha * this.veilAlpha) );
             else {
-                alpha = 0;
+                this.alpha = 0;
                 this.painter = null;
             }
         }

@@ -44,9 +44,9 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
      * Define if the model is on a "busy" state
      * @param value true to going in a busy state
      */
-    public void setBusy(boolean value) {
+    public void setBusy(final boolean value) {
         // new Exception("PASS(" + value + ")").printStackTrace();
-        boolean oldValue = isBusy();
+        final boolean oldValue = isBusy();
         this.busyState = value;
         
         if( oldValue != isBusy() ) {
@@ -68,7 +68,7 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
     /** Manage auto completion
      */
     @Override
-    public void setValue(int n) {
+    public void setValue(final int n) {
         super.setValue(n);
         
         if( isDeterminate() && isAutoCompletionEnabled() && getValue() >= getMaximum() ) {
@@ -80,8 +80,8 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
      * Define if the model is in a <code>determinate mode</code> or not
      * @param value true for change this model in a determinate mode
      */
-    public void setDeterminate(boolean value) {
-        boolean oldValue = isDeterminate();
+    public void setDeterminate(final boolean value) {
+        final boolean oldValue = isDeterminate();
         this.determinateState = value;
         
         if( oldValue != isDeterminate() )
@@ -102,8 +102,8 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
      * When the <code>busy</code> property is set to true the range <code>value</code> is set to the <code>minimum</code>.
      * When the range <code>value</code> reach the <code>maximum</code>, the <code>busy</code> property is set to <code>false</code>.
      */
-    public void setAutoCompletionEnabled(boolean value) {
-        boolean oldValue = isAutoCompletionEnabled();
+    public void setAutoCompletionEnabled(final boolean value) {
+        final boolean oldValue = isAutoCompletionEnabled();
         
         this.autoCompletionState = value;
         
@@ -126,7 +126,7 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
      * @return true is the model is cancellable
      */
     public boolean isCancellable() {
-        return cancellableState;
+        return this.cancellableState;
     }
 
     /**
@@ -141,8 +141,8 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
      * Define if this model is <code>cancellable</code>
      * @param value true for set this model cancellable.
      */
-    public void setCancellable(boolean value) {
-        boolean oldValue = isCancellable();
+    public void setCancellable(final boolean value) {
+        final boolean oldValue = isCancellable();
         
         this.cancellableState = value;
         
@@ -154,7 +154,7 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
     @Override
     protected void fireStateChanged() {
         if( ! SwingUtilities.isEventDispatchThread() ) {
-            Runnable doRun = new Runnable() {
+            final Runnable doRun = new Runnable() {
                 public void run() {
                     fireStateChanged();
                 }

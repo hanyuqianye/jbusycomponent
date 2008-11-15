@@ -96,7 +96,7 @@ public class JBusyComponent<C extends JComponent> extends JComponent {
      * Create a <code>JBusyComponent</code> with a specified view
      * @param view The view of this component
      */
-    public JBusyComponent( C view ) {
+    public JBusyComponent( final C view ) {
         this( view , new BasicBusyLayerUI() );
     }
     
@@ -105,7 +105,7 @@ public class JBusyComponent<C extends JComponent> extends JComponent {
      * @param view The view of this component
      * @param ui The ui of this component
      */
-    public JBusyComponent( C view  , BusyLayerUI ui) {
+    public JBusyComponent( final C view  , final BusyLayerUI ui) {
         
         /** Create the layer
          */
@@ -138,7 +138,7 @@ public class JBusyComponent<C extends JComponent> extends JComponent {
      * Define the view of this JBusyComponent
      * @param view the new view of this component
      */
-    public void setView(C view) {
+    public void setView(final C view) {
         this.layer.setView(view);
     }
     
@@ -188,8 +188,8 @@ public class JBusyComponent<C extends JComponent> extends JComponent {
      *  Define the BusyModel used by this component
      *  @param model New BusyModel to use by this component
      */
-    public void setBusyModel(BusyModel model) {
-        BusyLayerUI myUI = getBusyLayerUI();
+    public void setBusyModel(final BusyModel model) {
+        final BusyLayerUI myUI = getBusyLayerUI();
         if( myUI == null ) throw new IllegalStateException("Can't set a BusyModel on a JBusyComponent without a BusyLayerUI");
         myUI.setBusyModel( model );
     }
@@ -199,7 +199,7 @@ public class JBusyComponent<C extends JComponent> extends JComponent {
      *  @return BusyModel used by this component
      */
     public BusyModel getBusyModel() {
-        BusyLayerUI myUI = getBusyLayerUI();
+        final BusyLayerUI myUI = getBusyLayerUI();
         if( myUI == null ) return null;
         
         return myUI.getBusyModel();
@@ -217,18 +217,18 @@ public class JBusyComponent<C extends JComponent> extends JComponent {
      *  Define if this component is in a busy state or not
      *  @param value <code>true</code> value set this component in a busy state
      */
-    public void setBusy(boolean value) {
-        BusyModel model = getBusyModel();
+    public void setBusy(final boolean value) {
+        final BusyModel model = getBusyModel();
         if( model != null ) model.setBusy(value);
     }  
     
     @Override
-    public Component add(Component comp) {
+    public Component add(final Component comp) {
         throw new UnsupportedOperationException("JBusyComponent.add() is not supported.");
     }    
     
     @Override
-    public void remove(Component comp) {
+    public void remove(final Component comp) {
         throw new UnsupportedOperationException("JBusyComponent.remove(Component) is not supported.");
     }
 
