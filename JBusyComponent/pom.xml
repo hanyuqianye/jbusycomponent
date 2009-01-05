@@ -10,7 +10,10 @@
 	<url>http://code.google.com/p/jbusycomponent</url>
 
 	<!-- ###################################################### -->
-	<!-- dont't forget to update your settings.xml, see at: http://code.google.com/p/jbusycomponent/wiki/DeveloperMavenNotes -->
+	<!--
+		dont't forget to update your settings.xml, see at:
+		http://code.google.com/p/jbusycomponent/wiki/DeveloperMavenNotes
+	-->
 	<!-- ###################################################### -->
 	<developers>
 		<developer>
@@ -35,7 +38,10 @@
 
 	<distributionManagement>
 		<repository>
-			<uniqueVersion>false</uniqueVersion>
+			<id>ouaibskySF</id>
+			<name>Maven Sourceforge Repo</name>
+			<url>scp://shell.sourceforge.net/home/users/o/ou/ouaibsky/maven/m2repo</url>
+			<!--			<uniqueVersion>true</uniqueVersion>-->
 		</repository>
 	</distributionManagement>
 
