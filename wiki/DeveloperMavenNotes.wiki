@@ -10,6 +10,8 @@
 
 
 = Configuration =
+Due to dependencies (jxlayer, swingx) which are not deploy into the central repository (or not te right version), you have to configure maven to add another repository:
+
 Create or update your ${user.home}/.m2/settings.xml
 {{{
 <settings xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
