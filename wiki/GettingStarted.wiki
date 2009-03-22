@@ -10,6 +10,7 @@ JBusyComponent wrap any swing component (called `view`) and take place on the co
 You need to download independently theses libraries in order to use `JBusyComponent`
  * [http://swinglabs.org/ SwingX]
  * [https://jxlayer.dev.java.net/ JXLayer 3.0]
+For maven users see [http://code.google.com/p/jbusycomponent/wiki/DeveloperMavenNotes DeveloperMavenNotes]
 
 == The first busy component ==
 Let's see how to set busy a JTree :
