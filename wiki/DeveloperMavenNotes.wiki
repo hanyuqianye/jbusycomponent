@@ -8,6 +8,16 @@
   * install sonatype naven-eclipse plugin: http://m2eclipse.codehaus.org/
   * Optional: install maven command line tool: http://maven.apache.org/download.html
 
+= JBusyComponent deployement =
+  * For maven user, just add a section to your pom dependencies section, for example, to get 1.0.0 release
+{{{
+<dependency>
+    <groupId>com.google.code</groupId>
+    <artifactId>jbusycomponent</artifactId>
+    <version>1.0.0</version>
+</dependency> 
+}}}
+  * For manual download, look at http://repo1.maven.org/maven2/com/google/code/jbusycomponent/
 
 = Configuration =
 Due to dependencies (jxlayer, swingx) which are not deploy into the central repository (or not te right version), you have to configure maven to add another repository:
