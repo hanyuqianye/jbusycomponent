@@ -5,6 +5,10 @@
 
 == Bug Fix == 
  * Now the `BasicBusyLayerUI` render the cancel button as unvisited when the animation is showing.
+ * Update pom.xml to refer SwingX-0.9.6 and JXLayer-3.0.3
+
+== Enhancement ==
+ * Add BusyModel#getDescription() allowing to render a description when the model is busy
 
 = Version 1.0 (31/07/2008) =
  * First release of *JBusyComponent*
