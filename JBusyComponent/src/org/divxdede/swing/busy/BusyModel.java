@@ -80,4 +80,10 @@ public interface BusyModel extends BoundedRangeModel {
      *  You need to override this method for implements you own cancellation process.
      */
     public void cancel();
+
+    /** Description to show by UI when the model is busy
+     *  Return null for let the UI render the native description
+     *  @return Description to show by UI when the model is busy
+     */
+    public String getDescription();
 }
