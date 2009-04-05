@@ -1,7 +1,7 @@
 #summary Releases Notes
 #labels Featured
 
-= Version 1.0.1 (incoming) =
+= Version 1.0.1 (05/04/2009) =
 
 == Bug Fix == 
  * Now the `BasicBusyLayerUI` render the cancel button as unvisited when the animation is showing.
