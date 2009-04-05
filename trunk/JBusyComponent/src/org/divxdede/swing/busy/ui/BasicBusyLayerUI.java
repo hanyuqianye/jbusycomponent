@@ -226,7 +226,8 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
 
             /** Update the % 
              */
-            this.jXBusyLabel.setText( getPercentProgressionString() );
+            String descr = myModel.getDescription();
+            this.jXBusyLabel.setText( descr == null ? getPercentProgressionString() : descr );
         }
         super.updateUIImpl();
     }

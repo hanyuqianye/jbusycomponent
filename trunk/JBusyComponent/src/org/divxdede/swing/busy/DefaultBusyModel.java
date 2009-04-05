@@ -39,6 +39,7 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
     private boolean         determinateState    = false;
     private boolean         autoCompletionState = false;
     private boolean         cancellableState    = false;
+    private String          description         = null;
     
     /** 
      * Define if the model is on a "busy" state
@@ -150,7 +151,29 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
             this.fireStateChanged();
         }
     }
-    
+
+    /** Description to show by UI when the model is busy
+     *  Return null for let the UI render the native description
+     *  @return Description to show by UI when the model is busy
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+    /** Define the description to show by UI when the model is busy
+     *  @param s new description to show by UI, set null if you want to restore default value
+     */
+    public void setDescription(String s) {
+        String old = s;
+        this.description = s;
+        if( old != this.description ) {
+            if( old != null && this.description != null ) {
+                if( old.equals( this.description ) ) return;
+            }
+            fireStateChanged();
+        }
+    }
+
     @Override
     protected void fireStateChanged() {
         if( ! SwingUtilities.isEventDispatchThread() ) {
