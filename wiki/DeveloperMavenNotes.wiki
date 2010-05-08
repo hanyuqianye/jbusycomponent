@@ -1,63 +1,39 @@
-#summary How to setup an environment to build this project with maven and eclipse.
+#summary How to setup an environment to build this project with maven
 #labels Featured,Phase-Implementation
 
-= JBusyComponent integration =
- * You should add in your '''pom.xml''' description file this dependency include:
+= JBusyComponent library integration into a maven project =
+This project is hosted into the Sonatype OSS Maven repository that is synced with the Central Maven Repository. That means you don't need to configure any specific repository url for refer to this project.
+
+ * Add in your '''pom.xml''' a dependency into JBusyComponent
 {{{
 <dependency>
-    <groupId>com.google.code</groupId>
+    <groupId>org.divxdede</groupId>
     <artifactId>jbusycomponent</artifactId>
     <version>1.0.2</version>
 </dependency> 
 }}}
-  * For manual download, look at http://repo1.maven.org/maven2/com/google/code/jbusycomponent/
+  * For manual download look at xxxxxxxxxxxxxxxxxxx
 
-= Configuration =
-Due to dependencies (jxlayer, swingx) which are not deploy into the central repository (or not te right version), you have to configure maven to add another repository:
+= Sonatype configuration for deploying artifacts =
 
-Create or update your ${user.home}/.m2/settings.xml
+For creating account and initialize repository, see this guideline:
+ * http://nexus.sonatype.org/oss-repository-hosting.html
+
+Or '''pom.xml''' describe our repositories:
 {{{
-<settings xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
-	<profiles>
-		<profile>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>javanet</id>
-					<name>Java.net Repository for Maven 2</name>
-					<releases>
-						<enabled>true</enabled>
-						<updatePolicy>never</updatePolicy>
-						<checksumPolicy>fail</checksumPolicy>
-					</releases>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-					<url>http://download.java.net/maven/2/</url>
-					<layout>default</layout>
-				</repository>
-			</repositories>
-		</profile>
-	</profiles>
-</settings>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Nexus Release Repository</name>
+            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
 }}}
 
-
-= Usage =
-
-  * If you already have the project into your workspace, just active it:
-     Right click on project item > Maven > Enabled Dependency Management
-  * import from scratch:
-     File > New > Other
-      Select Maven > Checkout Maven Project From SCM ... and enter project information.
-
-= Configuring Maven for deploying on Sonatype OSS repository ==
-
-You muse edit you file %USER_HOME%/.m2/settings.xml like it
+You muse edit you file %MAVEN_HOME%/conf/settings.xml like it
 {{{
 <settings>
     <servers>
