@@ -74,3 +74,4 @@ You muse edit you file %USER_HOME%/.m2/settings.xml like it
     </servers>
 </settings>
 }}}
+see https://docs.sonatype.com/display/NX/OSS+Repository+Hosting
