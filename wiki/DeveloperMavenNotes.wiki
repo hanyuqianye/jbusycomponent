@@ -65,3 +65,14 @@ Create or update your ${user.home}/.m2/settings.xml
 = Don't panic =
 
 first import / activation is much slower. All is fine, it's because maven need to initialize its local repository and it download some dependency.
+
+
+======== incoming ============
+
+JBusyComponent is deployed into Sonatype OSS repository http://oss.sonatype.org/
+This respository is naturally synced with the Central Maven repository.
+
+
+=== Configuring Maven for deploying on Sonatype OSS repository ===
+
+You muse edit you file %USER_HOME%/.m2/settings.xml : 
