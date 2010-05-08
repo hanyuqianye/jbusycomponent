@@ -74,4 +74,6 @@ You muse edit you file %USER_HOME%/.m2/settings.xml like it
     </servers>
 </settings>
 }}}
-see https://docs.sonatype.com/display/NX/OSS+Repository+Hosting
+see :
+ * https://docs.sonatype.com/display/NX/OSS+Repository+Hosting
+ * http://www.jroller.com/holy/entry/releasing_a_project_to_maven
