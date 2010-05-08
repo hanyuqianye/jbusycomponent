@@ -29,7 +29,7 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -50,6 +50,18 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <distributionManagement>
@@ -61,9 +73,9 @@
     </distributionManagement>
 
     <scm>
-            <connection>scm:svn:http://jbusycomponent.googlecode.com/svn/trunk/JBusyComponent</connection>
-            <developerConnection>scm:svn:http://jbusycomponent.googlecode.com/svn/trunk/JBusyComponent</developerConnection>
-            <url>http://code.google.com/p/jbusycomponent/source/browse/</url>
+        <connection>scm:svn:http://jbusycomponent.googlecode.com/svn/trunk/JBusyComponent</connection>
+        <developerConnection>scm:svn:http://jbusycomponent.googlecode.com/svn/trunk/JBusyComponent</developerConnection>
+        <url>http://code.google.com/p/jbusycomponent/source/browse/</url>
     </scm>
 
     <dependencies>
