@@ -1,6 +1,15 @@
 #summary Releases Notes
 #labels Featured
 
+= Version 1.0.2 (08/05/2010) =
+
+== Bug Fix ==
+ * Fix mouse cursor updating
+
+== Enhancement ==
+ * Project build on top of maven instead of ant
+ * Update dependencies with JXLayer 3.0.4 and SwingX 1.6
+
 = Version 1.0.1 (05/04/2009) =
 
 == Bug Fix == 
