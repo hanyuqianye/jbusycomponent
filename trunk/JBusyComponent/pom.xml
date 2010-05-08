@@ -60,6 +60,12 @@
         </repository>
     </distributionManagement>
 
+    <scm>
+            <connection>scm:svn:http://jbusycomponent.googlecode.com/svn/trunk/JBusyComponent</connection>
+            <developerConnection>scm:svn:http://jbusycomponent.googlecode.com/svn/trunk/JBusyComponent</developerConnection>
+            <url>http://code.google.com/p/jbusycomponent/source/browse/</url>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
