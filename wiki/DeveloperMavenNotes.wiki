@@ -25,7 +25,7 @@ This project is hosted into the Sonatype OSS Maven repository that is synced wit
 For creating account and initialize repository, see this guideline:
  * http://nexus.sonatype.org/oss-repository-hosting.html
 
-Or 'pom.xml' describe our repositories:
+Or *pom.xml* describe our repositories:
 {{{
         <repository>
             <id>sonatype-nexus-staging</id>
@@ -39,7 +39,7 @@ Or 'pom.xml' describe our repositories:
         </snapshotRepository>
 }}}
 
-You muse edit you file %MAVEN_HOME%/conf/settings.xml like it
+You muse edit you file *%MAVEN_HOME%/conf/settings.xml* like it
 {{{
 <settings>
     <servers>
