@@ -16,7 +16,9 @@ This project is hosted into the Sonatype OSS Maven repository that is synced wit
 
 = Building from Maven =
   * Checkout the right version from svn 
-  * mvn clean install source:jar javadoc:jar repository:bundle-create
+{{{
+  mvn clean install source:jar javadoc:jar repository:bundle-create
+}}}
 
 = Sonatype configuration for deploying artifacts =
 
