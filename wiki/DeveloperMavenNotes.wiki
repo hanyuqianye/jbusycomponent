@@ -4,7 +4,7 @@
 = JBusyComponent library integration into a maven project =
 This project is hosted into the Sonatype OSS Maven repository that is synced with the Central Maven Repository. That means you don't need to configure any specific repository url for refer to this project.
 
- * Add in your '''pom.xml''' a dependency into JBusyComponent
+ * Add in your ''pom.xml'' a dependency into JBusyComponent
 {{{
 <dependency>
     <groupId>org.divxdede</groupId>
@@ -25,7 +25,7 @@ This project is hosted into the Sonatype OSS Maven repository that is synced wit
 For creating account and initialize repository, see this guideline:
  * http://nexus.sonatype.org/oss-repository-hosting.html
 
-Or '''pom.xml''' describe our repositories:
+Or 'pom.xml' describe our repositories:
 {{{
         <repository>
             <id>sonatype-nexus-staging</id>
