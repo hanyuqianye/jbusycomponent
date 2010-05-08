@@ -200,6 +200,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
 
         /** Visible states
          */
+        this.jXGlassPane.setVisible( isBusy );
         this.jXBusyLabel.setVisible( isBusy );
         this.jProgressBar.setVisible( isBusy && myModel.isDeterminate() );
 
