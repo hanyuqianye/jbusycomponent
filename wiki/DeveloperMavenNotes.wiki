@@ -1,20 +1,12 @@
 #summary How to setup an environment to build this project with maven and eclipse.
 #labels Featured,Phase-Implementation
 
-= Software installation =
-
-  * install eclipse: http://www.eclipse.org/downloads/
-  * install subeclipse (svn): http://subclipse.tigris.org/
-  * install sonatype naven-eclipse plugin: http://m2eclipse.codehaus.org/
-  * Optional: install maven command line tool: http://maven.apache.org/download.html
-
 = JBusyComponent download =
-  * For maven user, just add a section to your pom dependencies section, for example, to get 1.0.0 release
 {{{
 <dependency>
     <groupId>com.google.code</groupId>
     <artifactId>jbusycomponent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
 </dependency> 
 }}}
   * For manual download, look at http://repo1.maven.org/maven2/com/google/code/jbusycomponent/
@@ -62,17 +54,22 @@ Create or update your ${user.home}/.m2/settings.xml
      File > New > Other
       Select Maven > Checkout Maven Project From SCM ... and enter project information.
 
-= Don't panic =
+= Configuring Maven for deploying on Sonatype OSS repository ==
 
-first import / activation is much slower. All is fine, it's because maven need to initialize its local repository and it download some dependency.
-
-
-======== incoming ============
-
-JBusyComponent is deployed into Sonatype OSS repository http://oss.sonatype.org/
-This respository is naturally synced with the Central Maven repository.
-
-
-=== Configuring Maven for deploying on Sonatype OSS repository ===
-
-You muse edit you file %USER_HOME%/.m2/settings.xml : 
+You muse edit you file %USER_HOME%/.m2/settings.xml like it
+{{{
+<settings>
+    <servers>
+        <server>
+            <id>sonatype-nexus-staging</id>
+            <username>your_sonatype_login</username>
+            <password>your_sonatype_passwd</password>
+        </server>
+        <server>
+            <id>sonatype-nexus-snapshots</id>
+            <username>your_sonatype_login</username>
+            <password>your_sonatype_passwd</password>
+        </server>
+    </servers>
+</settings>
+}}}
