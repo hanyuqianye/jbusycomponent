@@ -1,7 +1,8 @@
 #summary How to setup an environment to build this project with maven and eclipse.
 #labels Featured,Phase-Implementation
 
-= JBusyComponent download =
+= JBusyComponent integration =
+ * You should add in your '''pom.xml''' description file this dependency include:
 {{{
 <dependency>
     <groupId>com.google.code</groupId>
