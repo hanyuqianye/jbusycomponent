@@ -8,8 +8,7 @@ And layout and configure the `JBusyComponent` with Matisse
 = Creating a Netbean' library ==
  * Menu *Tools / Libraries*
  * Button *New libraries...*
- ** Library name : *JBusyComponent*
- ** Library type : *Class library*
- ** Button *Ok*
+   * Library name : *JBusyComponent*
+   * Library type : *Class library*
+   * Button *Ok*
  
-
