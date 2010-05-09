@@ -23,8 +23,7 @@ This project is hosted into the Sonatype OSS Maven repository that is synced wit
 
 = Sonatype configuration for deploying artifacts =
 
-For creating account and initialize repository, see this guideline:
-[http://nexus.sonatype.org/oss-repository-hosting.html Sonatype Repository hosting guide]
+For creating account and initialize repository, see the [http://nexus.sonatype.org/oss-repository-hosting.html Sonatype Repository hosting guide]
 
 this *pom.xml*'s project describe sonatype repositories:
 {{{
