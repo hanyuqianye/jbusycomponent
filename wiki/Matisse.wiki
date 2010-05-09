@@ -6,15 +6,16 @@ We will introduce how use the `JBusyComponent` as a JavaBean in the palette mana
 And layout and configure the `JBusyComponent` with Matisse
 
 = Configuring your netbeans =
-Theses steps are done only one times and apply for your whole netbeans environment
+Theses steps are done only one time and apply for your whole netbeans environment
 
-== Creating required Netbeans' libraries ==
+== Creating required Netbeans's libraries ==
 
 === The JBusyComponent library ===
+You need to create a library that represent you JBusyComponent project as follow:
  * Menu *Tools / Libraries*
  * Add a new library by clicking on button *New libraries...*
  * Library name : *JBusyComponent* and Library type : *Class library* and click *Ok*
- * Tab *ClassPath*, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2.jar*
+ * Tab ClassPath, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2.jar*
  * Tab *Sources*, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2-sources.jar*
  * Tab *Javadoc*, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2-javadoc.jar*
 
