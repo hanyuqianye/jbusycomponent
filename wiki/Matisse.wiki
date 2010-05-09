@@ -5,6 +5,11 @@
 We will introduce how use the `JBusyComponent` as a JavaBean in the palette manager.
 And layout and configure the `JBusyComponent` with Matisse
 
-= Details =
+= Creating a Netbean' library ==
+ * Menu *Tools / Libraries*
+ * Button *New libraries...*
+ ** Library name : *JBusyComponent*
+ ** Library type : *Class library*
+ ** Button *Ok*
+ 
 
-TODO
