@@ -73,3 +73,4 @@ mvn deploy
  * [http://maven.apache.org/plugins/maven-javadoc-plugin/ maven-javadoc-plugin]
  * [http://maven.apache.org/plugins/maven-assembly-plugin-2.2-beta-5/ maven-assembly-plugin]
  * [http://maven.riedelcastro.org/gcupload-maven-plugin/ gcupload-maven-plugin]
+ * [http://blog.hikage.be/2010/04/13/introduction-plugin-release-sur-google-code/ blog pour faire une release sur google-code]
