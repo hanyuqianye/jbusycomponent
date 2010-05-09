@@ -28,7 +28,7 @@ Since version 1.0.2, this project is hosted on *Sonatype OSS Repository* that re
  * `mvn release:clean`
 
 = Deploying a staged artifacts =
- * `mvn clean deploy`
+ * `mvn clean deploy -Dgpg.passphrase=yourpassphrase`
  * Use the Sonatype interface to promote an artifact
 
 = Creating an account on Sonatype OSS repository =
