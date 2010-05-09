@@ -63,3 +63,6 @@ mvn deploy
 }}}
 
  * On sonatype, you must promote this staged artifact to release
+
+= Some Maven ressources documentations =
+ * [http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html Maven lifecycle]
