@@ -23,8 +23,8 @@ This project is hosted into the Sonatype OSS Maven repository that is synced wit
 = Create a release in the subversion repository =
 
  * In a shell (in windows, you need an Administrator privilegied Cmd)
- * `mvn clean release:prepare`
- * `mvn release:perform`
+ * `mvn clean release:prepare -Dusername=XXXXXX -Dpassword=XXXXXXX`
+ * `mvn release:perform -Dusername=XXXXXX -Dpassword=XXXXXXX`
  * `mvn release:clean`
 
 = Sonatype configuration for deploying artifacts =
