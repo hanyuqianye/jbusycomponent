@@ -65,6 +65,7 @@ mvn deploy
  * On sonatype, you must promote this staged artifact to release
 
 = Some Maven ressources documentations =
+ * aaaa
  * [http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html Maven lifecycle]
  * [http://maven.apache.org/plugins/maven-compiler-plugin/ maven-compiler-plugin]
  * [http://maven.apache.org/plugins/maven-resources-plugin/ maven-resources-plugin]
