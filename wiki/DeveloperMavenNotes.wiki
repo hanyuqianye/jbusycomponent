@@ -16,10 +16,16 @@ This project is hosted into the Sonatype OSS Maven repository that is synced wit
   * For manual download look at xxxxxxxxxxxxxxxxxxx
 
 = Building from Maven =
-  * Checkout the right version from svn 
-{{{
-  mvn clean install source:jar javadoc:jar repository:bundle-create
-}}}
+
+ * Build the project: `mvn clean package`
+ * Install the artifact in local repository: `mvn install`
+
+= Create a release in the subversion repository =
+
+ * In a shell (in windows, you need an Administrator privilegied Cmd)
+ * `mvn clean release:prepare`
+ * `mvn release:perform`
+ * `mvn release:clean`
 
 = Sonatype configuration for deploying artifacts =
 
