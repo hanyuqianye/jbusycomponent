@@ -3,13 +3,10 @@
 
 = Maven Repository consideration =
 Since version 1.0.2, this project is hosted on *Sonatype OSS Repository* that receive staged artifacts. After a while theses artifacts can be promoted to release artifacts and synced with the *Maven Central Repository*
-
 * The sonatype migration is under process *
 
-
-= JBusyComponent library integration into a maven project =
-
- * Add in your *pom.xml* a dependency into JBusyComponent
+= Integration into a Mavon project =
+ * Add in your *pom.xml* a dependency into JBusyComponent:
 {{{
 <dependency>
     <groupId>org.divxdede</groupId>
@@ -17,26 +14,26 @@ Since version 1.0.2, this project is hosted on *Sonatype OSS Repository* that re
     <version>1.0.2</version>
 </dependency> 
 }}}
+ * For manual download look at xxxxxxxxxxxxxxxxxxx
 
-  * For manual download look at xxxxxxxxxxxxxxxxxxx
-
-= Building from Maven =
-
+= Building =
  * Build the project: `mvn clean package`
  * Install the artifact in local repository: `mvn install`
 
-= Create a release in the subversion repository =
-
+= Create a release in the scm =
  * In a shell (in windows, you need an Administrator privilegied Cmd)
  * `mvn clean release:prepare -Dusername=XXXXXX -Dpassword=XXXXXXX`
  * `mvn release:perform -Dusername=XXXXXX -Dpassword=XXXXXXX`
  * `mvn release:clean`
 
-= Sonatype configuration for deploying artifacts =
+= Deploying a staged artifacts =
+ * `mvn clean deploy`
+ * Use the Sonatype interface to promote an artifact
 
-For creating account and initialize repository, see the [http://nexus.sonatype.org/oss-repository-hosting.html Sonatype Repository hosting guide]
+= Creating an account on Sonatype OSS repository =
+See the [http://nexus.sonatype.org/oss-repository-hosting.html Sonatype Repository hosting guide]
 
-this *pom.xml*'s project describe sonatype repositories:
+Your *pom.xml*'s project must describe sonatype repositories:
 {{{
         <repository>
             <id>sonatype-nexus-staging</id>
@@ -68,20 +65,12 @@ You muse edit you file *%MAVEN_HOME%/conf/settings.xml* with authentifaction inf
 </settings>
 }}}
 
-= Deploying into Sonatype staging repository and release it =
-{{{
-mvn deploy
-}}}
 
  * On sonatype, you must promote this staged artifact to release
 
-= Some Maven ressources documentations =
- * aaaa
+= Maven documentations resources =
  * [http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html Maven lifecycle]
  * [http://maven.apache.org/plugins/maven-compiler-plugin/ maven-compiler-plugin]
  * [http://maven.apache.org/plugins/maven-resources-plugin/ maven-resources-plugin]
  * [http://maven.apache.org/plugins/maven-source-plugin/ maven-source-plugin]
  * [http://maven.apache.org/plugins/maven-javadoc-plugin/ maven-javadoc-plugin]
- * [http://maven.apache.org/plugins/maven-assembly-plugin-2.2-beta-5/ maven-assembly-plugin]
- * [http://maven.riedelcastro.org/gcupload-maven-plugin/ gcupload-maven-plugin]
- * [http://blog.hikage.be/2010/04/13/introduction-plugin-release-sur-google-code/ blog pour faire une release sur google-code]
