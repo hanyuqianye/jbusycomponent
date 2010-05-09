@@ -60,3 +60,9 @@ see :
  * https://docs.sonatype.com/display/NX/OSS+Repository+Hosting
  * http://www.jroller.com/holy/entry/releasing_a_project_to_maven
  * http://nexus.sonatype.org/oss-repository-hosting.html
+
+= Deploying into Sonatype staging repository and release it =
+{{{
+mvn deploy
+}}}
+ * On sonatype, you must promote this staged artifact to release
