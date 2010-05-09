@@ -66,3 +66,8 @@ mvn deploy
 
 = Some Maven ressources documentations =
  * [http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html Maven lifecycle]
+ * [http://maven.apache.org/plugins/maven-compiler-plugin/ maven-compiler-plugin]
+ * [http://maven.apache.org/plugins/maven-resources-plugin/ maven-resources-plugin]
+ * [http://maven.apache.org/plugins/maven-source-plugin/ maven-source-plugin]
+ * [http://maven.apache.org/plugins/maven-javadoc-plugin/ maven-javadoc-plugin]
+ * [http://maven.apache.org/plugins/maven-assembly-plugin-2.2-beta-5/ maven-assembly-plugin]
