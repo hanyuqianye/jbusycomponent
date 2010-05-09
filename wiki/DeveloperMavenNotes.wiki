@@ -25,8 +25,9 @@ This project is hosted into the Sonatype OSS Maven repository that is synced wit
 
 For creating account and initialize repository, see this guideline:
  * http://nexus.sonatype.org/oss-repository-hosting.html
+ * or https://docs.sonatype.com/display/NX/OSS+Repository+Hosting
 
-Or *pom.xml* describe our repositories:
+this *pom.xml*'s project describe sonatype repositories:
 {{{
         <repository>
             <id>sonatype-nexus-staging</id>
@@ -40,7 +41,7 @@ Or *pom.xml* describe our repositories:
         </snapshotRepository>
 }}}
 
-You muse edit you file *%MAVEN_HOME%/conf/settings.xml* like it
+You muse edit you file *%MAVEN_HOME%/conf/settings.xml* with authentifaction informations to sonatype OSS repository:
 {{{
 <settings>
     <servers>
@@ -57,11 +58,6 @@ You muse edit you file *%MAVEN_HOME%/conf/settings.xml* like it
     </servers>
 </settings>
 }}}
-
-see :
- * https://docs.sonatype.com/display/NX/OSS+Repository+Hosting
- * http://www.jroller.com/holy/entry/releasing_a_project_to_maven
- * http://nexus.sonatype.org/oss-repository-hosting.html
 
 = Deploying into Sonatype staging repository and release it =
 {{{
