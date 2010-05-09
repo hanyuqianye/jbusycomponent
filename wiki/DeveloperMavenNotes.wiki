@@ -12,6 +12,7 @@ This project is hosted into the Sonatype OSS Maven repository that is synced wit
     <version>1.0.2</version>
 </dependency> 
 }}}
+
   * For manual download look at xxxxxxxxxxxxxxxxxxx
 
 = Building from Maven =
@@ -56,6 +57,7 @@ You muse edit you file *%MAVEN_HOME%/conf/settings.xml* like it
     </servers>
 </settings>
 }}}
+
 see :
  * https://docs.sonatype.com/display/NX/OSS+Repository+Hosting
  * http://www.jroller.com/holy/entry/releasing_a_project_to_maven
@@ -65,4 +67,5 @@ see :
 {{{
 mvn deploy
 }}}
+
  * On sonatype, you must promote this staged artifact to release
