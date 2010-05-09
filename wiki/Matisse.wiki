@@ -8,13 +8,22 @@ And layout and configure the `JBusyComponent` with Matisse
 = Configuring your netbeans =
 Theses steps are done only one times and apply for your whole netbeans environment
 
-== Creating a Netbeans' library ==
+== Creating required Netbeans' libraries ==
+
+=== The JBusyComponent library ===
  * Menu *Tools / Libraries*
  * Add a new library by clicking on button *New libraries...*
  * Library name : *JBusyComponent* and Library type : *Class library* and click *Ok*
  * Tab *ClassPath*, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2.jar*
  * Tab *Sources*, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2-sources.jar*
  * Tab *Javadoc*, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2-javadoc.jar*
+
+=== Dependencies libraries ===
+JBusyComponent project requires 2 other libraries
+  * SwingX 1.6 that can be downloaded [https://swingx.dev.java.net/servlets/ProjectDocumentList?folderID=11890&expandFolder=11890&folderID=6868 here]
+  * JXLayer 3.0.4 that can be downloaded [https://jxlayer.dev.java.net/#download here]
+
+Create Netbeans's libraries in the same model than JBusyComponent for theses libraries
 
 == Adding JBusyComponent Bean to the palette manager ==
  * Menu *Tools / Palette / Swing/Awt Components*
@@ -34,4 +43,3 @@ Your project must include the JBusyComponent library to be able to use it with t
  * Go to category *Libraries*
  * In tab *Compile* click into *Add library...*
  * Select *JBusyComponent* library and click on *Add Library*
-
