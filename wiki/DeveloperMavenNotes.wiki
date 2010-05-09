@@ -1,8 +1,13 @@
 #summary How to setup an environment to build this project with maven
 #labels Featured,Phase-Implementation
 
+= Maven Repository consideration =
+Since version 1.0.2, this project is hosted on *Sonatype OSS Repository* that receive staged artifacts. After a while theses artifacts can be promoted to release artifacts and synced with the *Maven Central Repository*
+
+* The sonatype migration is under process *
+
+
 = JBusyComponent library integration into a maven project =
-This project is hosted into the Sonatype OSS Maven repository that is synced with the Central Maven Repository. That means you don't need to configure any specific repository url for refer to this project.
 
  * Add in your *pom.xml* a dependency into JBusyComponent
 {{{
