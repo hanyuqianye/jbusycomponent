@@ -75,3 +75,4 @@ You muse edit you file *%MAVEN_HOME%/conf/settings.xml* with authentifaction inf
  * [http://maven.apache.org/plugins/maven-resources-plugin/ maven-resources-plugin]
  * [http://maven.apache.org/plugins/maven-source-plugin/ maven-source-plugin]
  * [http://maven.apache.org/plugins/maven-javadoc-plugin/ maven-javadoc-plugin]
+ * [http://www.sonatype.com/people/2010/01/how-to-generate-pgp-signatures-with-maven/ how to generate pgp signatures]
