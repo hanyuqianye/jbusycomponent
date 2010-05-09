@@ -17,7 +17,7 @@ Since version 1.0.2, this project is hosted on *Sonatype OSS Repository* that re
 }}}
  * For manual download look at xxxxxxxxxxxxxxxxxxx
 
-JBusyComponent artifacts are signed. the public key *100D95E6* can be found [http://pgp.mit.edu/ here] 
+JBusyComponent artifacts are signed. the public key *100D95E6* can be found at http://pgp.mit.edu/
 
 = Building =
  * Build the project: `mvn clean package`
