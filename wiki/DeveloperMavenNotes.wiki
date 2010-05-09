@@ -72,3 +72,4 @@ mvn deploy
  * [http://maven.apache.org/plugins/maven-source-plugin/ maven-source-plugin]
  * [http://maven.apache.org/plugins/maven-javadoc-plugin/ maven-javadoc-plugin]
  * [http://maven.apache.org/plugins/maven-assembly-plugin-2.2-beta-5/ maven-assembly-plugin]
+ * [http://maven.riedelcastro.org/gcupload-maven-plugin/ gcupload-maven-plugin]
