@@ -3,7 +3,7 @@
     <groupId>org.divxdede</groupId>
     <artifactId>jbusycomponent</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <name>JBusyComponent</name>
     <url>http://code.google.com/p/jbusycomponent</url>
 
@@ -123,9 +123,9 @@
          <url>http://code.google.com/p/jbusycomponent/issues/list</url>
      </issueManagement> 
     <scm>
-        <connection>scm:svn:http://jbusycomponent.googlecode.com/svn/tags/jbusycomponent-1.0.2</connection>
-        <developerConnection>scm:svn:https://jbusycomponent.googlecode.com/svn/tags/jbusycomponent-1.0.2</developerConnection>
-        <url>scm:svn:https://jbusycomponent.googlecode.com/svn/tags/jbusycomponent-1.0.2</url>
+        <connection>scm:svn:http://jbusycomponent.googlecode.com/svn/trunk/JBusyComponent</connection>
+        <developerConnection>scm:svn:https://jbusycomponent.googlecode.com/svn/trunk/JBusyComponent</developerConnection>
+        <url>http://code.google.com/p/jbusycomponent/source/browse/</url>
     </scm>
 
     <dependencies>
