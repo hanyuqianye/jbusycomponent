@@ -98,9 +98,9 @@ public abstract class AbstractBusyLayerUI extends LockableUI implements BusyLaye
            SwingUtilities.invokeLater(doRun);
        }
     }
-
+    
     @Override
-    public void updateUI(final JXLayer<? extends JComponent> l) {
+    public void updateUI(final JXLayer<JComponent> l) {
         this.updateUI();
         super.updateUI(l);
     }    

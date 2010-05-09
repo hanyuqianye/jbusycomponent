@@ -185,7 +185,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     }
     
     @Override
-    protected void paintLayer(final Graphics2D g2, final JXLayer<? extends JComponent> l) {
+    protected void paintLayer(final Graphics2D g2, final JXLayer<JComponent> l) {
         super.paintLayer(g2, l);
         final Painter painter = getBackGroundPainter();
         if( painter != null ) {
@@ -200,7 +200,6 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
 
         /** Visible states
          */
-        this.jXGlassPane.setVisible( isBusy );
         this.jXBusyLabel.setVisible( isBusy );
         this.jProgressBar.setVisible( isBusy && myModel.isDeterminate() );
 
