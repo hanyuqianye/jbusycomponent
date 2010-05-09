@@ -19,7 +19,7 @@ You need to create a library that represent our JBusyComponent project as follow
 
 == Create dependencies libraries ==
 JBusyComponent project requires 2 other libraries, you must create 2 libraries on the same model
-* [http://www]
+[http://www]
  * Create a library JXLayer-3.0.4 for [https://jxlayer.dev.java.net/#download JXLayer 3.0.4]
  * Create a library SwingX-1.6 for [https://swingx.dev.java.net/servlets/ProjectDocumentList?folderID=11890&expandFolder=11890&folderID=6868 SwingX 1.6]
 
