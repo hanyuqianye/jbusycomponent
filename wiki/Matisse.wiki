@@ -13,7 +13,7 @@ You need to create a library that represent our JBusyComponent project as follow
  * Menu *Tools / Libraries*
  * Add a new library by clicking on button *New libraries...*
  * Library name : *JBusyComponent* and Library type : *Class library* and click *Ok*
- * Tab *ClassPath*, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2.jar*
+ * Tab *!ClassPath*, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2.jar*
  * Tab *Sources*, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2-sources.jar*
  * Tab *Javadoc*, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2-javadoc.jar*
 
