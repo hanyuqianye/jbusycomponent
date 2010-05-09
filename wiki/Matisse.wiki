@@ -5,19 +5,33 @@
 We will introduce how use the `JBusyComponent` as a JavaBean in the palette manager.
 And layout and configure the `JBusyComponent` with Matisse
 
-= Creating a Netbeans' library ==
+= Configuring your netbeans =
+Theses steps are done only one times and apply for your whole netbeans environment
+
+== Creating a Netbeans' library ==
  * Menu *Tools / Libraries*
-   * Button *New libraries...*
-     * Library name : *JBusyComponent*
-     * Library type : *Class library*
-     * Button *Ok*
-   * Tab *ClassPath*
-     * Button *Add Jar/Folder*
-       * Select the *jbusycomponent-1.0.2.jar*
-   * Tab *Sources*
-     * Button *Add Jar/Folder*
-       * Select the *jbusycomponent-1.0.2-sources.jar*
-   * Tab *Javadoc*
-     * Button *Add Zip/Folder*
-       * Select the *jbusycomponent-1.0.2-javadoc.jar*
-   * Button *Ok*
+ * Add a new library by clicking on button *New libraries...*
+ * Library name : *JBusyComponent* and Library type : *Class library* and click *Ok*
+ * Tab *ClassPath*, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2.jar*
+ * Tab *Sources*, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2-sources.jar*
+ * Tab *Javadoc*, click on button *Add Jar/Folder*, select *jbusycomponent-1.0.2-javadoc.jar*
+
+== Adding JBusyComponent Bean to the palette manager ==
+ * Menu *Tools / Palette / Swing/Awt Components*
+ * Button *Add from library*
+ * Select *JBusyComponent* library and click *Next* button
+ * Select *JBusyComponent* bean and click *Next* button
+ * Select *Beans* category (or anything else of your choice) and click *Finish* Button
+
+= Configuring you projects =
+This step is required for all project that want to use JBusyComponent with the palette manager
+
+At this time, if you try to drag'n drop this bean into your design, you will receive a *can't instanciate this bean...*. 
+
+Your project must include the JBusyComponent library to be able to use it with the designer
+
+ * Into you project *Properties*
+ * Go to category *Libraries*
+ * In tab *Compile* click into *Add library...*
+ * Select *JBusyComponent* library and click on *Add Library*
+
