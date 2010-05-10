@@ -12,10 +12,10 @@ Since version 1.0.2, this project is hosted on *Sonatype OSS Repository* that re
     <artifactId>jbusycomponent</artifactId>
     <version>1.0.2</version>
 </dependency> 
+}}}
 
 *Be careful* the groupId is moved from `com.google.code` to `org.divxdede`
 
-}}}
  * For manual download look:
    # http://oss.sonatype.org/content/groups/public/org/divxdede/jbusycomponent 
    # http://oss.sonatype.org/content/groups/staging/org/divxdede/jbusycomponent for staging versions 
