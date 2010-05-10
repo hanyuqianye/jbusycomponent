@@ -79,22 +79,19 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--
             <plugin>
-                <groupId>org.riedelcastro</groupId>
-                <artifactId>maven-gcupload-plugin</artifactId>
-                <version>0.9</version>
-                <configuration>
-                    <projectName>jbusycomponent</projectName>
-                    <allowSnapshots>false</allowSnapshots>
-                    <uploads>
-                        <upload>
-                            <extension>jar</extension>
-                        </upload>
-                    </uploads>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
-            -->
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.0</version>
@@ -121,11 +118,11 @@
     <issueManagement>
          <system>Google Code</system>
          <url>http://code.google.com/p/jbusycomponent/issues/list</url>
-     </issueManagement> 
+     </issueManagement>
     <scm>
-        <connection>scm:svn:http://jbusycomponent.googlecode.com/svn/tags/jbusycomponent-1.0.2</connection>
-        <developerConnection>scm:svn:https://jbusycomponent.googlecode.com/svn/tags/jbusycomponent-1.0.2</developerConnection>
-        <url>scm:svn:https://jbusycomponent.googlecode.com/svn/tags/jbusycomponent-1.0.2</url>
+        <connection>scm:svn:http://jbusycomponent.googlecode.com/svn/trunk/JBusyComponent</connection>
+        <developerConnection>scm:svn:https://jbusycomponent.googlecode.com/svn/trunk/JBusyComponent</developerConnection>
+        <url>http://code.google.com/p/jbusycomponent/source/browse/</url>
     </scm>
 
     <dependencies>
@@ -149,6 +146,6 @@
         </dependency>
     </dependencies>
     <properties>
-        <project.build.sourceEncoding>windows-1252</project.build.sourceEncoding>
+        <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
     </properties>
 </project>
