@@ -62,7 +62,7 @@ After what, you can build this project following theses commands:
 
 = Deploying staged artifacts =
  * `mvn clean deploy -Dgpg.passphrase=yourpassphrase`
- * Use the Sonatype interface to promote an artifact
+ * Use the [http://oss.sonatype.org/index.html OSS Nexus repository] interface to promote an artifact
 
 = Creating an account on Sonatype OSS repository =
 See the [http://nexus.sonatype.org/oss-repository-hosting.html Sonatype Repository hosting guide]
