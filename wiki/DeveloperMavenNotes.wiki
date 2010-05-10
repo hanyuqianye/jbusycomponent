@@ -17,7 +17,7 @@ Since version 1.0.2, this project is hosted on *Sonatype OSS Repository* that re
 }}}
  * For manual download look
    * http://oss.sonatype.org/content/groups/public/org/divxdede/jbusycomponent 
-   * http://oss.sonatype.org/content/groups/staging for staging versions 
+   * http://oss.sonatype.org/content/groups/staging/org/divxdede/jbusycomponent for staging versions 
 
 JBusyComponent artifacts are signed. the public key *100D95E6* can be found at http://pgp.mit.edu/
 
