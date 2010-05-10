@@ -15,7 +15,7 @@ Since version 1.0.2, this project is hosted on *Sonatype OSS Repository* that re
     <version>1.0.2</version>
 </dependency> 
 }}}
- * For manual download look at xxxxxxxxxxxxxxxxxxx
+ * For manual download look at https://repository.sonatype.org/
 
 JBusyComponent artifacts are signed. the public key *100D95E6* can be found at http://pgp.mit.edu/
 
