@@ -4,7 +4,7 @@
 = Maven Repository consideration =
 Since version 1.0.2, this project is hosted on *Sonatype OSS Repository* that receive staged artifacts. After a while theses artifacts can be promoted to release artifacts and synced with the *Maven Central Repository*
 
-= Integration into a Mavon project =
+= Integration into a Maven project =
  * Add in your *pom.xml* a dependency into JBusyComponent:
 {{{
 <dependency>
