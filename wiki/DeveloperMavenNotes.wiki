@@ -1,11 +1,11 @@
 #summary How to setup an environment to build this project with maven
 #labels Featured,Phase-Implementation
 
-= Maven Repository consideration =
-Since version 1.0.2, this project is hosted on *Sonatype OSS Repository* that receive staged artifacts. After a while theses artifacts can be promoted to release artifacts and synced with the *Maven Central Repository*
+= Maven Repository considerations =
+Since version 1.0.2, this project is hosted on *[http://oss.sonatype.org/ Nexus OSS Repository]* that receive staged artifacts. After a while theses artifacts can be promoted to release artifacts and synced with the *Maven Central Repository* hourly
 
-= Integration into a Maven project =
- * Add in your *pom.xml* a dependency into JBusyComponent:
+= Maven project integration =
+ * Add in your *pom.xml* a dependency into JBusyComponent artifact:
 {{{
 <dependency>
     <groupId>org.divxdede</groupId>
@@ -14,19 +14,26 @@ Since version 1.0.2, this project is hosted on *Sonatype OSS Repository* that re
 </dependency> 
 }}}
 
-*Be careful* the groupId is moved from `com.google.code` to `org.divxdede`
+The [http://repo2.maven.org/maven2/org/divxdede/jbusycomponent/ Maven Central Repository] contains released versions. If you want use snapshot or staged versions, refer to the [http://oss.sonatype.org/content/groups/staging/org/divxdede/jbusycomponent Nexus OSS Repository].
 
- * For manual download look:
-   # http://oss.sonatype.org/content/groups/public/org/divxdede/jbusycomponent 
-   # http://oss.sonatype.org/content/groups/staging/org/divxdede/jbusycomponent for staging versions 
-
-JBusyComponent artifacts are signed. the public key *100D95E6* can be found at http://pgp.mit.edu/
+Be careful, the *older* release `1.0.0` is deployed into the `com.google.code` groupId instead of `org.divxdede`
 
 = Building this project =
-You need 3 programs for building this project
- * Subversion that can be found http://www.open.collab.net/downloads/subversion/
- * Maven that can be downloaded http://maven.apache.org/download.html
- * GnuPG that can be downloaded http://www.gnupg.org/
+This project is build on top of maven and need some tools for achieve a complete deployement process. Keep in mind that this process require some private stuff like  
+ # Deployement access to the OSS Nexus Repository 
+ # PGP Secret Key for sign artifacts.
+ # Google Code Subversion access for commiters (*that can be provided on demand*)
+ # Google code authorization for setting new  manual downloads
+ 
+That's why, The following guide can help you to build or participate to this project but not really deploy yourself artifacts.
+
+== Required stuff ==
+3 tools are needed:
+ # Subversion that can be found http://www.open.collab.net/downloads/subversion/ for checkout or commiters
+ * Maven that can be downloaded http://maven.apache.org/download.html for build it
+ * GnuPG that can be downloaded http://www.gnupg.org/ for sign it 
+
+In order to be synced into the Maven Central Repository, JBusyComponent artifacts are signed. the public key *100D95E6* can be found at http://pgp.mit.edu/ for authentification control. You don't need a sign it for a simple build. This steps is only required when deploying.
 
 You need to do some pre-configurations of theses tools:
  * `%MAVEN_HOME%/conf/settings.xml` for configure repository access (required for deploy)
@@ -54,15 +61,18 @@ After what, you can build this project following theses commands:
  * Build the project: `mvn clean package`
  * Install the artifact in local repository: `mvn install`
 
-= Create a release in the scm =
- * In a shell (in windows, you need an Administrator privilegied Cmd)
- * `mvn clean release:prepare -Dusername=XXXXXX -Dpassword=XXXXXXX`
- * `mvn release:perform -Dusername=XXXXXX -Dpassword=XXXXXXX`
- * `mvn release:clean`
+== Create a release tag in subversion ==
+For this step you require a write access over `https` on googlecode subversion.
+You can be promote to contributors on demand but you need a googlecode account.
+ # `mvn clean release:prepare -Dusername=XXXXXX -Dpassword=XXXXXXX`
+ # `mvn release:perform -Dusername=XXXXXX -Dpassword=XXXXXXX`
+ # `mvn release:clean`
 
-= Deploying staged artifacts =
+For this step, you should require to run you `cmd` windows shell in Administrator Mode for Windows Vista / Windows 7
+
+== Deploying staged artifacts ==
  * `mvn clean deploy -Dgpg.passphrase=yourpassphrase`
- * Use the [http://oss.sonatype.org/index.html OSS Nexus repository] interface to promote an artifact
+ * You should use after the [http://oss.sonatype.org/index.html OSS Nexus repository] interface to promote an artifact
 
 = Creating an account on Sonatype OSS repository =
 See the [http://nexus.sonatype.org/oss-repository-hosting.html Sonatype Repository hosting guide]
