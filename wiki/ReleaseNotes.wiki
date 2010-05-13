@@ -9,6 +9,7 @@
 == Enhancement ==
  * Project build on top of maven instead of ant
  * Update dependencies with JXLayer 3.0.4 and SwingX 1.6
+ * JBusyComponent implements Scrollable interface for respect view constraint from JTable or JTree
 
 = Version 1.0.1 (05/04/2009) =
 
