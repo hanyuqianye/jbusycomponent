@@ -70,6 +70,23 @@ You can be promote to contributors on demand but you need a googlecode account.
 
 For this step, you should require to run you `cmd` windows shell in Administrator Mode for Windows Vista / Windows 7
 
+For deploying *apidocs* inside googlecode, we commit this docs under svn and browse it directly. The counter-part of this method is that ìt requires `svn:mime-type` for all files in order to be correctly rendered.
+You must configure your svn `config` file under %USER%/AppData/Roaming/Subversion under windows like it:
+{{{
+[miscellany]
+enable-auto-props = yes
+
+[auto-props]
+*.html = svn:mime-type=text/html
+*.css = svn:mime-type=text/css
+*.txt = svn:mime-type=text/plain
+*.jpg = svn:mime-type=image/jpeg
+*.gif = svn:mime-type=image/gif
+*.png = svn:mime-type=image/png
+}}}
+
+Be careful, this auto mime-types doesn't work as-is under netbeans. At this time i add theses files directly from `svn` command lines.
+
 == Deploying staged artifacts ==
  * `mvn clean deploy -Dgpg.passphrase=yourpassphrase`
  * You should use after the [http://oss.sonatype.org/index.html OSS Nexus repository] interface to promote an artifact
