@@ -72,7 +72,7 @@ For this step, you should require to run you `cmd` windows shell in Administrato
 
 For deploying *apidocs* inside googlecode, we commit this docs under svn and browse it directly. The counter-part of this method is that ìt requires `svn:mime-type` for all files in order to be correctly rendered.
 
-You must configure your svn `config` file under `%USER%/AppData/Roaming/Subversion` under windows like it:
+You must configure your svn `config` file under `%USER%/AppData/Roaming/Subversion` on windows like it:
 {{{
 [miscellany]
 enable-auto-props = yes
