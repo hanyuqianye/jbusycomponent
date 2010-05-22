@@ -118,3 +118,4 @@ Your *pom.xml*'s project must describe sonatype repositories:
  * [http://maven.apache.org/plugins/maven-source-plugin/ maven-source-plugin]
  * [http://maven.apache.org/plugins/maven-javadoc-plugin/ maven-javadoc-plugin]
  * [http://www.sonatype.com/people/2010/01/how-to-generate-pgp-signatures-with-maven/ how to generate pgp signatures]
+ * [http://www.sonatype.com/books/mvnref-book/reference/writing-plugins.html Writing Maven Plugins]
