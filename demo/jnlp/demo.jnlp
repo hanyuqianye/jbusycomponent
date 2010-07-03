@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp
+    spec="1.0+"
+    codebase="http://jbusycomponent.googlecode.com/svn/demo/jnlp"
+    href="demo.jnlp">
+  <information>
+    <title>jbusycomponent-demo</title>
+    <vendor>divxdede</vendor>
+    <homepage href="http://jbusycomponent.googlecode.com/svn/demo/jnlp"/>
+    <description>JBusyComponent Demo : JavaWebStart example for demonstrate JBusyComponent capability</description>
+    <offline-allowed/>
+  </information>
+  <security>
+     <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+"/>
+     
+<jar href="lib/jbusycomponent-demo-1.0.jar" version="1.0" main="true"/>
+<jar href="lib/jbusycomponent-1.0.2.jar" version="1.0.2"/>
+<jar href="lib/jxlayer-3.0.4.jar" version="3.0.4"/>
+<jar href="lib/swingx-1.6.jar" version="1.6"/>
+<jar href="lib/filters-2.0.235.jar" version="2.0.235"/>
+<jar href="lib/swing-worker-1.1.jar" version="1.1"/>
+<jar href="lib/swing-layout-1.0.3.jar" version="1.0.3"/>
+
+  </resources>
+  <application-desc main-class="org.divxdede.swing.busy.demo.BusyDemo"/>
+</jnlp>
+
