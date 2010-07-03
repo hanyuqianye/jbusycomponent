@@ -88,7 +88,8 @@ enable-auto-props = yes
 *.jnlp = svn:mime-type=application/x-java-jnlp-file
 }}}
 
-Be careful, this auto mime-types doesn't work as-is under netbeans. At this time i add theses files directly from `svn` command lines.
+Be careful, this auto mime-types must be configured in other place to order to work under Netbeans.
+The netbeans placeholder is like `%USER%\.netbeans\6.9\config\svn\config`
 
 == Deploying staged artifacts ==
  * `mvn clean deploy -Dgpg.passphrase=yourpassphrase`
