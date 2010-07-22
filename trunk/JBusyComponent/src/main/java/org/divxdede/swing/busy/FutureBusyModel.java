@@ -29,7 +29,7 @@ import java.util.concurrent.Future;
  * <p>
  * Use <code>setFuture</code> for defining the <code>Future</code> to reflet.
  * 
- * @author AndrÃ© SÃ©bastien
+ * @author André Sébastien (divxdede)
  */
 public class FutureBusyModel extends DefaultBusyModel {
     

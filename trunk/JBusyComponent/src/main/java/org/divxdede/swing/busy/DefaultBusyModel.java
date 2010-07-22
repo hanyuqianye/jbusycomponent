@@ -31,7 +31,7 @@ import javax.swing.SwingUtilities;
  * At the other side, when the  current value reach the maximum bounded range, it set
  * automatically the busy property to <code>false</code>.
  * 
- * @author AndrÃ© SÃ©bastien
+ * @author André Sébastien (divxdede)
  */
 public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyModel {
 
@@ -91,7 +91,7 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
     
     /** 
      * Returns true if the model is in a <code>determinate mode</code>.
-     * @returns true if the model is in a determinate mode.
+     * @return true if the model is in a determinate mode.
      */
     public boolean isDeterminate() {
         return this.determinateState;

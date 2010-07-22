@@ -39,7 +39,7 @@ import org.jdesktop.jxlayer.plaf.ext.LockableUI;
  * You must override <code>updateUIImpl</code> method for complete the layer update
  * when needed. This method is called for any changes on the model or ui.
  * 
- * @author AndrÃ© SÃ©bastien
+ * @author André Sébastien (divxdede)
  */
 public abstract class AbstractBusyLayerUI extends LockableUI implements BusyLayerUI {
     

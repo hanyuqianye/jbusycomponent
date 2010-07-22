@@ -24,6 +24,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import javax.swing.JComponent;
+import javax.swing.JScrollBar;
 import javax.swing.JViewport;
 import javax.swing.Scrollable;
 import org.divxdede.swing.busy.ui.BusyLayerUI;
@@ -79,7 +80,7 @@ import org.jdesktop.jxlayer.plaf.LayerUI;
  * @see BusyModel
  * @see JXLayer
  * @see BusyLayerUI
- * @author AndrÃ© SÃ©bastien
+ * @author André Sébastien (divxdede)
  */
 public class JBusyComponent<C extends JComponent> extends JComponent implements Scrollable {
 
@@ -148,7 +149,7 @@ public class JBusyComponent<C extends JComponent> extends JComponent implements 
     
     /** 
      * Returns the BusyLayerUI used by this component.
-     * @returns BusyLayerUI used by this component, this ui subclass LayerUI
+     * @return BusyLayerUI used by this component, this ui subclass LayerUI
      * @see LayerUI
      */
     public BusyLayerUI getBusyLayerUI() {

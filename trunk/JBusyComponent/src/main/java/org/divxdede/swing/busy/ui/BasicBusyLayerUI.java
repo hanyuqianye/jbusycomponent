@@ -27,18 +27,21 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import org.divxdede.swing.busy.BusyIcon;
 import org.divxdede.swing.busy.BusyModel;
+import org.divxdede.swing.busy.icon.InfiniteBusyIcon;
 import org.jdesktop.jxlayer.JXLayer;
-import org.jdesktop.swingx.JXBusyLabel;
 import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXPanel;
-import org.jdesktop.swingx.icon.EmptyIcon;
 import org.jdesktop.swingx.painter.BusyPainter;
 import org.jdesktop.swingx.painter.MattePainter;
 import org.jdesktop.swingx.painter.Painter;
@@ -73,16 +76,18 @@ import org.jdesktop.swingx.painter.Painter;
  *      model.setBusy(true); // an animation over our component is shown
  * </pre>
  * 
- * @author AndrÃ© SÃ©bastien
+ * @author André Sébastien (divxdede)
  */
 public class BasicBusyLayerUI extends AbstractBusyLayerUI {
 
     /** Components
      */
     JXPanel        jXGlassPane       = new JXPanel();
-    JXBusyLabel    jXBusyLabel       = new CustomBusyLabel();
+    JLabel         jLabel            = new JLabel();
     JProgressBar   jProgressBar      = new JProgressBar();
     JXHyperlink    jXHyperlinkCancel = new JXHyperlink();
+    BusyIcon       busyIcon          = null;
+    Observer       observer          = new AnimationObserver();
     
     /** Listener for cancelling action
      */
@@ -104,7 +109,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      */
     private int            alpha              = 0;
     private Timer          timer              = null;
-    private Painter        painter            = null;    
+    private Painter        painter            = null;
 
     /** Insets used
      */
@@ -114,7 +119,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     /** Basic Implementation with default values
      */
     public BasicBusyLayerUI() {
-        this( 200 , 30 , 0.7f  , Color.WHITE );
+        this( 400 , 30 , 0.85f  , Color.WHITE );
     }
 
     /** Basic Implementation with shading configuration's
@@ -135,6 +140,8 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
         
         this.veilAlpha          = veilAlpha;
         this.veilColor          = veilColor;
+
+        this.setBusyIcon( new InfiniteBusyIcon() );
     }
     
     @Override
@@ -152,17 +159,55 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
         layer.setGlassPane( null );
     }
 
+    /** Define the BusyIcon to use by this ui to render the busy animation.
+     *  @param icon New BusyIcon to use by this ui
+     *  @since 1.1
+     */
+    public void setBusyIcon(BusyIcon icon) {
+        if( this.busyIcon != null && this.busyIcon instanceof Observable ) {
+            ((Observable)this.busyIcon).deleteObserver( this.observer );
+        }
+        if( this.busyIcon != null ) {
+            this.busyIcon.setModel(null);
+        }
+
+        this.busyIcon = icon;
+
+        if( this.busyIcon != null && this.busyIcon instanceof Observable ) {
+            ((Observable)this.busyIcon).addObserver( this.observer );
+        }
+        if( this.busyIcon != null ) {
+            this.busyIcon.setModel( getBusyModel() );
+        }
+        this.jLabel.setIcon( this.busyIcon );
+        updateUI();
+    }
+
+    /** Return the BusyIcon used by this ui for render the busy animation.
+     *  @return BusyIcon used by this ui
+     *  @since 1.1
+     */
+    public BusyIcon getBusyIcon() {
+        return this.busyIcon;
+    }
+
     /** 
      * Returns the busy painter to use for render the busy animation
      * @return BusyPainter used for render the friendly busy animation
+     * @deprecated v1.1: Use instead {@link #getBusyIcon()}. This method can return <code>null</code> if the BusyIcon is not an {@link InfiniteBusyIcon}.
      */
     public BusyPainter getBusyPainter() {
-        return this.jXBusyLabel.getBusyPainter();
+        BusyIcon myIcon = getBusyIcon();
+        if( myIcon instanceof InfiniteBusyIcon ) {
+            return ((InfiniteBusyIcon)myIcon).getBusyPainter();
+        }
+        return null;
     }
     
     /** 
      * Define the busy painter to use for render the friendly busy animation
      * @param busyPainter New busy painter to use for render the friendly busy animation
+     * @deprecated v1.1: Use instead a setBusyIcon( new InfiniteBusyIcon( busyPainter , null ) );
      */
     public void setBusyPainter(final BusyPainter busyPainter) {
         this.setBusyPainter(busyPainter,null);
@@ -172,16 +217,10 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      * Define the busy painter to use for render the friendly busy animation
      * @param busyPainter New busy painter to use for render the friendly busy animation
      * @param preferredSize Preferred Size to use for this painter animation
+     * @deprecated v1.1: Use instead a setBusyIcon( new InfiniteBusyIcon( busyPainter , preferredSize ) );
      */
     public void setBusyPainter(final BusyPainter busyPainter , final Dimension preferredSize ) {
-        if( preferredSize != null ) {
-            this.jXBusyLabel.setIcon( new EmptyIcon( preferredSize.width , preferredSize.height ) );
-        }
-        else
-            this.jXBusyLabel.setIcon(null);
-        
-        this.jXBusyLabel.setBusyPainter( busyPainter );
-        this.updateUI();
+        setBusyIcon( new InfiniteBusyIcon(busyPainter,preferredSize) );
     }
     
     @Override
@@ -196,13 +235,14 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     @Override
     protected void updateUIImpl() {
         final BusyModel myModel = getBusyModel();
+        final BusyIcon  myIcon  = getBusyIcon();
         final boolean   isBusy  = myModel == null ? false : myModel.isBusy();
 
         /** Visible states
          */
         this.jXGlassPane.setVisible( isBusy );
-        this.jXBusyLabel.setVisible( isBusy );
-        this.jProgressBar.setVisible( isBusy && myModel.isDeterminate() );
+        this.jLabel.setVisible( isBusy );
+        this.jProgressBar.setVisible( isBusy && myModel.isDeterminate() && !myIcon.isDeterminate() );
 
         { final boolean hyperlinkVisible = isBusy && myModel.isCancellable();
           if( hyperlinkVisible && !this.jXHyperlinkCancel.isVisible() ) 
@@ -210,10 +250,6 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
         
           this.jXHyperlinkCancel.setVisible( hyperlinkVisible );
         }
-
-        /** Busy animation (start or stop)
-         */
-        this.jXBusyLabel.setBusy( isBusy ); 
 
         /** Background shading animation (check if start needed)
          */
@@ -228,7 +264,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
             /** Update the % 
              */
             String descr = myModel.getDescription();
-            this.jXBusyLabel.setText( descr == null ? getPercentProgressionString() : descr );
+            this.jLabel.setText( descr == null ? getPercentProgressionString() : descr );
         }
         super.updateUIImpl();
     }
@@ -237,8 +273,10 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     public void setBusyModel(final BusyModel model) {
         super.setBusyModel(model);
         
-        if( getBusyModel() != null ) 
+        if( getBusyModel() != null )  {
             this.jProgressBar.setModel( model );
+            if( this.busyIcon != null ) this.busyIcon.setModel( getBusyModel() );
+        }
     }
 
     /** Create our glasspane
@@ -254,13 +292,13 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
         final GridBagConstraints gbcBar   = new GridBagConstraints(1,2,1,1,0,0, GridBagConstraints.CENTER , GridBagConstraints.NONE , emptyInsets , 0 , 0 );
         final GridBagConstraints gbcLink  = new GridBagConstraints(2,2,1,1,0,0, GridBagConstraints.CENTER , GridBagConstraints.NONE , emptyInsets , 0 , 0 );
         
-        this.jXGlassPane.add( this.jXBusyLabel , gbcLabel );
+        this.jXGlassPane.add( this.jLabel , gbcLabel );
         this.jXGlassPane.add( this.jProgressBar , gbcBar );
         this.jXGlassPane.add( this.jXHyperlinkCancel , gbcLink );
 
-        this.jXBusyLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        this.jXBusyLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        this.jXBusyLabel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        this.jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        this.jLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        this.jLabel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         this.jXHyperlinkCancel.setText( UIManager.getString("OptionPane.cancelButtonText") );
         this.jXHyperlinkCancel.addActionListener( this.cancelListener );
@@ -439,15 +477,14 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
         
         if( oldPainter != this.painter )
             updateUI();
-    }    
-    
-    /** Overide the JXBusyLabel that must perform an updateUI() on the layer for
-     *  repainting the animation
-     */
-    private class CustomBusyLabel extends JXBusyLabel {
+    }
 
-        @Override
-        protected void frameChanged() {
+    /** Observer implementation that allow the layer UI to listen any update from
+     *  the busy icon and perform an updateUI
+     */
+    private class AnimationObserver implements Observer {
+
+        public void update(Observable o, Object arg) {
             BasicBusyLayerUI.this.updateUI();
         }
     }
