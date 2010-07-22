@@ -4,7 +4,7 @@
   <groupId>org.divxdede</groupId>
   <artifactId>jbusycomponent-demo</artifactId>
   <packaging>jar</packaging>
-  <version>1.0</version>
+  <version>1.1</version>
   <name>jbusycomponent-demo</name>
   <url>http://jbusycomponent.googlecode.com/svn/demo/jnlp</url>
     
@@ -77,7 +77,7 @@
                     <libPath>lib</libPath>
                     <jnlp>
                         <outputFile>demo.jnlp</outputFile>
-                        <mainClass>org.divxdede.swing.busy.demo.BusyDemo</mainClass>
+                        <mainClass>org.divxdede.swing.busy.demo.MainDemo</mainClass>
                     </jnlp>
                     <sign>
                         <!-- Use private properties stored on settings.properties -->
@@ -115,7 +115,7 @@
         <dependency>
             <groupId>org.divxdede</groupId>
             <artifactId>jbusycomponent</artifactId>
-            <version>1.0.2</version>
+            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>org.swinglabs</groupId>
