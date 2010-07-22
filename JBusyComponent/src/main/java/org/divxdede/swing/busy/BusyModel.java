@@ -1,5 +1,4 @@
 /*
- * 
  * Copyright (c) 2007 ANDRE SÃ©bastien (divxdede).  All rights reserved.
  * BusyModel.java is a part of this JBusyComponent library
  * ====================================================================
@@ -36,7 +35,7 @@ import javax.swing.BoundedRangeModel;
  * BusyModel can be cancellable to allow the controller of this model to cancel the 
  * underlying task. 
  * 
- * @author AndrÃ© SÃ©bastien
+ * @author André Sébastien (divxdede)
  */
 public interface BusyModel extends BoundedRangeModel {
 
@@ -60,7 +59,7 @@ public interface BusyModel extends BoundedRangeModel {
     
     /** 
      * Returns true if the model is in a <code>determinate mode</code>.
-     * @returns true if the model is in a determinate mode.
+     * @return true if the model is in a determinate mode.
      */
     public boolean isDeterminate();
 

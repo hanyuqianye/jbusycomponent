@@ -29,9 +29,16 @@ import org.jdesktop.jxlayer.plaf.LayerUI;
  * A BusyLayerUI <strong>must</strong> subclass LayerUI.<br>
  * But <code>LayerUI</code> is a class and this interface can't formalize this
  * specification anyway.
+ * <p>
+ * A <code>BusyLayerUI</code> requires two thnigs in order to render the busy state:
+ * <ul>
+ *   <li>a {@link BusyModel} for be able to knwow the progression advance and states (cancellable,determinate,undeterminate</li>
+ *   <li>a {@link BusyIcon} for render the busy animation</li>
+ * </ul>
  * 
  * @see LayerUI
- * @author AndrÃ© SÃ©bastien
+ * @see AbstractBusyLayerUI
+ * @author André Sébastien (divxdede)
  */
 public interface BusyLayerUI {
 
@@ -46,4 +53,16 @@ public interface BusyLayerUI {
      *  @return BusyModel used by this ui
      */
     public BusyModel getBusyModel();
+
+    /** Define the BusyIcon to use by this ui to render the busy animation.
+     *  @param icon New BusyIcon to use by this ui
+     *  @since 1.1
+     */
+    public void setBusyIcon(BusyIcon icon);
+
+    /** Return the BusyIcon used by this ui for render the busy animation.
+     *  @return BusyIcon used by this ui
+     *  @since 1.1
+     */
+    public BusyIcon getBusyIcon();
 }
