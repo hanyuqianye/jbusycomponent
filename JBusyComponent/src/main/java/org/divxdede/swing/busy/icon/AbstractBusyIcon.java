@@ -63,7 +63,7 @@ import org.divxdede.swing.busy.BusyModel;
  *   <li>{@link #paintIdle(java.awt.Component, java.awt.Graphics, int, int)} for render an idle state (not busy)</li>
  * </ul>
  * <p>
- * This icon accept generic {@link BoundedRangeModel} or mode specific {@link BusyModel}.<br>
+ * This icon accept generic {@link BoundedRangeModel} or a more specific {@link BusyModel}.<br>
  * When this icon is bound to a generic <code>BoundedRangeModel</code>, this icon is always considered in a <code>determinate</code> state.<br>
  * But if this icon is bound to a <code>BusyModel</code>, this model can control the busy state or the determinate/undeterminate state.
  * <p>
