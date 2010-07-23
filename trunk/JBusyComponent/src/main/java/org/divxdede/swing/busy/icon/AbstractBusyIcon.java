@@ -54,7 +54,7 @@ import org.divxdede.swing.busy.BusyModel;
  *   <li>Automatic frame rate mecanism for render undeterminate state animation : {@link #setUndeterminateFrameRate(int, int)}</li>
  *   <li>Provide a {@link #repaint(boolean)} for subclasses use when they needs to send a repaint event</li>
  *   <li>Extends {@link Observable} providing a delegate mecanism for repaint's event</li>
- * </lu>
+ * </ul>
  * <p>
  * This implementation provide 3 methods to implements for render a busy icon:
  * <ul>
