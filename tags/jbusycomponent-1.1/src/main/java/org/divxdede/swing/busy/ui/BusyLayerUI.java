@@ -32,7 +32,7 @@ import org.jdesktop.jxlayer.plaf.LayerUI;
  * <p>
  * A <code>BusyLayerUI</code> requires two thnigs in order to render the busy state:
  * <ul>
- *   <li>a {@link BusyModel} for be able to knwow the progression advance and states (cancellable,determinate,undeterminate</li>
+ *   <li>a {@link BusyModel} for be able to knwow the progression advance and states (cancellable,determinate,undeterminate)</li>
  *   <li>a {@link BusyIcon} for render the busy animation</li>
  * </ul>
  * 
