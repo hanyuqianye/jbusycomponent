@@ -89,7 +89,7 @@
                     </sign>
                     <pack200>false</pack200>
                     <gzip>false</gzip> <!-- default force when pack200 false, true when pack200 selected ?? -->
-                    <outputJarVersions>true</outputJarVersions>
+                    <outputJarVersions>false</outputJarVersions>
                 </configuration>
             </plugin>
         </plugins>
