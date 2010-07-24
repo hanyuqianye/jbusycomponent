@@ -48,11 +48,11 @@ import org.divxdede.swing.busy.BusyModel;
  * <p>
  * At this level, this class give some features for make BusyIcon implementation easier:<br>
  * <ul>
- *   <li>Paints method for various states of icons <code>(determinate,undeterminate,idle)</code></li>
+ *   <li>Paint methods for various states of icons <code>(determinate,undeterminate,idle)</code></li>
  *   <li>Common implementation for storing either a simple {@link BoundedRangeModel} or a more featured {@link BusyModel}</li>
  *   <li>Buffer Image cache for optimize repaint's event from {@link BoundedRangeModel} changes : {@link #setUseCache(boolean)}, {@link #getSignificantRatioOffset()}</li>
  *   <li>Automatic frame rate mecanism for render undeterminate state animation : {@link #setUndeterminateFrameRate(int, int)}</li>
- *   <li>Provide a {@link #repaint(boolean)} for subclasses use when they needs to send a repaint event</li>
+ *   <li>Provide a {@link #repaint(boolean)} for subclasses uses when they needs to send a repaint event</li>
  *   <li>Extends {@link Observable} providing a delegate mecanism for repaint's event</li>
  * </ul>
  * <p>
@@ -68,16 +68,16 @@ import org.divxdede.swing.busy.BusyModel;
  * But if this icon is bound to a <code>BusyModel</code>, this model can control the busy state or the determinate/undeterminate state.
  * <p>
  * The buffer image cache is done for optimize painting process when this icon state are unchanged.<br>
- * Instead of call real paints method each time, this abstract implementation use a previously rendered image of this icon.<br>
+ * Instead of call real paints methods each time, this abstract implementation use a previously rendered image of this icon.<br>
  * In the other side, subclasses must implements {@link #getSignificantRatioOffset()} in the way to help this implementation determine
  * if the current buffer image cache is up to date regarding the current state of this icon.<br>
- * In the other-side, this implementation help us to prevent from various change from the {@link BoundedRangeModel}.
+ * This basis implementation help us to prevent from various change from the {@link BoundedRangeModel}.
  * Theses models can have data range that can be large, and any minor change will fire a repaint event even if the change
  * don't be significant in the ui representation. That's why, you should implements the {@link #getSignificantRatioOffset()} accordingly
  * to your ui.
  * <p>
  * When this busy icon is on an <code>undeterminate</code> state, an internal timer will fire repaint events periodically.<br>
- * The {@link #paintUndeterminate(java.awt.Component, java.awt.Graphics, int, int, int)} method will be used for rendering this icon.<br>
+ * The {@link #paintUndeterminate(java.awt.Component, java.awt.Graphics, int, int, int)} method will be use for rendering this icon.<br>
  * The provided frame number is incremented each paint event and is cyclic accordingly to the configuration done by {@link #setUndeterminateFrameRate(int, int)}.<br>
  * This method should be used by subclasses in order to configure the undeterminate frame rate animation.
  * <p>

@@ -31,7 +31,7 @@ import org.divxdede.commons.Disposable;
 import org.divxdede.commons.Sizable;
 
 /**
- * A <code>BoundedRangeModelHub</code> can split a <code>BoundedRangeModel</code> (call <code>master model</code> in sub-models.
+ * A <code>BoundedRangeModelHub</code> can split a <code>BoundedRangeModel</code> (call <code>master model</code>) in sub-models.
  * <p>
  * Each sub-models represent a progression part of the master model.<br>
  * Each sub-models have a weight that describe how combine theses sub-models for computing the master's value.
@@ -41,7 +41,7 @@ import org.divxdede.commons.Sizable;
  * This weighting must be a positive weight and just serve to compute a factor for each sub-models regarding theses weight.
  * <p>
  * Exemple:
- *  <code>
+ * <pre>
  *            BoundedRangeModelHub hub   = new BoundedRangeModelHub();
  *            
  *            BoundedRangeModel    taskA = hub.createFragment(40);  // will represent 20% of the master model
@@ -67,7 +67,7 @@ import org.divxdede.commons.Sizable;
  *            
  *            // dispose hub resources (listener and so one)
  *            hub.dispose();
- * </code>
+ * </pre>
  * <p>
  * Some statics methods allow to split in a one call a model in sub-model:
  * <ul>
