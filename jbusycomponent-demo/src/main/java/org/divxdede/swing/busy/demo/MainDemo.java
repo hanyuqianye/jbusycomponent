@@ -196,6 +196,11 @@ public class MainDemo extends javax.swing.JPanel {
          */
         this.printingUI = new BasicBusyLayerUI();
 
+        /** Give a range to the printing model
+         */
+        this.printingModel.setMinimum(0);
+        this.printingModel.setMaximum(1000000);
+
         /** Bound the LayerUI and the BusyModel to the JBusyComponent
          */
         this.jBusyComponent.setBusyLayerUI( this.printingUI );
