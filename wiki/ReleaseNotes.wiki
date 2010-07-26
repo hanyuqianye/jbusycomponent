@@ -4,12 +4,16 @@
 *History*
 <wiki:toc max_depth="1" />
 
+-----------------
+
 = Version 1.1 (23/07/2010) =
 
 == Enhancement ==
  * Introduction of BusyIcon (DefaultBusyIcon,RadialBusyIcon,InfiniteBusyIcon)
  * Introduction of BoundedRangeModelHub
  * New demo
+
+-----------------
 
 = Version 1.0.2 (08/05/2010) =
 
@@ -21,6 +25,8 @@
  * Update dependencies with JXLayer 3.0.4 and SwingX 1.6
  * JBusyComponent implements Scrollable interface for respect view constraint from JTable or JTree
 
+-----------------
+
 = Version 1.0.1 (05/04/2009) =
 
 == Bug Fix == 
@@ -30,5 +36,9 @@
 == Enhancement ==
  * Add BusyModel#getDescription() allowing to render a description when the model is busy
 
+-----------------
+
 = Version 1.0 (31/07/2008) =
  * First release of *JBusyComponent*
+
+-----------------
