@@ -87,6 +87,7 @@
                         <alias>${jnlp-alias}</alias>
                         <verify>true</verify>
                     </sign>
+                    <unsign>true</unsign>
                     <pack200>false</pack200>
                     <gzip>false</gzip> <!-- default force when pack200 false, true when pack200 selected ?? -->
                     <outputJarVersions>false</outputJarVersions>
