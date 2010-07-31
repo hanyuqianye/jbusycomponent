@@ -103,7 +103,7 @@ Here an example:
 >    }
 }}}
 
-== Change the icon to use with you JBusyComponent ==
+== Change the icon to use with your JBusyComponent ==
 You can change the default icon used by JBusyComponent for render the busy over animation.
 For achieve this, you need to provide a BusyLayerUI to the JBusyComponent like it:
 
