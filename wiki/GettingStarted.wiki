@@ -104,7 +104,7 @@ Here an example:
 }}}
 
 == Change the icon to use with your JBusyComponent ==
-You can change the default icon used by JBusyComponent for render the busy over animation.
+You can change the default icon used by JBusyComponent for render the busy animation overlay.
 For achieve this, you need to provide a BusyLayerUI to the JBusyComponent like it:
 
 {{{
@@ -128,8 +128,10 @@ For achieve this, you need to provide a BusyLayerUI to the JBusyComponent like i
 
 This API provide 3 default implementations of 'BusyIcon'
  * *`InfiniteBusyIcon`*: Default icon rendering a infinite animation
- * *`RadialBusyIcon`* : For rendering a radial progress bar around an icon
- * *`DefaultBusyIcon`* : An Icon with an horizontal progress bar inside it
+ * *`RadialBusyIcon`* : An icon with a radial progress bar beside it
+ * *`DefaultBusyIcon`* : An Icon with an horizontal progress bar.
+
+Theses icons can be used like any other icons and it's not mandatory to use theses with a JBusyComponent. You can use theses with `JLabel` or all other components
 
 == Track a concurrent task with a `FutureBusyModel` ==
 One from the coolest package that came with the JDK 1.5 is the package `java.util.concurrent`.
