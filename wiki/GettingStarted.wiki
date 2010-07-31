@@ -127,9 +127,9 @@ For achieve this, you need to provide a BusyLayerUI to the JBusyComponent like i
 }}}
 
 This API provide 3 default implementations of 'BusyIcon'
- * InfiniteBusyIcon : Default icon rendering a infinite animation
- * RadialBusyIcon : For rendering a radial progress bar around an icon
- * DefaultBusyIcon : An Icon with an horizontal progress bar inside it
+ * *`InfiniteBusyIcon`*: Default icon rendering a infinite animation
+ * *`RadialBusyIcon`* : For rendering a radial progress bar around an icon
+ * *`DefaultBusyIcon`* : An Icon with an horizontal progress bar inside it
 
 == Track a concurrent task with a `FutureBusyModel` ==
 One from the coolest package that came with the JDK 1.5 is the package `java.util.concurrent`.
