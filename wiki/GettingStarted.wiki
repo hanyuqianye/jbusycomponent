@@ -1,7 +1,9 @@
 #summary First steps with JBusyComponent
 #labels Featured
 
-= Introductiona =
+<wiki:toc max_depth="1" />
+
+= Introduction =
 
 We will introduce how use JBusyComponent easily. 
 JBusyComponent wrap any swing component (called `view`) and take place on the components hierarchy. The JBusyComponent let you to manage `busy` properties on the `view` and provide *`BusyModel`*.
