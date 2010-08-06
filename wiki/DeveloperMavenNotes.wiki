@@ -14,7 +14,9 @@ Since version 1.0.2, this project is hosted on *[http://oss.sonatype.org/ Nexus 
 </dependency> 
 }}}
 
-The [http://repo2.maven.org/maven2/org/divxdede/jbusycomponent/ Maven Central Repository] contains released versions. If you want use snapshot or staged versions, refer to the [http://oss.sonatype.org/content/groups/staging/org/divxdede/jbusycomponent Nexus OSS Repository] with this declaration:
+The [http://repo2.maven.org/maven2/org/divxdede/jbusycomponent/ Maven Central Repository] contains released versions and requires no additionnal configuration.
+
+If you want use snapshot versions, refer to the [http://oss.sonatype.org/content/groups/staging/org/divxdede/jbusycomponent Nexus OSS Repository] with this configuration:
 
 {{{
     <repositories>
