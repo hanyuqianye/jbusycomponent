@@ -14,7 +14,23 @@ Since version 1.0.2, this project is hosted on *[http://oss.sonatype.org/ Nexus 
 </dependency> 
 }}}
 
-The [http://repo2.maven.org/maven2/org/divxdede/jbusycomponent/ Maven Central Repository] contains released versions. If you want use snapshot or staged versions, refer to the [http://oss.sonatype.org/content/groups/staging/org/divxdede/jbusycomponent Nexus OSS Repository].
+The [http://repo2.maven.org/maven2/org/divxdede/jbusycomponent/ Maven Central Repository] contains released versions. If you want use snapshot or staged versions, refer to the [http://oss.sonatype.org/content/groups/staging/org/divxdede/jbusycomponent Nexus OSS Repository] with this declaration:
+
+{{{
+    <repositories>
+        <repository>
+            <id>sonatype.oss.snapshots</id>
+            <name>Sonatype OSS Snapshot Repository</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+              <enabled>false</enabled>
+            </releases>
+            <snapshots>
+              <enabled>true</enabled>
+            </snapshots>
+        </repository> 
+    </repositories>
+}}}
 
 Be careful, the *older* release `1.0.0` is deployed into the `com.google.code` groupId instead of `org.divxdede`
 
