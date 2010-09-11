@@ -111,12 +111,20 @@ public abstract class AbstractBusyLayerUI extends LockableUI implements BusyLaye
         setLocked( shouldLock() );
         setDirty(true);
     }
-    
+
+    /** Indicate if the {@link BusyModel} is busy or not
+     *  @return <code>true</code> if the model is busy
+     *  @since 1.2
+     */
+    protected boolean isModelBusy() {
+         return ( getBusyModel() == null ? false : getBusyModel().isBusy() );
+    }
+
     /** Indicate if this layer should be placed in a locked state.
      *  This default implementation lock the layer when the model is <code>busy</code>.
      */
     protected boolean shouldLock() {
-        return getBusyModel() == null ? false : getBusyModel().isBusy();
+        return isModelBusy();
     }
     
     /** Returns the ModelListener usable by this UI
