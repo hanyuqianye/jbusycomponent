@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
@@ -36,9 +37,11 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import org.divxdede.swing.RemainingTimeMonitor;
 import org.divxdede.swing.busy.BusyIcon;
 import org.divxdede.swing.busy.BusyModel;
 import org.divxdede.swing.busy.icon.InfiniteBusyIcon;
+import org.divxdede.text.TimeFormat;
 import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXPanel;
@@ -82,12 +85,21 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
 
     /** Components
      */
-    JXPanel        jXGlassPane       = new JXPanel();
-    JLabel         jLabel            = new JLabel();
-    JProgressBar   jProgressBar      = new JProgressBar();
-    JXHyperlink    jXHyperlinkCancel = new JXHyperlink();
-    BusyIcon       busyIcon          = null;
-    Observer       observer          = new AnimationObserver();
+    JXPanel              jXGlassPane       = new JXPanel();
+    JLabel               jLabel            = new JLabel();
+    JProgressBar         jProgressBar      = new JProgressBar();
+    JXHyperlink          jXHyperlinkCancel = new JXHyperlink();
+    BusyIcon             busyIcon          = null;
+    Observer             observer          = new AnimationObserver();
+
+
+    /** Members managing popup trigger and remaining time
+     */
+    boolean              remainingTimeVisible  = false;
+    RemainingTimeMonitor monitor               = null;
+    final TimeFormat     timeFormat            = new TimeFormat( TimeUnit.SECONDS );
+    int                  millisToDecideToPopup = 0;
+    int                  millisToPopup         = 2000;
     
     /** Listener for cancelling action
      */
@@ -191,6 +203,89 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
         return this.busyIcon;
     }
 
+    /**
+     * Specifies the amount of time to wait before deciding whether or
+     * not to make busy the component when it's underlying model is.
+     * <p>
+     * If you set this attribute with 0 or with a negative number, this feature is
+     * disabled. In this case, the component is instantly busy when the model is.
+     *
+     * @param millisToDecideToPopup  an int specifying the time to wait, in milliseconds
+     * @see #getMillisToDecideToPopup
+     * @since 1.2
+     */
+    public void setMillisToDecideToPopup(int millisToDecideToPopup) {
+        this.millisToDecideToPopup = millisToDecideToPopup;
+    }
+
+    /**
+     * Returns the amount of time this object waits before deciding whether
+     * or not to propage the busy state from the model to the component.
+     * <p>
+     * After this elpased time, this object will decide if the job underlying the busy state will be long enough
+     * for propage the busy state from the model to the component.
+     * <p>
+     * If it returns 0 or a negative value,  this feature is disabled.
+     *
+     * @see #setMillisToDecideToPopup
+     * @since 1.2
+     */
+    public int getMillisToDecideToPopup() {
+        return millisToDecideToPopup;
+    }
+
+
+    /**
+     * Specifies the amount of time it will take for propage the busy state of the model to the component
+     * (If the predicted time remaining is less than this time, the component will not be busy)
+     * <p>
+     * If you set this attribute with 0 or with a negative number, this feature is
+     * disabled. In this case, the component is instantly busy when the model is.
+     *
+     * @param millisToPopup  an int specifying the time in milliseconds
+     * @see #getMillisToPopup
+     * @since 1.2
+     */
+    public void setMillisToPopup(int millisToPopup) {
+        this.millisToPopup = millisToPopup;
+    }
+
+    /**
+     * Returns the amount of time it will take for the popup to appear.
+     * <p>
+     * If it returns 0 or a negative value,  this feature is disabled.
+     * @see #setMillisToPopup
+     * @since 1.2
+     */
+    public int getMillisToPopup() {
+        return millisToPopup;
+    }
+
+    /** Define if this {@link BusyLayerUI} should show the remaining time
+     *  of the job underlying the busy state.
+     *  <p>
+     *  This feature works only with determinate {@link BusyModel}
+     *
+     *  @param value set to <code>true</code> to show the remaining time when a determinate model is busy
+     *  @see #isRemainingTimeVisible()
+     *  @since 1.2
+     */
+    public void setRemainingTimeVisible(boolean value) {
+        this.remainingTimeVisible = value;
+    }
+
+    /** Indicate if this {@link BusyLayerUI} should show the remaining time
+     *  of the job underlying the busy state
+     *  <p>
+     *  This feature works only with determinate {@link BusyModel}
+     *
+     *  @return <code>true</code> of the remaining time should by shown
+     *  @since 1.2
+     */
+    public boolean isRemainingTimeVisible() {
+        return this.remainingTimeVisible;
+    }
+
     /** 
      * Returns the busy painter to use for render the busy animation
      * @return BusyPainter used for render the friendly busy animation
@@ -236,7 +331,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     protected void updateUIImpl() {
         final BusyModel myModel = getBusyModel();
         final BusyIcon  myIcon  = getBusyIcon();
-        final boolean   isBusy  = myModel == null ? false : myModel.isBusy();
+        final boolean   isBusy  = isComponentBusy();
 
         /** Visible states
          */
@@ -253,7 +348,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
 
         /** Background shading animation (check if start needed)
          */
-        this.manageBackgroundVeil();
+        this.manageBackgroundVeil(isBusy);
         
         /** If cancellable, update it's border regarding the progress bar visible state
          */
@@ -263,8 +358,34 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
 
             /** Update the % 
              */
-            String descr = myModel.getDescription();
-            this.jLabel.setText( descr == null ? getPercentProgressionString() : descr );
+            String description = myModel.getDescription();
+            String remaining   = getRemainingTimeString();
+
+            if( isRemainingTimeVisible() ) {
+                if( remaining == null ) remaining = " ";
+                if( description == null ) {
+                    this.jLabel.setText( remaining );
+                    this.jProgressBar.setString( null );
+                    this.jProgressBar.setStringPainted(true);
+                }
+                else {
+                    this.jLabel.setText( description );
+                    this.jProgressBar.setString( remaining );
+                    this.jProgressBar.setStringPainted(true);
+                }
+            }
+            else {
+                if( description == null ) {
+                    this.jLabel.setText( getPercentProgressionString() );
+                    this.jProgressBar.setStringPainted(false);
+                    this.jProgressBar.setString(null);
+                }
+                else {
+                    this.jLabel.setText( description );
+                    this.jProgressBar.setString( getPercentProgressionString() );
+                    this.jProgressBar.setStringPainted(true);
+                }
+            }
         }
         super.updateUIImpl();
     }
@@ -311,7 +432,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      */
     private String getPercentProgressionString() {
         final BusyModel myModel = getBusyModel();
-        final boolean   isBusy  = myModel == null ? false : myModel.isBusy();
+        final boolean   isBusy  = isModelBusy();
         if( ! isBusy )                 return null;
         if( !myModel.isDeterminate() ) return null;
         
@@ -319,7 +440,23 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
         final int   value   = myModel.getValue();
         final float percent = ( 100f / range ) * ( value - myModel.getMinimum() );
         
-        return  ((int)percent) + " %";
+        return  Integer.toString( (int)percent) + " %";
+    }
+
+    /** Return the remaining time string
+     */
+    private String getRemainingTimeString() {
+        if( ! isRemainingTimeVisible() ) return null;
+        final BusyModel myModel = getBusyModel();
+        if( !myModel.isDeterminate() ) return null;
+        
+        if( this.monitor != null ) {
+            long timeRemaining = monitor.getRemainingTime( TimeUnit.SECONDS );
+            if( timeRemaining > 0 ) {
+                return " Remaining time: " + timeFormat.format( timeRemaining );
+            }
+        }
+        return null;
     }
     
     /** Create the Listener managing the cancel action when click on the hyperlink
@@ -336,14 +473,52 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
             }
         };
     }
-    
+
+    /** Indicate if the component should be busy.
+     *  <p>
+     * If you use {@link #getMillisToDecideToPopup()} and {@link #getMillisToPopup()}, the component
+     * will not be busy instantly when the model is. This layer will take time to predict the remaining time and
+     * decide if the component would be busy or not.
+     *
+     * @return <code>true</code> if the component would be busy
+     */
+    protected boolean isComponentBusy() {
+        boolean isModelBusy = isModelBusy();
+
+        boolean triggerEnabled = getMillisToDecideToPopup() > 0 && getMillisToPopup() > 0;
+        if( isModelBusy ) {
+            if( monitor == null && ( triggerEnabled || isRemainingTimeVisible() ) ) {
+                int decideTime = ( getMillisToDecideToPopup() > 0 ? getMillisToDecideToPopup() : 500 );
+                monitor = new RemainingTimeMonitor( getBusyModel() , decideTime , 10 );
+            }
+            if( triggerEnabled  ) {
+                long remainingTime = monitor.getRemainingTime();
+                if( remainingTime == -1 ) {
+                    return false;
+                }
+                else {
+                    if( monitor.getRemainingTime() < 2000 )
+                        return isLocked(); // in fact remain same state
+                }
+            }
+        }
+        else {
+            if( monitor != null ) {
+                monitor.dispose();
+                monitor = null;
+            }
+        }
+        return isModelBusy;
+    }
+
     /** Indicate if this layer should be placed in a locked state.
      *  This default implementation return <code>true</code> if the model is "busy"
      *  OR the background animation is not ended.
      */
     @Override
     protected boolean shouldLock() {
-        return super.shouldLock() || isBackgroundPainterDirty();
+        boolean componentBusy = isComponentBusy();
+        return componentBusy || isBackgroundPainterDirty( componentBusy );
     }
     
     /** Get the painter ready for render over the specified component.
@@ -378,13 +553,13 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      *  If no shading is requested (shadeDelayTotal <= 0 ) then the background is
      *  updated directly by this method without using any timer)
      */
-    private synchronized void manageBackgroundVeil() {
-        if( ! this.isBackgroundPainterDirty() ) return;
+    private synchronized void manageBackgroundVeil(boolean isBusy) {
+        if( ! this.isBackgroundPainterDirty(isBusy) ) return;
         
         if( this.shadeDelayTotal <= 0 ) {
             /** Do it directly without using a timer (because no animation is needed)
              */
-            this.updateBackgroundPainter();
+            this.updateBackgroundPainter(isBusy);
         }
         else {
             if( this.timer.isRunning() ) return;
@@ -404,8 +579,9 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
 
             public void actionPerformed(final ActionEvent e) {
                 synchronized( BasicBusyLayerUI.this ) {
-                    updateBackgroundPainter();
-                    if( ! isBackgroundPainterDirty() ) {
+                    boolean isBusy = isComponentBusy();
+                    updateBackgroundPainter( isBusy );
+                    if( ! isBackgroundPainterDirty( isBusy ) ) {
                         ((Timer)e.getSource()).stop();
                     }
                 }
@@ -423,11 +599,8 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      *    - the painter is translucent and not busy 
      *  If it's the case, a new painter must be created and this layer UI should be repainted with it
      */
-    private synchronized boolean isBackgroundPainterDirty() {
+    private synchronized boolean isBackgroundPainterDirty(boolean isBusy) {
         if( this.veilColor == null || this.veilAlpha == 0f ) return false;
-        
-        final BusyModel myModel = getBusyModel();
-        final boolean   isBusy  = myModel == null ? false : myModel.isBusy();
         
         if( isBusy  && this.alpha < 255 ) return true;
         if( !isBusy && this.alpha > 0 )   return true;
@@ -440,10 +613,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      *  The method update the alpha of the white veil depending <code>shadeDelayTotal</code> delay
      *  and <code>shadeDelayInterval</code> delay
      */
-    private synchronized void updateBackgroundPainter() {
-        final BusyModel myModel = getBusyModel();
-        final boolean   isBusy  = myModel == null ? false : myModel.isBusy();
-        
+    private synchronized void updateBackgroundPainter(boolean isBusy) {
         final Painter oldPainter = this.painter;
         
         if( isBusy && this.alpha < 255 ) {
