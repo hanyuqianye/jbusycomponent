@@ -98,8 +98,8 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     boolean              remainingTimeVisible  = false;
     RemainingTimeMonitor monitor               = null;
     final TimeFormat     timeFormat            = new TimeFormat( TimeUnit.SECONDS );
-    int                  millisToDecideToPopup = 0;
-    int                  millisToPopup         = 2000;
+    int                  millisToDecideToPopup = 300;
+    int                  millisToPopup         = 1200;
     
     /** Listener for cancelling action
      */
@@ -207,8 +207,17 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      * Specifies the amount of time to wait before deciding whether or
      * not to make busy the component when it's underlying model is.
      * <p>
-     * If you set this attribute with 0 or with a negative number, this feature is
-     * disabled. In this case, the component is instantly busy when the model is.
+     * This feature purpose is to prevent to show a progress bar for a very very short time.<br>
+     * This {@link BusyLayerUI} wait few times (300ms by default) and decide to popup the progress bar or not.
+     * <p>
+     * The decision was made by computing a predicted remaining time of the underlying task.<br>
+     * If the remaining time is long enough (>= 1200ms by default), the progress bar will shown.
+     * <p>
+     * When the model gone busy, the component is instantly locked (can't be accessed anymore)
+     * even if the progress bar is not yet visible.
+     * <p>
+     * Setting a 0 value or any negative value disable this feature.
+     * In this case, the progress bar will popup instantly when the model become busy.
      *
      * @param millisToDecideToPopup  an int specifying the time to wait, in milliseconds
      * @see #getMillisToDecideToPopup
@@ -222,10 +231,17 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      * Returns the amount of time this object waits before deciding whether
      * or not to propage the busy state from the model to the component.
      * <p>
-     * After this elpased time, this object will decide if the job underlying the busy state will be long enough
-     * for propage the busy state from the model to the component.
+     * This feature purpose is to prevent to show a progress bar for a very very short time.<br>
+     * This {@link BusyLayerUI} wait few times (300ms by default) and decide to popup the progress bar or not.
      * <p>
-     * If it returns 0 or a negative value,  this feature is disabled.
+     * The decision was made by computing a predicted remaining time of the underlying task.<br>
+     * If the remaining time is long enough (>= 1200ms by default), the progress bar will shown.
+     * <p>
+     * When the model gone busy, the component is instantly locked (can't be accessed anymore)
+     * even if the progress bar is not yet visible.
+     * <p>
+     * Getting a 0 value or any negative value indicate a disabled feature.<br>
+     * In this case, the progress bar will popup instantly when the model become busy.
      *
      * @see #setMillisToDecideToPopup
      * @since 1.2
@@ -234,13 +250,23 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
         return millisToDecideToPopup;
     }
 
-
     /**
-     * Specifies the amount of time it will take for propage the busy state of the model to the component
-     * (If the predicted time remaining is less than this time, the component will not be busy)
+     * Specifies the amount of remaining time required when this object take it's decision.
      * <p>
-     * If you set this attribute with 0 or with a negative number, this feature is
-     * disabled. In this case, the component is instantly busy when the model is.
+     * After {@link #getMillisToDecideToPopup()}, this layer compute the remaining time's job,<br>
+     * If its long enough regarding this property, the progress bar will be shown.
+     * <p>
+     * This feature purpose is to prevent to show a progress bar for a very very short time.<br>
+     * This {@link BusyLayerUI} wait few times (300ms by default) and decide to popup the progress bar or not.
+     * <p>
+     * The decision was made by computing a predicted remaining time of the underlying task.<br>
+     * If the remaining time is long enough (>= 1200ms by default), the progress bar will shown.
+     * <p>
+     * When the model gone busy, the component is instantly locked (can't be accessed anymore)
+     * even if the progress bar is not yet visible.
+     * <p>
+     * Setting a 0 value or any negative value disable this feature.
+     * In this case, the progress bar will popup instantly when the model become busy.
      *
      * @param millisToPopup  an int specifying the time in milliseconds
      * @see #getMillisToPopup
@@ -251,9 +277,23 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     }
 
     /**
-     * Returns the amount of time it will take for the popup to appear.
+     * Returns the amount of remaining time required when this object take it's decision.
      * <p>
-     * If it returns 0 or a negative value,  this feature is disabled.
+     * After {@link #getMillisToDecideToPopup()}, this layer compute the remaining time's job,<br>
+     * If its long enough regarding this property, the progress bar will be shown.
+     * <p>
+     * This feature purpose is to prevent to show a progress bar for a very very short time.<br>
+     * This {@link BusyLayerUI} wait few times (300ms by default) and decide to popup the progress bar or not.
+     * <p>
+     * The decision was made by computing a predicted remaining time of the underlying task.<br>
+     * If the remaining time is long enough (>= 1200ms by default), the progress bar will shown.
+     * <p>
+     * When the model gone busy, the component is instantly locked (can't be accessed anymore)
+     * even if the progress bar is not yet visible.
+     * <p>
+     * Getting a 0 value or any negative value indicate a disabled feature.<br>
+     * In this case, the progress bar will popup instantly when the model become busy.
+     * 
      * @see #setMillisToPopup
      * @since 1.2
      */
@@ -497,8 +537,8 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
                     return false;
                 }
                 else {
-                    if( monitor.getRemainingTime() < 2000 )
-                        return isLocked(); // in fact remain same state
+                    if( monitor.getRemainingTime() < getMillisToPopup() )
+                        return jXGlassPane.isVisible(); // in fact remain same state
                 }
             }
         }
@@ -514,11 +554,14 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     /** Indicate if this layer should be placed in a locked state.
      *  This default implementation return <code>true</code> if the model is "busy"
      *  OR the background animation is not ended.
+     *  <p>
+     *  Whenever the component is not yet busy because we wait some times to decide if
+     *  progression would popup, the component will be locked instantly (when model is busy) anyway to prevent any access
+     *  during the job.
      */
     @Override
     protected boolean shouldLock() {
-        boolean componentBusy = isComponentBusy();
-        return componentBusy || isBackgroundPainterDirty( componentBusy );
+        return isModelBusy() || isBackgroundPainterDirty( isComponentBusy() );
     }
     
     /** Get the painter ready for render over the specified component.
