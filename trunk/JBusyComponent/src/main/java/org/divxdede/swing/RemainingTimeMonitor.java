@@ -166,7 +166,9 @@ public class RemainingTimeMonitor implements Disposable {
 
         // Exemple "Has a advance of 10% in 5 seconds"
         // If it rest 25%, it should take 5 / 10 * 25 = 12.5 seconds
-        return (long)( (float)time / (float)advance * (float)remainingRatio );
+        float div = (float)advance * (float)remainingRatio;
+        if( div == 0f ) return -1L; // can't compute infinite time
+        return (long)( (float)time / div);
     }
 
     /** Return the current advance ratio of the specified {@link BoundedRangeModel}.
