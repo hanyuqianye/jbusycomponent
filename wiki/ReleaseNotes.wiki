@@ -6,6 +6,13 @@
 
 -----------------
 
+= Version 1.2-SNAPSHIT (unreleased) =
+
+== Enhancement ==
+todo
+
+-----------------
+
 = Version 1.1 (23/07/2010) =
 
 == Enhancement ==
