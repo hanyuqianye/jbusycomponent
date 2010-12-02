@@ -16,6 +16,7 @@
    * The `JBusyComponent` view is locked (can't be accessed anymore) instantly when the model become busy even if the progress bar is not yet shown.
  * Capability to show the remaining time above the progress bar using the `setRemainingTimeVisible(boolean)` on the `BasicBusyLayerUI`
    * Introduction of `RemainingTimeMonitor` tool for computing remaining time from any `BoundedRangeModel` and usable outside the `JBusyComponent`
+ * JDK 1.5 integration is now compatible
    * Use SwingX 1.0  dependency when the JDK is 1.5 for compatibility issue
    * Use SwingX 1.6+ dependency when the JDK is 1.6+
 
