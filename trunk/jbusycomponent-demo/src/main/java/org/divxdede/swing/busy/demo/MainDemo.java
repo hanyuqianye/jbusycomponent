@@ -57,7 +57,7 @@ public class MainDemo extends javax.swing.JPanel {
      /** The {@link BusyLayerUI} used by the JBusyComponent.
       *  This layer ui will swap from theses previous BusyIcon accordingly the form selected by the user
       */
-     private BusyLayerUI      printingUI           = null;
+     private BasicBusyLayerUI printingUI           = null;
 
      /** A flag that indicate or not if the sample task demo running when the component is busy was canceled or not by the user.
       *  This flag will serve to the dummy thread to stop this flag raise to <code>true</code.
@@ -385,6 +385,8 @@ public class MainDemo extends javax.swing.JPanel {
         jTextFieldTaskDescription = new javax.swing.JTextField();
         jRadioButtonTaskBasicForm = new javax.swing.JRadioButton();
         jRadioButtonTaskAdvancedForm = new javax.swing.JRadioButton();
+        jCheckBoxShowRemainingTime = new javax.swing.JCheckBox();
+        jButton1 = new javax.swing.JButton();
         jBusyComponent = new org.divxdede.swing.busy.JBusyComponent();
         jPanelIconDemo = new javax.swing.JPanel();
         jXTitledPanelIconDemo = new org.jdesktop.swingx.JXTitledPanel();
@@ -449,10 +451,14 @@ public class MainDemo extends javax.swing.JPanel {
 
         jCheckBoxTaskDeterminate.setSelected(true);
         jCheckBoxTaskDeterminate.setText("Determinate");
+        jCheckBoxTaskDeterminate.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBoxTaskDeterminateStateChanged(evt);
+            }
+        });
 
         jLabel6.setText("Description (can be empty)");
 
-        jTextFieldTaskDescription.setText("Printing...");
         jTextFieldTaskDescription.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldTaskDescriptionActionPerformed(evt);
@@ -467,6 +473,12 @@ public class MainDemo extends javax.swing.JPanel {
         jRadioButtonTaskAdvancedForm.setText("Advanced from");
         jRadioButtonTaskAdvancedForm.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
+        jCheckBoxShowRemainingTime.setText(" Remaining Time");
+        jCheckBoxShowRemainingTime.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jCheckBoxShowRemainingTime.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        jButton1.setText("Clear");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -474,21 +486,29 @@ public class MainDemo extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jCheckBoxTaskDeterminate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addComponent(jCheckBoxShowRemainingTime))
+                    .addComponent(jButtonTaskExecute, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jRadioButtonTaskBasicForm)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                        .addComponent(jRadioButtonTaskAdvancedForm))
                     .addComponent(jCheckBoxTaskCancellable)
-                    .addComponent(jCheckBoxTaskDeterminate)
-                    .addComponent(jTextFieldTaskDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSpinnerTaskDuration, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4))
-                    .addComponent(jButtonTaskExecute, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jRadioButtonTaskBasicForm)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                        .addComponent(jRadioButtonTaskAdvancedForm))
-                    .addComponent(jLabel6))
+                        .addComponent(jTextFieldTaskDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -502,12 +522,16 @@ public class MainDemo extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBoxTaskCancellable)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBoxTaskDeterminate)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBoxTaskDeterminate)
+                    .addComponent(jCheckBoxShowRemainingTime))
                 .addGap(13, 13, 13)
                 .addComponent(jLabel6)
                 .addGap(2, 2, 2)
-                .addComponent(jTextFieldTaskDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldTaskDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButtonTaskAdvancedForm)
                     .addComponent(jRadioButtonTaskBasicForm))
@@ -524,7 +548,7 @@ public class MainDemo extends javax.swing.JPanel {
             jPanelBusyDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBusyDemoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jBusyComponent, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                .addComponent(jBusyComponent, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -876,7 +900,7 @@ public class MainDemo extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Arial", 1, 18));
         jLabel9.setForeground(new java.awt.Color(0, 0, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("LGPL JBusyComponent Library 1.1 demonstration");
+        jLabel9.setText("LGPL JBusyComponent Library 1.2 demonstration");
         jLabel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel9.setOpaque(true);
 
@@ -1010,6 +1034,7 @@ public class MainDemo extends javax.swing.JPanel {
             this.printingUI.setBusyIcon( this.printingAdvancedIcon );
         }
 
+        this.printingUI.setRemainingTimeVisible( this.jCheckBoxShowRemainingTime.isSelected() );
         this.jButtonTaskExecute.setEnabled(false);
         this.printingModel.setBusy(true);
 
@@ -1036,15 +1061,23 @@ public class MainDemo extends javax.swing.JPanel {
         t.start();
     }//GEN-LAST:event_jButtonTaskExecuteActionPerformed
 
+    private void jCheckBoxTaskDeterminateStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBoxTaskDeterminateStateChanged
+        this.jCheckBoxShowRemainingTime.setEnabled( this.jCheckBoxTaskDeterminate.isSelected() );
+        if( ! this.jCheckBoxTaskDeterminate.isSelected() )
+            this.jCheckBoxShowRemainingTime.setSelected(false);
+    }//GEN-LAST:event_jCheckBoxTaskDeterminateStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupIcon;
     private javax.swing.ButtonGroup buttonGroupIconForm;
     private javax.swing.ButtonGroup buttonGroupTaskForm;
     private org.divxdede.swing.busy.JBusyComponent jBusyComponent;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonTaskExecute;
     private javax.swing.JCheckBox jCheckBoxBusy;
     private javax.swing.JCheckBox jCheckBoxDeterminate;
+    private javax.swing.JCheckBox jCheckBoxShowRemainingTime;
     private javax.swing.JCheckBox jCheckBoxTaskCancellable;
     private javax.swing.JCheckBox jCheckBoxTaskDeterminate;
     private javax.swing.JLabel jLabel1;
