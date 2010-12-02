@@ -6,7 +6,7 @@
 
 -----------------
 
-= Version 1.2-SNAPSHOT (unreleased) =
+= Version 1.2 (02/12/2010) =
 
 == Enhancement ==
  * Delayed progress bar popup. After few times, the `BasicBusyLayerUI` predict remaining time and if it's long enough show the progress bar. 
