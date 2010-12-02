@@ -3,7 +3,7 @@
     <groupId>org.divxdede</groupId>
     <artifactId>jbusycomponent</artifactId>
     <packaging>jar</packaging>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
     <name>JBusyComponent</name>
     <url>http://code.google.com/p/jbusycomponent</url>
 
@@ -144,17 +144,39 @@
         <dependency>
             <groupId>org.swinglabs</groupId>
             <artifactId>swingx</artifactId>
-            <version>1.6</version>
+            <version>${swingx-version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.divxdede</groupId>
             <artifactId>commons</artifactId>
-            <version>0.2-SNAPSHOT</version>
+            <version>0.2</version>
             <type>jar</type>
         </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
     </properties>
+
+    <!-- Issue #9: Rest on SwingX 1.0 if the jdk is 1.5 -->
+    <profiles>
+        <profile>
+            <id>jdk5</id>
+            <activation>
+                <jdk>1.5</jdk>
+            </activation>
+            <properties>
+                <swingx-version>[1.0]</swingx-version>
+            </properties>
+        </profile>
+        <profile>
+            <id>jdk6+</id>
+            <activation>
+                <jdk>[1.6,)</jdk>
+            </activation>
+            <properties>
+                <swingx-version>[1.6,)</swingx-version>
+            </properties>
+        </profile>
+    </profiles>
 </project>
