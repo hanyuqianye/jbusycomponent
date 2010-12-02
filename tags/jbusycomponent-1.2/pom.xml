@@ -4,7 +4,7 @@
     <artifactId>jbusycomponent</artifactId>
     <packaging>jar</packaging>
     <version>1.2</version>
-    <name>JBusyComponent</name>
+    <name>JBusyComponent 1.2</name>
     <url>http://code.google.com/p/jbusycomponent</url>
 
     <description>JBusyComponent : Enhance any swing components with a "busy" state</description>
