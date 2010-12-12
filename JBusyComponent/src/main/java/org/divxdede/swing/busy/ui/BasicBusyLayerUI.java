@@ -30,6 +30,7 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
@@ -108,13 +109,13 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     /** Veil members (color and alpha) to render
      *  A null color or a 0 alpha mean no veil
      */
-    float                  veilAlpha          = 0;     // 0 < alpha > 1
-    Color                  veilColor          = null;
+    float                  veilAlpha               = 0;     // 0 < alpha > 1
+    Color                  veilColor               = null;
+    long                   backgroundVeilStartTime = 0L;    // > 0 : busy transition start time. < 0 idle transition start time
 
     /** Shading members for rendering the veil with an animation
      *  A shadeDelayInterval <= 0 means no shading
      */
-    int                    shadeDelayInterval = 0;  // in milliseconds
     int                    shadeDelayTotal    = 0;  // in milliseconds
 
     /** Internal members for manage shading & veil rendering
@@ -122,16 +123,18 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     private int            alpha              = 0;
     private Timer          timer              = null;
     private Painter        painter            = null;
+    private AtomicBoolean  repainted          = new AtomicBoolean(false);
 
     /** Insets used
      */
-    private static final Border NO_SPACE = new EmptyBorder( new Insets(0,0,0,0) );
-    private static final Border MARGIN   = new EmptyBorder( new Insets(0,10,0,0) );
+    private static final Border NO_SPACE      = new EmptyBorder( new Insets(0,0,0,0) );
+    private static final Border MARGIN        = new EmptyBorder( new Insets(0,10,0,0) );
+    private static final int    REFRESH_DELAI = 32;
 
     /** Basic Implementation with default values
      */
     public BasicBusyLayerUI() {
-        this( 400 , 30 , 0.85f  , Color.WHITE );
+        this( 400 , 0.85f  , Color.WHITE );
     }
 
     /** Basic Implementation with shading configuration's
@@ -140,16 +143,13 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      *  @param veilAlpha Alpha ratio to use for the veil when the model is <code>busy</code>
      *  @param veilColor Color to use for render the veil
      */ 
-    public BasicBusyLayerUI(final int shadeDelay , final int shadeFps , final float veilAlpha  , final Color veilColor) {
+    public BasicBusyLayerUI(final int shadeDelay , final float veilAlpha  , final Color veilColor) {
         
         this.cancelListener     = createCancelListener();
-        this.timer              = createBackgroundShadingTimer();
+        this.timer              = createTimer();
                                   createGlassPane();
         
-        
         this.shadeDelayTotal    = shadeDelay;
-        this.shadeDelayInterval = ( this.shadeDelayTotal <= 0 ? 0 : (int)(1000f / shadeFps) );
-        
         this.veilAlpha          = veilAlpha;
         this.veilColor          = veilColor;
 
@@ -373,6 +373,13 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
         final BusyIcon  myIcon  = getBusyIcon();
         final boolean   isBusy  = isComponentBusy();
 
+        /** Ensure the timer is running when the model is busy
+         */
+        if( myModel != null && myModel.isBusy() && !this.timer.isRunning() ) {
+            this.timer.start();
+        }
+        repainted.set(true);
+        
         /** Visible states
          */
         this.jXGlassPane.setVisible( isBusy );
@@ -523,15 +530,16 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      * @return <code>true</code> if the component would be busy
      */
     protected boolean isComponentBusy() {
-        boolean isModelBusy = isModelBusy();
+        boolean isModelBusy   = isModelBusy();
+        boolean isDeterminate = isModelBusy && getBusyModel().isDeterminate();
 
         boolean triggerEnabled = getMillisToDecideToPopup() > 0 && getMillisToPopup() > 0;
         if( isModelBusy ) {
-            if( monitor == null && ( triggerEnabled || isRemainingTimeVisible() ) ) {
+            if( monitor == null && isDeterminate && ( triggerEnabled || isRemainingTimeVisible() )  ) {
                 int decideTime = ( getMillisToDecideToPopup() > 0 ? getMillisToDecideToPopup() : 500 );
                 monitor = new RemainingTimeMonitor( getBusyModel() , decideTime , 10 );
             }
-            if( triggerEnabled  ) {
+            if( triggerEnabled  && isDeterminate ) {
                 long remainingTime = monitor.getRemainingTime();
                 if( remainingTime == -1 ) {
                     return false;
@@ -604,33 +612,33 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
              */
             this.updateBackgroundPainter(isBusy);
         }
-        else {
-            if( this.timer.isRunning() ) return;
-            this.timer.start();
-        }
     }
-    
-    /** Create the Timer responsible to animate the white veil shading.
-     *  <p>
-     *  This timer update the background painter at regular intervals (shadeDelayInterval).
-     *  After each update, this layer is updated for repaint it.
-     *  <p>
-     *  When the shading is completed, this timer stop itself.
+
+    /** Create the Timer responsible to animate this layerUI
      */
-    private synchronized Timer createBackgroundShadingTimer() {
+    private synchronized Timer createTimer() {
         final ActionListener actionListener = new ActionListener() {
 
             public void actionPerformed(final ActionEvent e) {
                 synchronized( BasicBusyLayerUI.this ) {
                     boolean isBusy = isComponentBusy();
-                    updateBackgroundPainter( isBusy );
-                    if( ! isBackgroundPainterDirty( isBusy ) ) {
+                    
+                    if( updateBackgroundPainter( isBusy ) ) {
+                        updateUI();
+                    }
+                    else {
+                        if( !repainted.get() ) {
+                            updateUI();
+                            repainted.set(false); // the timer is on the EDT, the updateUI is really done
+                        }
+                    }
+                    if( ! isModelBusy() && ! isBackgroundPainterDirty( isBusy ) ) {
                         ((Timer)e.getSource()).stop();
                     }
                 }
             }
         };
-        return new Timer(this.shadeDelayInterval , actionListener );
+        return new Timer( REFRESH_DELAI , actionListener );
     }
     
     /** Indicate if the background painter is dirty.
@@ -649,32 +657,47 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
         if( !isBusy && this.alpha > 0 )   return true;
         return false;
     }
-    
+
     /** Update the painter for paint the next step of the shading.
      *  <p>
      *  This method request an updateUI() if a new painter is created.
      *  The method update the alpha of the white veil depending <code>shadeDelayTotal</code> delay
      *  and <code>shadeDelayInterval</code> delay
+     *
+     *  @return <code>true</code> when this method request an {@link #updateUI()} call for refresh ui state
      */
-    private synchronized void updateBackgroundPainter(boolean isBusy) {
+    private synchronized boolean updateBackgroundPainter(boolean isBusy) {
         final Painter oldPainter = this.painter;
         
-        if( isBusy && this.alpha < 255 ) {
+        if( isBusy && ( this.alpha < 255 || this.painter == null ) ) {
+            if( backgroundVeilStartTime <= 0 ) backgroundVeilStartTime = System.currentTimeMillis();
+            long   delay     = System.currentTimeMillis() - backgroundVeilStartTime;
+            double veilRatio = (double)delay / (double)this.shadeDelayTotal;
+            
             if( this.shadeDelayTotal <= 0 ) {
                 this.alpha = 255;
+                backgroundVeilStartTime = 0L;
             }
             else {
-                this.alpha += 255 / (this.shadeDelayTotal / this.shadeDelayInterval);
-                if( this.alpha > 255 ) this.alpha = 255;
+                this.alpha = (int)(255 * veilRatio);
+                if( this.alpha >= 255 ) {
+                    this.alpha = 255;
+                    backgroundVeilStartTime = 0L;
+                }
             }
             this.painter = createBackgroundPainter( (int)(this.alpha * this.veilAlpha) );
         }
-        else if( !isBusy && this.alpha > 0 ) {
+        else if( !isBusy && ( this.alpha > 0 || this.painter != null ) ) {
+            if( backgroundVeilStartTime >= 0 ) backgroundVeilStartTime = -System.currentTimeMillis();
+            long   delay     = System.currentTimeMillis() + backgroundVeilStartTime;
+            double veilRatio = (double)delay / (double)this.shadeDelayTotal;
+
             if( this.shadeDelayTotal <= 0 ) {
                 this.alpha = 0;
+                backgroundVeilStartTime = 0L;
             }
             else {
-                this.alpha-= 255 / (this.shadeDelayTotal / this.shadeDelayInterval );
+                this.alpha = 255 - (int)(255 * veilRatio);
             }
             
             if( this.alpha > 0 )
@@ -682,14 +705,13 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
             else {
                 this.alpha = 0;
                 this.painter = null;
+                backgroundVeilStartTime = 0L;
             }
         }
         else {
-            this.painter = null;
+            backgroundVeilStartTime = 0L;
         }
-        
-        if( oldPainter != this.painter )
-            updateUI();
+        return oldPainter != this.painter;
     }
 
     /** Observer implementation that allow the layer UI to listen any update from
@@ -698,6 +720,9 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     private class AnimationObserver implements Observer {
 
         public void update(Observable o, Object arg) {
+            /** Observable from BusyIcon perform an update only when it is significant
+             *  So let it to refresh our layer.
+             */
             BasicBusyLayerUI.this.updateUI();
         }
     }

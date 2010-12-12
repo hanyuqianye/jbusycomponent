@@ -19,6 +19,7 @@
  */
 package org.divxdede.swing.busy.ui;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
@@ -50,6 +51,10 @@ public abstract class AbstractBusyLayerUI extends LockableUI implements BusyLaye
     /** Model listener
      */
     private ChangeListener modelListener = null;
+
+    /** Refer to the last state known of the bounded model
+     */
+    private AtomicBoolean lastBusyState = new AtomicBoolean(false);
     
     /** Default constructor
      */
@@ -71,6 +76,7 @@ public abstract class AbstractBusyLayerUI extends LockableUI implements BusyLaye
         this.model = model;
         
         if( getBusyModel() != null ) {
+            this.lastBusyState.set( this.model.isBusy() );
             getBusyModel().addChangeListener( this.modelListener );
             updateUI();
         }
@@ -132,7 +138,13 @@ public abstract class AbstractBusyLayerUI extends LockableUI implements BusyLaye
     private ChangeListener createModelListener() {
         return new ChangeListener() {
            public void stateChanged(final ChangeEvent e) {
-              updateUI();
+              boolean newValue = getBusyModel().isBusy();
+
+              // perform an updateUI only if the model change it's busy state
+              if( lastBusyState.get() != newValue ) {
+                  lastBusyState.set(newValue);
+                  updateUI();
+              }
            }
         };
     }    
