@@ -6,6 +6,16 @@
 
 -----------------
 
+= Version 1.2.1 (12/12/2010) =
+
+== Bug Fix ==
+ * Fix remaining time feature that may cause the busy icon not showing when it would be busy.
+
+== Enhancement ==
+ * Optimize ***repaint*** events on the `BasicBusyLayerUI` implementation.
+
+-----------------
+
 = Version 1.2 (02/12/2010) =
 
 == Enhancement ==
