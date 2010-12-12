@@ -47,13 +47,13 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jLabel9" alignment="0" pref="701" max="32767" attributes="0"/>
-                  <Component id="jTabbedPane" alignment="1" pref="701" max="32767" attributes="0"/>
+                  <Component id="jLabel9" alignment="0" pref="767" max="32767" attributes="0"/>
+                  <Component id="jTabbedPane" alignment="1" pref="767" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jXHyperlinkCrystal" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="91" max="32767" attributes="0"/>
+                      <EmptySpace pref="157" max="32767" attributes="0"/>
                       <Component id="jXHyperlinkJbusyComponent" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -67,7 +67,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel9" min="-2" pref="37" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane" pref="290" max="32767" attributes="0"/>
+              <Component id="jTabbedPane" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -101,6 +101,7 @@
                       <Component id="jBusyComponent" pref="422" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -109,8 +110,8 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jBusyComponent" alignment="0" pref="240" max="32767" attributes="0"/>
+                          <Component id="jPanel4" alignment="0" pref="262" max="32767" attributes="0"/>
+                          <Component id="jBusyComponent" alignment="0" pref="262" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -134,36 +135,59 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jCheckBoxTaskDeterminate" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="44" max="32767" attributes="0"/>
-                                  <Component id="jCheckBoxShowRemainingTime" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="jButtonTaskExecute" alignment="1" pref="232" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jRadioButtonTaskBasicForm" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="58" max="32767" attributes="0"/>
-                                  <Component id="jRadioButtonTaskAdvancedForm" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="jCheckBoxTaskCancellable" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel2" min="-2" pref="71" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" max="-2" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jSpinnerTaskDuration" min="-2" pref="88" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jLabel2" linkSize="8" min="-2" pref="89" max="-2" attributes="0"/>
+                                      <Component id="jLabel8" linkSize="8" min="-2" pref="171" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="jSpinnerMinTaskDuration" max="32767" attributes="1"/>
+                                      <Component id="jSpinnerTaskDuration" alignment="1" pref="70" max="32767" attributes="1"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jTextFieldTaskDescription" pref="169" max="32767" attributes="1"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton1" min="-2" pref="57" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jCheckBoxTaskCancellable" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace pref="215" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jCheckBoxTaskDeterminate" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace pref="106" max="32767" attributes="0"/>
+                                          <Component id="jCheckBoxShowRemainingTime" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel6" min="-2" max="-2" attributes="1"/>
-                                  <EmptySpace pref="103" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jTextFieldTaskDescription" alignment="0" pref="288" max="32767" attributes="1"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel6" min="-2" max="-2" attributes="1"/>
+                                          <EmptySpace pref="159" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jRadioButtonTaskBasicForm" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace pref="110" max="32767" attributes="0"/>
+                                                  <Component id="jRadioButtonTaskAdvancedForm" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="jButtonTaskExecute" alignment="0" pref="284" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -175,9 +199,15 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jSpinnerTaskDuration" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jSpinnerMinTaskDuration" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jCheckBoxTaskCancellable" min="-2" max="-2" attributes="0"/>
@@ -186,21 +216,18 @@
                               <Component id="jCheckBoxTaskDeterminate" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jCheckBoxShowRemainingTime" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextFieldTaskDescription" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace pref="14" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jRadioButtonTaskAdvancedForm" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jRadioButtonTaskBasicForm" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jButtonTaskExecute" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTextFieldTaskDescription" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jRadioButtonTaskBasicForm" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonTaskAdvancedForm" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jButtonTaskExecute" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -219,6 +246,7 @@
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
                     <Property name="text" type="java.lang.String" value="Task duration"/>
                   </Properties>
                 </Component>
@@ -281,9 +309,17 @@
                     <Property name="horizontalTextPosition" type="int" value="2"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton1">
+                <Component class="javax.swing.JSpinner" name="jSpinnerMinTaskDuration">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel8">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Clear"/>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="Minimum task duration for showing"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel10">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="seconds"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -314,26 +350,26 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-                              <Component id="jSlider" pref="666" max="32767" attributes="0"/>
+                              <Component id="jSlider" pref="732" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jLabelIcon" alignment="0" pref="676" max="32767" attributes="1"/>
+                                  <Component id="jLabelIcon" alignment="0" pref="742" max="32767" attributes="1"/>
                                   <Group type="102" alignment="0" attributes="1">
                                       <Component id="jRadioButtonIconMonitor" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="232" max="32767" attributes="0"/>
+                                      <EmptySpace pref="298" max="32767" attributes="0"/>
                                       <Component id="jRadioButtonIconBattery" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="167" max="-2" attributes="0"/>
                                       <Component id="jRadioButtonIconSearch" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jXTitledPanelIconDemo" alignment="0" pref="676" max="32767" attributes="1"/>
+                                  <Component id="jXTitledPanelIconDemo" alignment="0" pref="742" max="32767" attributes="1"/>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jCheckBoxDeterminate" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jCheckBoxBusy" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="504" max="32767" attributes="0"/>
+                                      <EmptySpace pref="570" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Component id="jRadioButtonRadialForm" min="-2" max="-2" attributes="0"/>
                                           <Component id="jRadioButtonSquareForm" min="-2" max="-2" attributes="0"/>
@@ -360,7 +396,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabelIcon" min="-2" pref="80" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jSlider" pref="47" max="32767" attributes="0"/>
+                      <Component id="jSlider" pref="69" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jCheckBoxBusy" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -504,7 +540,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
                           <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabelHub" alignment="1" pref="676" max="32767" attributes="0"/>
+                          <Component id="jLabelHub" alignment="1" pref="742" max="32767" attributes="0"/>
                           <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -522,7 +558,7 @@
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                      <EmptySpace pref="37" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -562,8 +598,8 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jSliderModel1" pref="308" max="32767" attributes="0"/>
-                                  <EmptySpace pref="149" max="32767" attributes="0"/>
+                                  <Component id="jSliderModel1" pref="341" max="32767" attributes="0"/>
+                                  <EmptySpace pref="182" max="32767" attributes="0"/>
                               </Group>
                               <Component id="jLabelHelp1" min="-2" pref="145" max="-2" attributes="0"/>
                           </Group>
@@ -640,7 +676,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jSpinnerModel2" min="-2" pref="98" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jSliderModel2" pref="308" max="32767" attributes="0"/>
+                          <Component id="jSliderModel2" pref="374" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabelHelp2" min="-2" pref="145" max="-2" attributes="0"/>
                       </Group>
@@ -716,7 +752,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jSpinnerModel3" min="-2" pref="98" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jSliderModel3" pref="308" max="32767" attributes="0"/>
+                          <Component id="jSliderModel3" pref="374" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabelHelp3" min="-2" pref="145" max="-2" attributes="0"/>
                       </Group>
@@ -799,7 +835,7 @@
           <Color blue="ff" green="0" red="0" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="LGPL JBusyComponent Library 1.2 demonstration"/>
+        <Property name="text" type="java.lang.String" value="LGPL JBusyComponent Library 1.2.1 demonstration"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
             <BevelBorder/>
