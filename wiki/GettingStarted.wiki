@@ -178,7 +178,8 @@ We provide a *really cool* `BusyModel` implementation that can track a `Future` 
 >     ...
 >     ...
 >
->     // When your program is exiting or the gui using the model is no more used, you must dispose the FutureBusyModel in order to free all resources (unless your JVM will not exiting correctly)
+>     // When your program is exiting or the gui using the model is no more used, 
+>     // you must dispose the FutureBusyModel in order to free all resources (unless your JVM will not exiting correctly)
 >     model.dispose();
 >
 >
