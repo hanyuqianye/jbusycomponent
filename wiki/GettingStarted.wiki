@@ -105,7 +105,7 @@ Here an example:
 >    }
 }}}
 
-== Using `SwingWorker` with `BusyModel` ==
+== Using a `SwingWorker` with `BusyModel` ==
 TODO
 
 == Change the icon to use with your JBusyComponent ==
