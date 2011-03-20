@@ -135,6 +135,9 @@ This API provide 3 default implementations of 'BusyIcon'
 
 Theses icons can be used like any other icons and it's not mandatory to use theses with a JBusyComponent. You can use theses with `JLabel` or all other components
 
+== Using `SwingWorker` with `BusyModel` ==
+TODO
+
 == Track a concurrent task with a `FutureBusyModel` ==
 One from the coolest package that came with the JDK 1.5 is the package `java.util.concurrent`.
 When you use some `ExecutorService`, you can enqueue some tasks to execute when it is possible. The `ExecutorService` implementation is responsible to manage theses tasks (use one or more threads, manage the pool size and so more).
