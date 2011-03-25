@@ -12,6 +12,7 @@
 
 == Enhancement ==
  * A new `BusySwingWorker` class that allow simply to create a `SwingWorker` using a `BusyModel` for disabling view while it's running.
+ * A full review of `RemainingTimeMonitor` for more accuracy in the estimation process.
 
 = Version 1.2.1 (12/12/2010) =
 
