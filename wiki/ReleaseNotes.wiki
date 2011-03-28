@@ -15,7 +15,7 @@
 == Enhancement ==
  * A new `BusySwingWorker` class that allow simply to create a `SwingWorker` using a `BusyModel` for disabling view while it's running.
  * A full review of `RemainingTimeMonitor` for more accuracy in the estimation process.
- * A BusyModel can now register `ActionListener` and fire events when the model start, is canceled or when it's done.
+ * A `BusyModel` can now register `ActionListener` and fire events when the model start, is canceled or when it's done.
 
 -----------------
 
