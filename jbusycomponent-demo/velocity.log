@@ -1,33 +1,33 @@
-Thu Dec 02 23:46:53 CET 2010  [debug] AvalonLogChute initialized using file 'velocity.log'
-Thu Dec 02 23:46:53 CET 2010  [trace] *******************************************************************
-Thu Dec 02 23:46:53 CET 2010  [debug] Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
-Thu Dec 02 23:46:53 CET 2010  [trace] RuntimeInstance initializing.
-Thu Dec 02 23:46:53 CET 2010  [debug] Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
-Thu Dec 02 23:46:53 CET 2010  [debug] Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
-Thu Dec 02 23:46:53 CET 2010  [debug] Using logger class org.apache.velocity.runtime.log.AvalonLogChute
-Thu Dec 02 23:46:53 CET 2010  [debug] Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
-Thu Dec 02 23:46:53 CET 2010  [debug] ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.JarResourceLoader
-Thu Dec 02 23:46:53 CET 2010  [trace] JarResourceLoader : initialization starting.
-Thu Dec 02 23:46:53 CET 2010  [debug] JarResourceLoader # of paths : 1
-Thu Dec 02 23:46:53 CET 2010  [debug] JarResourceLoader : trying to load "jar:file:/C:/Users/Sébastien/.m2/repository/org/codehaus/mojo/webstart/webstart-maven-plugin/1.0-beta-1/webstart-maven-plugin-1.0-beta-1.jar!/"
-Thu Dec 02 23:46:53 CET 2010  [debug] JarHolder: attempting to connect to jar:file:/C:/Users/Sébastien/.m2/repository/org/codehaus/mojo/webstart/webstart-maven-plugin/1.0-beta-1/webstart-maven-plugin-1.0-beta-1.jar!/
-Thu Dec 02 23:46:53 CET 2010  [debug] JarHolder: initialized JAR: jar:file:/C:/Users/Sébastien/.m2/repository/org/codehaus/mojo/webstart/webstart-maven-plugin/1.0-beta-1/webstart-maven-plugin-1.0-beta-1.jar!/
-Thu Dec 02 23:46:53 CET 2010  [trace] JarResourceLoader : initialization complete.
-Thu Dec 02 23:46:53 CET 2010  [debug] ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
-Thu Dec 02 23:46:53 CET 2010  [trace] Default ResourceManager initialization complete.
-Thu Dec 02 23:46:53 CET 2010  [debug] Loaded System Directive: org.apache.velocity.runtime.directive.Literal
-Thu Dec 02 23:46:53 CET 2010  [debug] Loaded System Directive: org.apache.velocity.runtime.directive.Macro
-Thu Dec 02 23:46:53 CET 2010  [debug] Loaded System Directive: org.apache.velocity.runtime.directive.Parse
-Thu Dec 02 23:46:53 CET 2010  [debug] Loaded System Directive: org.apache.velocity.runtime.directive.Include
-Thu Dec 02 23:46:53 CET 2010  [debug] Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
-Thu Dec 02 23:46:53 CET 2010  [debug] Created '20' parsers.
-Thu Dec 02 23:46:53 CET 2010  [trace] Velocimacro : initialization starting.
-Thu Dec 02 23:46:53 CET 2010  [debug] Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
-Thu Dec 02 23:46:53 CET 2010  [debug] Velocimacro : Default library not found.
-Thu Dec 02 23:46:53 CET 2010  [debug] Velocimacro : allowInline = true : VMs can be defined inline in templates
-Thu Dec 02 23:46:53 CET 2010  [debug] Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
-Thu Dec 02 23:46:53 CET 2010  [debug] Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
-Thu Dec 02 23:46:53 CET 2010  [debug] Velocimacro : autoload off : VM system will not automatically reload global library macros
-Thu Dec 02 23:46:53 CET 2010  [trace] Velocimacro : Velocimacro : initialization complete.
-Thu Dec 02 23:46:53 CET 2010  [trace] RuntimeInstance successfully initialized.
-Thu Dec 02 23:46:53 CET 2010  [debug] ResourceManager : found default-jnlp-template.vm with loader org.apache.velocity.runtime.resource.loader.JarResourceLoader
+Mon Dec 13 00:30:09 CET 2010  [debug] AvalonLogChute initialized using file 'velocity.log'
+Mon Dec 13 00:30:09 CET 2010  [trace] *******************************************************************
+Mon Dec 13 00:30:09 CET 2010  [debug] Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+Mon Dec 13 00:30:09 CET 2010  [trace] RuntimeInstance initializing.
+Mon Dec 13 00:30:09 CET 2010  [debug] Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+Mon Dec 13 00:30:09 CET 2010  [debug] Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+Mon Dec 13 00:30:09 CET 2010  [debug] Using logger class org.apache.velocity.runtime.log.AvalonLogChute
+Mon Dec 13 00:30:09 CET 2010  [debug] Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+Mon Dec 13 00:30:09 CET 2010  [debug] ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.JarResourceLoader
+Mon Dec 13 00:30:09 CET 2010  [trace] JarResourceLoader : initialization starting.
+Mon Dec 13 00:30:09 CET 2010  [debug] JarResourceLoader # of paths : 1
+Mon Dec 13 00:30:09 CET 2010  [debug] JarResourceLoader : trying to load "jar:file:/C:/Users/Sébastien/.m2/repository/org/codehaus/mojo/webstart/webstart-maven-plugin/1.0-beta-1/webstart-maven-plugin-1.0-beta-1.jar!/"
+Mon Dec 13 00:30:09 CET 2010  [debug] JarHolder: attempting to connect to jar:file:/C:/Users/Sébastien/.m2/repository/org/codehaus/mojo/webstart/webstart-maven-plugin/1.0-beta-1/webstart-maven-plugin-1.0-beta-1.jar!/
+Mon Dec 13 00:30:09 CET 2010  [debug] JarHolder: initialized JAR: jar:file:/C:/Users/Sébastien/.m2/repository/org/codehaus/mojo/webstart/webstart-maven-plugin/1.0-beta-1/webstart-maven-plugin-1.0-beta-1.jar!/
+Mon Dec 13 00:30:09 CET 2010  [trace] JarResourceLoader : initialization complete.
+Mon Dec 13 00:30:09 CET 2010  [debug] ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+Mon Dec 13 00:30:09 CET 2010  [trace] Default ResourceManager initialization complete.
+Mon Dec 13 00:30:09 CET 2010  [debug] Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+Mon Dec 13 00:30:09 CET 2010  [debug] Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+Mon Dec 13 00:30:09 CET 2010  [debug] Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+Mon Dec 13 00:30:09 CET 2010  [debug] Loaded System Directive: org.apache.velocity.runtime.directive.Include
+Mon Dec 13 00:30:09 CET 2010  [debug] Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+Mon Dec 13 00:30:09 CET 2010  [debug] Created '20' parsers.
+Mon Dec 13 00:30:09 CET 2010  [trace] Velocimacro : initialization starting.
+Mon Dec 13 00:30:09 CET 2010  [debug] Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+Mon Dec 13 00:30:09 CET 2010  [debug] Velocimacro : Default library not found.
+Mon Dec 13 00:30:09 CET 2010  [debug] Velocimacro : allowInline = true : VMs can be defined inline in templates
+Mon Dec 13 00:30:09 CET 2010  [debug] Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+Mon Dec 13 00:30:09 CET 2010  [debug] Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+Mon Dec 13 00:30:09 CET 2010  [debug] Velocimacro : autoload off : VM system will not automatically reload global library macros
+Mon Dec 13 00:30:09 CET 2010  [trace] Velocimacro : Velocimacro : initialization complete.
+Mon Dec 13 00:30:09 CET 2010  [trace] RuntimeInstance successfully initialized.
+Mon Dec 13 00:30:09 CET 2010  [debug] ResourceManager : found default-jnlp-template.vm with loader org.apache.velocity.runtime.resource.loader.JarResourceLoader
