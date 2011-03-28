@@ -32,8 +32,7 @@ import org.divxdede.commons.Disposable;
  * <code>RemainingTimeMonitor</code> store few past samples of the advance progression's speed
  * and use it for compute the remaining time.
  * <p>
- * By default the sample period is to <strong>500ms</strong> and can use <strong>10</strong> samples.<br>
- * In this configuration, that mean we use the last 5s of the task to compute the remaining task.
+ * This monitor use at least the last <strong>10s</strong> to do estimation but it can use greater samples depending on how much frequently the {@link BoundedRangeModel} fire changes.
  * <p>
  * Exemple:
  * <pre>
@@ -43,7 +42,7 @@ import org.divxdede.commons.Disposable;
  *          // Just simply call #getRemainingTime()
  *          long remainingTime = getRemainingTime();
  *          if( remainingTime != -1 ) {
- *              // you have a remaining time, you ca reinvoke this method for update the remaining time
+ *              // you have a remaining time, you can re-invoke this method for update the remaining time
  *          }
  * </pre>
  *
@@ -52,40 +51,34 @@ import org.divxdede.commons.Disposable;
  */
 public class RemainingTimeMonitor implements Disposable {
 
-    private BoundedRangeModel model = null;
-    private int bulkDelay = 500;
+    private BoundedRangeModel          model = null;
 
-    private CyclicBuffer<Float> bulks = null;
-    private long  bulkStartTime  = 0L;
-    private float bulkStartRatio = 0f;
+    private static final long          MINIMUM_SAMPLE_DELAY = 1000;
+    private static final long          MINIMUM_INITIAL_SAMPLE_DELAY = 100;
+    private static final int           SAMPLE_COUNT = 10;
+
+    private       CyclicBuffer<Sample> samples = null;
+
+    private       Sample               currentSample = null;
+    private       Sample               lastSampleUsed = null;
+    private       long                 lastRemainingTimeResult = -1;
+    private       long                 whenLastRemainingTimeResult = 0L;
 
     private ChangeListener listener = new ChangeListener() {
         public void stateChanged(ChangeEvent e) {
-            tick(true);
+            tick();
         }
     };
 
     /** Create a <code>RemainingTimeMonitor</code> for the specified {@link BoundedRangeModel}.<br>
-     *  This instance will take samples of <strong>500ms</strong> and will use a maximum of <strong>10</strong> for compute remaining time.
+     *  This instance will use at least samples for a total of <strong>30s</strong>.
      *
      * @param model BoundedRangeModel for which compute the remaining time
      */
     public RemainingTimeMonitor(BoundedRangeModel model) {
-        this(model,500,10);
-    }
-
-    /** Create a <code>RemainingTimeMonitor</code> for the specified {@link BoundedRangeModel}.<br>
-     *  This constructor allow to configure how this tool will monitor the model.
-     *
-     *  @param model BoundedRangeModel for which compute the remaining time
-     *  @param samplePeriodDelay Delay of a sample
-     *  @param sampleCount How many samples at maximum can be used for compute the remaining time.
-     */
-    public RemainingTimeMonitor(BoundedRangeModel model , int samplePeriodDelay , int sampleCount ) {
-         this.model = model;
-         this.bulkDelay = samplePeriodDelay;
-         this.bulks = new CyclicBuffer<Float>(sampleCount);
-         this.model.addChangeListener( this.listener );
+        this.model = model;
+        this.samples = new CyclicBuffer<Sample>(SAMPLE_COUNT);
+        this.model.addChangeListener( this.listener );
     }
 
     /** Return the monitored model by this <code>RemainingTimeMonitor</code>.<br>
@@ -97,38 +90,50 @@ public class RemainingTimeMonitor implements Disposable {
 
     /** Internal method that manages sample snapshot
      */
-    private synchronized void tick(boolean starteable) {
-        if( bulkStartTime == 0L ) {
-            if( !starteable ) return;
-            bulkStartTime  = System.currentTimeMillis();
-            bulkStartRatio = getRatio( getModel() );
+    private synchronized void tick() {
+        if( currentSample == null ) {
+            currentSample = new Sample( getCurrentRatio() );
             return;
         }
         long currentTime = System.currentTimeMillis();
-        long delay       = currentTime - bulkStartTime;
-        if( delay > this.bulkDelay ) {
-            float normalization_factor = (float)this.bulkDelay / (float)delay;
-            float currentRatio         = getRatio( getModel() );
-            float bulkAdvance          = (currentRatio - bulkStartRatio) * normalization_factor;
+        long delay       = currentTime - currentSample.getStartTime();
+        if( ( samples.size() < 5 && delay >= MINIMUM_INITIAL_SAMPLE_DELAY ) || ( delay >= MINIMUM_SAMPLE_DELAY ) ) {
+            float ratio = getCurrentRatio();
 
-            bulks.add(bulkAdvance);
-            bulkStartTime  = currentTime;
-            bulkStartRatio = currentRatio;
+            /** Close the current bulk
+             */
+            currentSample.end( ratio );
+            samples.add(currentSample);
 
-            if( getModel().getValue() + getModel().getExtent() >= getModel().getMaximum() ) {
-                dispose();
-            }
+            /** Start a new one
+             */
+            currentSample = new Sample( ratio );
         }
+        disposeIfCompleted();
     }
 
     /** Free resources.<br>
      *  After this method call, this tool don't monitor anymore the underlying {@link BoundedRangeModel}
      */
-    public void dispose() {
+    public synchronized void dispose() {
         if( this.listener != null ) {
             getModel().removeChangeListener( this.listener );
             this.listener = null;
         }
+        this.samples.clear();
+        this.currentSample = null;
+        this.lastSampleUsed = null;
+        this.lastRemainingTimeResult = 0; // it's ended
+    }
+
+    /** Indicate if {@link #getRemainingTime()} can give a result based on a new estimation.
+     *  If this method returns <code>false</code>, it means the {@link #getRemainingTime()} will give a result based on the last estimation.
+     *
+     *  @return <code>true</code> if {@link #getRemainingTime()} will give a result based on a new estimation. <code>false</code> otherwise.
+     *  @since 1.2.2
+     */
+    public synchronized boolean hasNewerEstimation() {
+        return lastSampleUsed != samples.getLast();
     }
 
     /** Compute the remaining time of the task underlying the {@link BoundedRangeModel}.<br>
@@ -144,29 +149,50 @@ public class RemainingTimeMonitor implements Disposable {
 
     /** Compute the remaining time of the task underlying the {@link BoundedRangeModel}.<br>
      *  This tool monitor and analysys the task advance speed and compute a predicted remaining time.<br>
-     *  If it has'nt sufficient informations in order to compute the remaining time and will return <code>-1</code>
+     *  If it has'nt sufficient informations in order to compute the remaining time it will return <code>-1</code>
+     *  In the counterpart, if the monitoring sample can't compute a finite task duration, it will return Long.MAX_VALUE
      *
      *  @return Remaining time in milliseconds of the task underlying the {@link BoundedRangeModel}
      */
     public synchronized long getRemainingTime() {
-        tick(false);
-        if( bulks.isEmpty() ) return -1L;
+        if( !hasNewerEstimation() ) {
+            if( lastRemainingTimeResult == -1 || lastRemainingTimeResult == Long.MAX_VALUE ) return lastRemainingTimeResult;
+            return Math.max( 0L , lastRemainingTimeResult - (System.currentTimeMillis() - whenLastRemainingTimeResult ) );
+        }
+
+        if( samples.isEmpty() ) {
+            lastRemainingTimeResult = -1;
+            whenLastRemainingTimeResult = System.currentTimeMillis();
+            lastSampleUsed = null;
+            return -1L;
+        }
+
+        if( disposeIfCompleted() ) {
+            return 0L;
+        }
+        
         float currentRatio = getRatio( getModel() );
-        if( currentRatio >= 1.0f ) return 0L;
+        float advance      = 0f;
+        long  time         = 0L;
 
-        float advance = 0f;
-        long  time    = 0L;
+        for(int i = 0 ; i < samples.size() ; i++ ) {
+            lastSampleUsed = samples.get(i);
 
-        for(int i = 0 ; i < bulks.size() ; i++ ) {
-            advance += bulks.get(i).floatValue();
-            time    += bulkDelay;
+            advance += lastSampleUsed.getAdvance();
+            time    += lastSampleUsed.getDuration();
         }
 
         float remainingRatio = 1.0f - currentRatio;
 
-        // ( 1f / advance ) * time * remainingRatio
-        if( advance == 0 ) return -1L;
-        return (long)( (1f / advance) * (float)time * remainingRatio );
+        if( advance < 0.0001f )  {
+            this.lastRemainingTimeResult = Long.MAX_VALUE;
+        }
+        else {
+            this.lastRemainingTimeResult = (long)( (1f / advance) * (float)time * remainingRatio );
+        }
+        this.whenLastRemainingTimeResult = System.currentTimeMillis();
+
+        return this.lastRemainingTimeResult;
     }
 
     /** Return the current advance ratio of the specified {@link BoundedRangeModel}.
@@ -183,5 +209,58 @@ public class RemainingTimeMonitor implements Disposable {
             return (float)value / (float)length;
         }
         else return 0f;
+    }
+
+    /** Return the current advance as a ratio [0 ~ 1]
+     */
+    private float getCurrentRatio() {
+        return getRatio( getModel() );
+    }
+
+    /** Dispose this monitor if the BoundedRangeModel is complete
+     *  @return true if this monitor was disposed
+     */
+    private boolean disposeIfCompleted() {
+        if( getModel().getValue() + getModel().getExtent() >= getModel().getMaximum() ) {
+            dispose();
+            return true;
+        }
+        return false;
+    }
+
+    /** Store the advance progression of the underlying task for a given duration.
+     *  Some most recents samples are holded for estimate the remaining time by extrapolation of the total amount of advance by the duration it took.
+     */
+    private static class Sample {
+
+        private long  duration;
+        private float advance;
+
+        private long  startTime;
+        private float startRatio;
+        private long endTime;
+
+        public Sample(float ratio) {
+            startTime  = System.currentTimeMillis();
+            startRatio = ratio;
+        }
+
+        public void end(float ratio) {
+            endTime = System.currentTimeMillis();
+            duration = endTime - startTime;
+            advance = ratio - startRatio;
+        }
+
+        public long getDuration() {
+            return this.duration;
+        }
+
+        public float getAdvance() {
+            return this.advance;
+        }
+
+        public long getStartTime() {
+            return this.startTime;
+        }
     }
 }

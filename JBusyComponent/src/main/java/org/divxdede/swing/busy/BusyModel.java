@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 ANDRE SÃ©bastien (divxdede).  All rights reserved.
+ * Copyright (c) 2007 ANDRE Sébastien (divxdede).  All rights reserved.
  * BusyModel.java is a part of this JBusyComponent library
  * ====================================================================
  * 
@@ -18,6 +18,8 @@
  */
 package org.divxdede.swing.busy;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BoundedRangeModel;
 
 /**
@@ -29,7 +31,7 @@ import javax.swing.BoundedRangeModel;
  * <p>
  * When the model is gone to busy, it can be determinate that allow to track the
  * progress and time remaining like a <code>JProgressBar</code>.
- * In fact, a BusyModel is a  BoundedRangeModel that allow it to be bounded to a
+ * In fact, a BusyModel is a BoundedRangeModel that allow it to be bounded to a
  * <code>JProgressBar</code>.
  * <p>
  * BusyModel can be cancellable to allow the controller of this model to cancel the 
@@ -38,6 +40,36 @@ import javax.swing.BoundedRangeModel;
  * @author André Sébastien (divxdede)
  */
 public interface BusyModel extends BoundedRangeModel {
+
+    /** Start Action ID used in {@link ActionEvent} fired to {@link ActionListener}
+     *  @since 1.2.2
+     */
+    public static final int    START_ACTION_ID      = 1;
+
+    /** Start Action Command used in {@link ActionEvent} fired to {@link ActionListener}
+     *  @since 1.2.2
+     */
+    public static final String START_ACTION_COMMAND = "Start";
+
+    /** Cancel Action ID used in {@link ActionEvent} fired to {@link ActionListener}
+     *  @since 1.2.2
+     */
+    public static final int    CANCEL_ACTION_ID      = 2;
+
+    /** Cancel Action Command used in {@link ActionEvent} fired to {@link ActionListener}
+     *  @since 1.2.2
+     */
+    public static final String CANCEL_ACTION_COMMAND = "Cancel";
+
+    /** Stop Action ID used in {@link ActionEvent} fired to {@link ActionListener}
+     *  @since 1.2.2
+     */
+    public static final int    STOP_ACTION_ID      = 3;
+
+    /** Stop Action Command used in {@link ActionEvent} fired to {@link ActionListener}
+     *  @since 1.2.2
+     */
+    public static final String STOP_ACTION_COMMAND = "Stop";
 
     /** 
      * Define if the model is on a "busy" state
@@ -77,6 +109,7 @@ public interface BusyModel extends BoundedRangeModel {
     
     /** Invoke this method to cancel the current job responsible of the <code>busy</code> state.
      *  You need to override this method for implements you own cancellation process.
+     *  Cancelling a task fire an {@link ActionEvent} to all registered {@link ActionListener} to this model.
      */
     public void cancel();
 
@@ -85,4 +118,18 @@ public interface BusyModel extends BoundedRangeModel {
      *  @return Description to show by UI when the model is busy
      */
     public String getDescription();
+
+    /**
+     * Adds an <code>ActionListener</code> to the model.
+     * @param l the <code>ActionListener</code> to be added
+     * @since 1.2.2
+     */
+    public void addActionListener(ActionListener listener);
+
+    /**
+     * Removes an <code>ActionListener</code> from the model.
+     * @param l the listener to be removed
+     * @since 1.2.2
+     */
+    public void removeActionListener(ActionListener listener);
 }

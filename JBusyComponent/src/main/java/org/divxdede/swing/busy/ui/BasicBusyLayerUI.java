@@ -98,6 +98,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      */
     boolean              remainingTimeVisible  = false;
     RemainingTimeMonitor monitor               = null;
+    long                 monitorStartTime      = 0L;
     final TimeFormat     timeFormat            = new TimeFormat( TimeUnit.SECONDS );
     int                  millisToDecideToPopup = 300;
     int                  millisToPopup         = 1200;
@@ -500,6 +501,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
         if( this.monitor != null ) {
             long timeRemaining = monitor.getRemainingTime( TimeUnit.SECONDS );
             if( timeRemaining > 0 ) {
+                if( timeRemaining == Long.MAX_VALUE ) return " Remaining time: \u221E";
                 return " Remaining time: " + timeFormat.format( timeRemaining );
             }
         }
@@ -532,21 +534,31 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
     protected boolean isComponentBusy() {
         boolean isModelBusy   = isModelBusy();
         boolean isDeterminate = isModelBusy && getBusyModel().isDeterminate();
-
+        
         boolean triggerEnabled = getMillisToDecideToPopup() > 0 && getMillisToPopup() > 0;
-        if( isModelBusy ) {
-            if( monitor == null && isDeterminate && ( triggerEnabled || isRemainingTimeVisible() )  ) {
-                int decideTime = ( getMillisToDecideToPopup() > 0 ? getMillisToDecideToPopup() : 500 );
-                monitor = new RemainingTimeMonitor( getBusyModel() , decideTime , 10 );
+        if( isModelBusy && isDeterminate ) {
+            if( monitor == null && ( triggerEnabled || isRemainingTimeVisible() )  ) {
+                monitor = new RemainingTimeMonitor( getBusyModel() );
+                monitorStartTime = System.currentTimeMillis();
             }
-            if( triggerEnabled  && isDeterminate ) {
-                long remainingTime = monitor.getRemainingTime();
-                if( remainingTime == -1 ) {
-                    return false;
+
+            if( jXGlassPane.isVisible() ) {
+                // if the component is already busy, we will let it busy until the end
+                return true;
+            }
+
+            if( triggerEnabled ) {
+                long currentTime = System.currentTimeMillis();
+                if( currentTime - monitorStartTime >= getMillisToDecideToPopup() ) {
+                    /** we must take a decision
+                     */
+                    long remainingTime = monitor.getRemainingTime();
+                    return remainingTime < 0 || remainingTime > getMillisToPopup();
                 }
                 else {
-                    if( monitor.getRemainingTime() < getMillisToPopup() )
-                        return jXGlassPane.isVisible(); // in fact remain same state
+                    /** At this stage, the component is not shown as busy (just locked)
+                     */
+                    return false;
                 }
             }
         }
@@ -554,6 +566,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
             if( monitor != null ) {
                 monitor.dispose();
                 monitor = null;
+                monitorStartTime = 0L;
             }
         }
         return isModelBusy;
