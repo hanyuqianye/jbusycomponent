@@ -5,7 +5,7 @@
 <wiki:toc max_depth="1" />
 
 -----------------
-= Version 1.2.2 (unreleased) =
+= Version 1.2.2 (29/03/2011) =
 
 == Bug Fix ==
  * Fix `FutureBusyModel` that lmust now be disposed when it's no more used for release it's own dedicated thread. The JVM will now terminate correctly if all `FutureBusyModel` are disposed.
