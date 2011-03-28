@@ -4,7 +4,7 @@
   <groupId>org.divxdede</groupId>
   <artifactId>jbusycomponent-demo</artifactId>
   <packaging>jar</packaging>
-  <version>1.2.1</version>
+  <version>1.2.2-SNAPSHOT</version>
   <name>jbusycomponent-demo</name>
   <url>http://jbusycomponent.googlecode.com/svn/demo/jnlp</url>
     
@@ -116,7 +116,7 @@
         <dependency>
             <groupId>org.divxdede</groupId>
             <artifactId>jbusycomponent</artifactId>
-            <version>1.2.1</version>
+            <version>1.2.2-SNAPSHOT</version>
         </dependency>
         <!--
         <dependency>

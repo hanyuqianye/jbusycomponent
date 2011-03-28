@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 import org.divxdede.swing.BoundedRangeModelHub;
 import org.divxdede.swing.busy.BusyIcon;
 import org.divxdede.swing.busy.BusyModel;
@@ -37,6 +38,7 @@ public class MainDemo extends javax.swing.JPanel {
     private Icon            iconSearch = null;
     private Icon            iconJava = null;
     private Icon            iconPrinter = null;
+    private Icon            iconRun = null;
 
     /**
      * ########################################
@@ -152,6 +154,7 @@ public class MainDemo extends javax.swing.JPanel {
         initJBusyComponentTab();
         initBusyIconTab();
         initHubTab();
+        initWorkerTab();
 
         updateBusyIconModel();
     }
@@ -164,6 +167,7 @@ public class MainDemo extends javax.swing.JPanel {
         iconSearch  = new ImageIcon( getClass().getResource("/xmag.png") );
         iconJava     = new ImageIcon( getClass().getResource("/java-icon.png") );
         iconPrinter = new ImageIcon( getClass().getResource("/printer.png") );
+        iconRun = new ImageIcon( getClass().getResource("/run.png") );
     }
 
     /** Initialize all busy icons
@@ -373,6 +377,8 @@ public class MainDemo extends javax.swing.JPanel {
         jScrollPaneLoremIpsum = new javax.swing.JScrollPane();
         jTextAreaLoremIpsum = new javax.swing.JTextArea();
         buttonGroupTaskForm = new javax.swing.ButtonGroup();
+        jScrollPaneBusyTable = new javax.swing.JScrollPane();
+        jXTable = new org.jdesktop.swingx.JXTable();
         jTabbedPane = new javax.swing.JTabbedPane();
         jPanelBusyDemo = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -419,17 +425,33 @@ public class MainDemo extends javax.swing.JPanel {
         jSpinnerModel3 = new javax.swing.JSpinner();
         jLabel7 = new javax.swing.JLabel();
         jLabelHelp3 = new javax.swing.JLabel();
+        jPanelSwingWorker = new javax.swing.JPanel();
+        jBusyTable = new org.divxdede.swing.busy.JBusyComponent();
+        jButtonFillTable = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jXHyperlinkCrystal = new org.jdesktop.swingx.JXHyperlink();
         jLabel9 = new javax.swing.JLabel();
         jXHyperlinkJbusyComponent = new org.jdesktop.swingx.JXHyperlink();
 
         jTextAreaLoremIpsum.setColumns(20);
-        jTextAreaLoremIpsum.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jTextAreaLoremIpsum.setFont(new java.awt.Font("Arial", 0, 18));
         jTextAreaLoremIpsum.setLineWrap(true);
         jTextAreaLoremIpsum.setRows(5);
         jTextAreaLoremIpsum.setText("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
         jScrollPaneLoremIpsum.setViewportView(jTextAreaLoremIpsum);
+
+        jXTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPaneBusyTable.setViewportView(jXTable);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Sample task configuration"));
 
@@ -564,7 +586,7 @@ public class MainDemo extends javax.swing.JPanel {
                     .addComponent(jRadioButtonTaskAdvancedForm))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonTaskExecute)
-                .addGap(29, 29, 29))
+                .addGap(165, 165, 165))
         );
 
         jBusyComponent.setView(jScrollPaneLoremIpsum);
@@ -575,7 +597,7 @@ public class MainDemo extends javax.swing.JPanel {
             jPanelBusyDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBusyDemoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jBusyComponent, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+                .addComponent(jBusyComponent, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -585,8 +607,8 @@ public class MainDemo extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBusyDemoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelBusyDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-                    .addComponent(jBusyComponent, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                    .addComponent(jBusyComponent, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -677,23 +699,23 @@ public class MainDemo extends javax.swing.JPanel {
                 .addGroup(jPanelIconDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelIconDemoLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
+                        .addComponent(jSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanelIconDemoLayout.createSequentialGroup()
                         .addGroup(jPanelIconDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelIcon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
+                            .addComponent(jLabelIcon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelIconDemoLayout.createSequentialGroup()
                                 .addComponent(jRadioButtonIconMonitor)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 298, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 340, Short.MAX_VALUE)
                                 .addComponent(jRadioButtonIconBattery)
                                 .addGap(167, 167, 167)
                                 .addComponent(jRadioButtonIconSearch))
-                            .addComponent(jXTitledPanelIconDemo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
+                            .addComponent(jXTitledPanelIconDemo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
                             .addGroup(jPanelIconDemoLayout.createSequentialGroup()
                                 .addGroup(jPanelIconDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jCheckBoxDeterminate)
                                     .addComponent(jCheckBoxBusy))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 570, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 612, Short.MAX_VALUE)
                                 .addGroup(jPanelIconDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jRadioButtonRadialForm)
                                     .addComponent(jRadioButtonSquareForm))))
@@ -712,7 +734,7 @@ public class MainDemo extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(jSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelIconDemoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBoxBusy)
@@ -764,8 +786,8 @@ public class MainDemo extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSliderModel1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
-                        .addContainerGap(182, Short.MAX_VALUE))
+                        .addComponent(jSliderModel1, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                        .addContainerGap(203, Short.MAX_VALUE))
                     .addComponent(jLabelHelp1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -815,7 +837,7 @@ public class MainDemo extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSpinnerModel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSliderModel2, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                .addComponent(jSliderModel2, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelHelp2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -866,7 +888,7 @@ public class MainDemo extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSpinnerModel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSliderModel3, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                .addComponent(jSliderModel3, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelHelp3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -895,7 +917,7 @@ public class MainDemo extends javax.swing.JPanel {
                 .addGroup(jPanelHubLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelHub, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
+                    .addComponent(jLabelHub, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -910,10 +932,42 @@ public class MainDemo extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Hub", jPanelHub);
+
+        jBusyTable.setView(jScrollPaneBusyTable);
+
+        jButtonFillTable.setText("Start a long task with a BusySwingWorker that fill 500 records");
+        jButtonFillTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFillTableActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelSwingWorkerLayout = new javax.swing.GroupLayout(jPanelSwingWorker);
+        jPanelSwingWorker.setLayout(jPanelSwingWorkerLayout);
+        jPanelSwingWorkerLayout.setHorizontalGroup(
+            jPanelSwingWorkerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSwingWorkerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelSwingWorkerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonFillTable, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
+                    .addComponent(jBusyTable, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanelSwingWorkerLayout.setVerticalGroup(
+            jPanelSwingWorkerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSwingWorkerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jBusyTable, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonFillTable)
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        jTabbedPane.addTab("BusySwingWorker", jPanelSwingWorker);
 
         jLabel1.setText("Crystal diamonds icons are featured by");
 
@@ -925,10 +979,10 @@ public class MainDemo extends javax.swing.JPanel {
         });
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 18));
         jLabel9.setForeground(new java.awt.Color(0, 0, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("LGPL JBusyComponent Library 1.2.1 demonstration");
+        jLabel9.setText("LGPL JBusyComponent Library 1.2.2 demonstration");
         jLabel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel9.setOpaque(true);
 
@@ -946,13 +1000,13 @@ public class MainDemo extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 809, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 809, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jXHyperlinkCrystal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
                         .addComponent(jXHyperlinkJbusyComponent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -1096,12 +1150,40 @@ public class MainDemo extends javax.swing.JPanel {
             this.jCheckBoxShowRemainingTime.setSelected(false);
     }//GEN-LAST:event_jCheckBoxTaskDeterminateStateChanged
 
+    private void initWorkerTab() {
+
+        DefaultTableModel dataModel = new DefaultTableModel(0,0);
+        dataModel.addColumn("N°");
+        dataModel.addColumn("Name");
+        dataModel.addColumn("Color");
+        dataModel.addColumn("Age");
+        jXTable.setModel(dataModel);
+
+        BusyModel model = jBusyTable.getBusyModel();
+        model.setCancellable(true);
+        model.setDeterminate(true);
+
+        BasicBusyLayerUI ui = (BasicBusyLayerUI)jBusyTable.getBusyLayerUI();
+        ui.setRemainingTimeVisible(true);
+        ui.setBusyIcon( new DefaultBusyIcon( iconRun ) );
+    }
+
+    private void jButtonFillTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFillTableActionPerformed
+        
+        // Create a worker
+        SwingWorkerDemo worker = new SwingWorkerDemo( jBusyTable.getBusyModel()  , (DefaultTableModel)jXTable.getModel() );
+
+        // Start the worker
+        worker.execute();
+    }//GEN-LAST:event_jButtonFillTableActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupIcon;
     private javax.swing.ButtonGroup buttonGroupIconForm;
     private javax.swing.ButtonGroup buttonGroupTaskForm;
     private org.divxdede.swing.busy.JBusyComponent jBusyComponent;
+    private org.divxdede.swing.busy.JBusyComponent jBusyTable;
+    private javax.swing.JButton jButtonFillTable;
     private javax.swing.JButton jButtonTaskExecute;
     private javax.swing.JCheckBox jCheckBoxBusy;
     private javax.swing.JCheckBox jCheckBoxDeterminate;
@@ -1130,6 +1212,7 @@ public class MainDemo extends javax.swing.JPanel {
     private javax.swing.JPanel jPanelBusyDemo;
     private javax.swing.JPanel jPanelHub;
     private javax.swing.JPanel jPanelIconDemo;
+    private javax.swing.JPanel jPanelSwingWorker;
     private javax.swing.JRadioButton jRadioButtonIconBattery;
     private javax.swing.JRadioButton jRadioButtonIconMonitor;
     private javax.swing.JRadioButton jRadioButtonIconSearch;
@@ -1137,6 +1220,7 @@ public class MainDemo extends javax.swing.JPanel {
     private javax.swing.JRadioButton jRadioButtonSquareForm;
     private javax.swing.JRadioButton jRadioButtonTaskAdvancedForm;
     private javax.swing.JRadioButton jRadioButtonTaskBasicForm;
+    private javax.swing.JScrollPane jScrollPaneBusyTable;
     private javax.swing.JScrollPane jScrollPaneLoremIpsum;
     private javax.swing.JSlider jSlider;
     private javax.swing.JSlider jSliderModel1;
@@ -1152,6 +1236,7 @@ public class MainDemo extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldTaskDescription;
     private org.jdesktop.swingx.JXHyperlink jXHyperlinkCrystal;
     private org.jdesktop.swingx.JXHyperlink jXHyperlinkJbusyComponent;
+    private org.jdesktop.swingx.JXTable jXTable;
     private org.jdesktop.swingx.JXTitledPanel jXTitledPanelIconDemo;
     // End of variables declaration//GEN-END:variables
 
