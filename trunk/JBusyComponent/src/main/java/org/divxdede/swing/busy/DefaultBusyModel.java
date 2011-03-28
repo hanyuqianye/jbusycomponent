@@ -19,8 +19,12 @@
  */
 package org.divxdede.swing.busy;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.EventListenerList;
 
 /**
  * Default Implementation of interface <code>BusyModel</code>.
@@ -42,7 +46,8 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
     private String          description         = null;
     
     /** 
-     * Define if the model is on a "busy" state
+     * Define if the model is on a "busy" state.
+     * This method fire an {@link ActionEvent} of {@link #START_ACTION_ID} or  {@link #STOP_ACTION_ID} following by a {@link ChangeEvent}
      * @param value true to going in a busy state
      */
     public void setBusy(final boolean value) {
@@ -54,7 +59,13 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
             if( this.isBusy() && this.isDeterminate() && this.isAutoCompletionEnabled() ) {
                 this.setValue( getMinimum() );
             }
-            this.fireStateChanged();
+            try {
+                if( isBusy() ) this.fireActionPerformed( new ActionEvent(this,START_ACTION_ID,START_ACTION_COMMAND,System.currentTimeMillis(),0) );
+                else           this.fireActionPerformed( new ActionEvent(this,STOP_ACTION_ID,STOP_ACTION_COMMAND,System.currentTimeMillis(),0) );
+            }
+            finally {
+                this.fireStateChanged();
+            }
         }
     }
     
@@ -135,9 +146,14 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
      */
     public void cancel() {
         if( ! isCancellable() ) throw new IllegalStateException("this model is not cancellable");
-        setBusy(false);
+        try {
+            this.fireActionPerformed( new ActionEvent(this, CANCEL_ACTION_ID , CANCEL_ACTION_COMMAND , System.currentTimeMillis() , 0 ) );
+        }
+        finally {
+            setBusy(false);
+        }
     }
-    
+
     /** 
      * Define if this model is <code>cancellable</code>
      * @param value true for set this model cancellable.
@@ -174,6 +190,40 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
         }
     }
 
+    /**
+     * Adds an <code>ActionListener</code> to the model.
+     * @param l the <code>ActionListener</code> to be added
+     * @since 1.2.2
+     */
+    public void addActionListener(ActionListener l) {
+        listenerList.add(ActionListener.class, l);
+    }
+
+    /**
+     * Removes an <code>ActionListener</code> from the model.
+     * If the listener is the currently set <code>Action</code>
+     * for the button, then the <code>Action</code>
+     * is set to <code>null</code>.
+     *
+     * @param l the listener to be removed
+     * @since 1.2.2
+     */
+    public void removeActionListener(ActionListener l) {
+        listenerList.remove(ActionListener.class, l);
+    }
+
+    /**
+     * Returns an array of all the <code>ActionListener</code>s added
+     * to this Model with addActionListener().
+     *
+     * @return all of the <code>ActionListener</code>s added or an empty
+     *         array if no listeners have been added
+     * @since 1.2.2
+     */
+    public ActionListener[] getActionListeners() {
+        return (ActionListener[])(listenerList.getListeners(ActionListener.class));
+    }
+    
     @Override
     protected void fireStateChanged() {
         if( ! SwingUtilities.isEventDispatchThread() ) {
@@ -186,5 +236,37 @@ public class DefaultBusyModel extends DefaultBoundedRangeModel implements BusyMo
             return;
         }
         super.fireStateChanged();
+    }
+
+    /**
+     * Notifies all listeners that have registered interest for
+     * notification on this event type.  The event instance
+     * is lazily created using the <code>event</code>
+     * parameter.
+     *
+     * @param event  the <code>ActionEvent</code> object
+     * @see EventListenerList
+     * @since 1.2.2
+     */
+    protected void fireActionPerformed(final ActionEvent event) {
+        // Ensure on EDT
+        if( !SwingUtilities.isEventDispatchThread() ) {
+            Runnable doRun = new Runnable() {
+                public void run() {
+                    fireActionPerformed(event);
+                }
+            };
+            SwingUtilities.invokeLater(doRun);
+            return;
+        }
+        // Guaranteed to return a non-null array
+        Object[] listeners = listenerList.getListenerList();
+        // Process the listeners last to first, notifying
+        // those that are interested in this event
+        for (int i = listeners.length-2; i>=0; i-=2) {
+            if (listeners[i]==ActionListener.class) {
+                ((ActionListener)listeners[i+1]).actionPerformed(event);
+            }
+        }
     }
 }

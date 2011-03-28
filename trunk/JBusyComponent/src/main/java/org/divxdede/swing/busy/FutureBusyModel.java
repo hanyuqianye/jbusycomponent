@@ -19,19 +19,27 @@
  */
 package org.divxdede.swing.busy;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import javax.swing.SwingWorker;
+import org.divxdede.commons.Disposable;
 
 /**
  * A BusyModel implementation allowing to reflet the execution of a Future task.
  * While the job task underlying the Future is running, this model will be set to a <code>busy</code> state.
  * <p>
- * Use <code>setFuture</code> for defining the <code>Future</code> to reflet.
+ * Use <code>setFuture</code> for defining the <code>Future</code> to reflet.<br>
+ * Since {@link SwingWorker} is also a {@link Future}, you can bound a SwingWorker to this model.<br>
+ * When you bound a {@link SwingWorker} to this model, this model will be determinate and use the {@link SwingWorker#getProgress()}
+ * <p>
+ * When you don't need anymore to use this model, you must invoke {@link #dispose()} in order to free all threading resources.<br>
  * 
  * @author André Sébastien (divxdede)
  */
-public class FutureBusyModel extends DefaultBusyModel {
+public class FutureBusyModel extends DefaultBusyModel implements Disposable {
     
     /** Members
      */
@@ -39,19 +47,41 @@ public class FutureBusyModel extends DefaultBusyModel {
     private int             ticket              = 0;
     private Future          trackedFuture       = null;
     private Future          trackerFuture       = null;
+
+    /** Listener of {@link SwingWorker} that listen "progress" property
+     */
+    private PropertyChangeListener listener     = new PropertyChangeListener() {
+        public void propertyChange(PropertyChangeEvent evt) {
+            synchronized(FutureBusyModel.this) {
+                if( evt.getSource() == trackedFuture && ( evt.getSource() instanceof SwingWorker ) && evt.getPropertyName().equals("progress") ) {
+                    SwingWorker worker = (SwingWorker)evt.getSource();
+                    setValue( worker.getProgress() );
+                }
+            }
+        }
+    };
+
+    /** Default constructor
+     */
+    public FutureBusyModel() {
+        this.setAutoCompletionEnabled(false);
+    }
     
     /** 
      * Reflet a new <code>Future</code> to reflet.
      * This model will be set as <code>undeterminate</code> but <code>cancellable</code> model.
      * @param future New Future to reflet.
      */
-    public synchronized void setFuture(final Future future ) {
+    public synchronized void setFuture(final Future future) {
         setFuture(future,true);
     }
 
+    /** You can't define the busy state manually on a {@link FutureBusyModel}
+     *  Use instead the {@link #setFuture(Future)} for define which task to track.
+     */
     @Override
-    public void setBusy(final boolean value) {
-        this.setBusyImpl(value);
+    public final void setBusy(final boolean value) {
+        // do nothing
     }
     
     /** Change a busy state and return a ticket identifier of this attempt
@@ -65,7 +95,7 @@ public class FutureBusyModel extends DefaultBusyModel {
      */
     private synchronized boolean compareAndSetBusy( final boolean value , final int ticketValue ) {
         if( ticketValue == this.ticket ) {
-            setBusy(value);
+            setBusyImpl(value);
             return true;
         }
         return false;
@@ -78,66 +108,108 @@ public class FutureBusyModel extends DefaultBusyModel {
      * @param cancellable true for let this future cancellable by the JBusyComponent
      */
     public synchronized void setFuture(final Future future , final boolean cancellable ) {
-        if( this.service == null ) this.service = Executors.newSingleThreadExecutor();
-        if( future == null ) return;
-        
-        /** Hold the tracked future
+        /** unregister current future
          */
-        this.trackedFuture = future;
+        unregister();
 
-        /** Cancel the previous tracker
+        /** define cancellable property
          */
-        if( this.trackerFuture != null ) {
-            this.trackerFuture.cancel(true);
-        }
-        this.trackerFuture = null;
-        
-        /** undeterminate but cancelable task
-         */
-        this.setDeterminate(false);
         this.setCancellable(cancellable);
 
-        /** Tracker job to execute on our dedicated thread
+        /** register the new future
          */
-        final Runnable tracker = new Runnable() {
+        register(future);
+    }
+
+    /** Register the specified {@link Future} in this FutureBusyModel
+     */
+    private void register(Future future) {
+        this.trackedFuture = future;
+        if( this.trackedFuture instanceof SwingWorker ) {
+            setDeterminate(true);
+            setMinimum(0);
+            setMaximum(100);
             
-            public void run() {
-                int myTicket = 0;
-                try {
-                    final Future myFuture = FutureBusyModel.this.trackedFuture;
-                    while( ! myFuture.isDone() ) {
-                        myTicket = setBusyImpl(true);
-                        try {
-                            myFuture.get();
-                        }
-                        catch(final Exception e) {
-                           if( myFuture != FutureBusyModel.this.trackedFuture ) {
-                               /** probably the model must reflet now a different Future
-                                *  We must stop to reflet this one
-                                */
-                               break;
-                           }
+            SwingWorker worker = (SwingWorker)this.trackedFuture;
+            worker.addPropertyChangeListener(this.listener);
+        }
+        else {
+            setDeterminate(false);
+        }
+
+        if( this.trackedFuture != null ) {
+            /** Tracker job to execute on our dedicated thread
+             */
+            final Runnable tracker = new Runnable() {
+                public void run() {
+                    int myTicket = 0;
+                    try {
+                        final Future myFuture = FutureBusyModel.this.trackedFuture;
+                        while( ! myFuture.isDone() ) {
+                            myTicket = setBusyImpl(true);
+                            try {
+                                myFuture.get();
+                            }
+                            catch(final Exception e) {
+                               if( myFuture != FutureBusyModel.this.trackedFuture ) {
+                                   /** probably the model must reflet now a different Future
+                                    *  We must stop to reflet this one
+                                    */
+                                   break;
+                               }
+                            }
                         }
                     }
+                    finally {
+                        compareAndSetBusy( false, myTicket );
+                    }
                 }
-                finally {
-                    compareAndSetBusy( false, myTicket );
-                }
+            };
+
+            if( this.service == null ) this.service = Executors.newSingleThreadExecutor();
+            this.trackerFuture = this.service.submit(tracker);
+        }
+        else {
+            setBusyImpl(false);
+        }
+    }
+
+    /** Unregister the current future from this FutureBusyModel
+     */
+    private synchronized void unregister() {
+        if( this.trackedFuture != null ) {
+            if( this.trackedFuture instanceof SwingWorker ) {
+                SwingWorker worker = (SwingWorker)this.trackedFuture;
+                worker.removePropertyChangeListener(this.listener);
             }
-        };
-        
-        this.trackerFuture = this.service.submit(tracker);
+        }
+        this.setDeterminate(false);
+        this.trackedFuture = null;
+
+        if( this.trackerFuture != null ) {
+            this.trackerFuture.cancel(true);
+            this.trackerFuture = null;
+        }
     }
 
     /** Cancel the current <code>future</code> under process
      */
     @Override
-	public synchronized void cancel() {
+    public synchronized void cancel() {
         final Future toCancel = this.trackedFuture;
         if( toCancel != null ) {
             toCancel.cancel(true);
         }
-        this.trackedFuture = null;
-        this.trackerFuture = null;
+    }
+
+    /** Dispose the model by freeing threading resources.
+     *  @since 1.2.2
+     */
+    public synchronized void dispose() {
+        setFuture(null,false);
+        if( this.service != null ) {
+            this.service.shutdownNow();
+            this.service = null;
+        }
     }
 }
