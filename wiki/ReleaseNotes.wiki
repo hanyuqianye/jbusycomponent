@@ -9,7 +9,7 @@
 
 == Bug Fix ==
  * Fix `FutureBusyModel` that lmust now be disposed when it's no more used for release it's own dedicated thread. The JVM will now terminate correctly if all `FutureBusyModel` are disposed.
- * Fix a  bug on `RemainingTimeMonitor` and `BasicBusyLayerUI` that may cause the view to by busy/notbusy along the task.
+ * Fix a  bug on `RemainingTimeMonitor` and `BasicBusyLayerUI` that may cause the view to change state (busy / not busy) along the task execution.
  * Update dependency of jarvis-commons that fix a bug in `CyclicBuffer` class
 
 == Enhancement ==
