@@ -6,7 +6,7 @@
 
 -----------------
 
-= Version 1.2.3 (SNAPSHOT) =
+= Version 1.2.3 (SNAPSHOT - unreleased) =
 
 == Enhancement ==
  * The `getMillisToDecideToPopup()` of `BasicBusyLayerUI` is now effective with undeterminate model. Theses models waits the time `MillisToDecideToPopup` before to render the busy state.
