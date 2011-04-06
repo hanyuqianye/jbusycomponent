@@ -98,7 +98,7 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      */
     boolean              remainingTimeVisible  = false;
     RemainingTimeMonitor monitor               = null;
-    long                 monitorStartTime      = 0L;
+    long                 monitorStartTime      = -1L;
     final TimeFormat     timeFormat            = new TimeFormat( TimeUnit.SECONDS );
     int                  millisToDecideToPopup = 300;
     int                  millisToPopup         = 1200;
@@ -211,8 +211,9 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      * This feature purpose is to prevent to show a progress bar for a very very short time.<br>
      * This {@link BusyLayerUI} wait few times (300ms by default) and decide to popup the progress bar or not.
      * <p>
-     * The decision was made by computing a predicted remaining time of the underlying task.<br>
-     * If the remaining time is long enough (>= 1200ms by default), the progress bar will shown.
+     * With a determinate model, the decision was made by computing a predicted remaining time of the underlying task.<br>
+     * If the remaining time is long enough (>= 1200ms by default), the progress bar will shown.<br>
+     * With an undeterminate model, this layer consider that it must render the busy state after the decision time is reach.
      * <p>
      * When the model gone busy, the component is instantly locked (can't be accessed anymore)
      * even if the progress bar is not yet visible.
@@ -235,8 +236,9 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      * This feature purpose is to prevent to show a progress bar for a very very short time.<br>
      * This {@link BusyLayerUI} wait few times (300ms by default) and decide to popup the progress bar or not.
      * <p>
-     * The decision was made by computing a predicted remaining time of the underlying task.<br>
-     * If the remaining time is long enough (>= 1200ms by default), the progress bar will shown.
+     * With a determinate model, the decision was made by computing a predicted remaining time of the underlying task.<br>
+     * If the remaining time is long enough (>= 1200ms by default), the progress bar will shown.<br>
+     * With an undeterminate model, this layer consider that it must render the busy state after the decision time is reach.
      * <p>
      * When the model gone busy, the component is instantly locked (can't be accessed anymore)
      * even if the progress bar is not yet visible.
@@ -260,8 +262,9 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      * This feature purpose is to prevent to show a progress bar for a very very short time.<br>
      * This {@link BusyLayerUI} wait few times (300ms by default) and decide to popup the progress bar or not.
      * <p>
-     * The decision was made by computing a predicted remaining time of the underlying task.<br>
-     * If the remaining time is long enough (>= 1200ms by default), the progress bar will shown.
+     * With a determinate model, the decision was made by computing a predicted remaining time of the underlying task.<br>
+     * If the remaining time is long enough (>= 1200ms by default), the progress bar will shown.<br>
+     * With an undeterminate model, this layer consider that it must render the busy state after the decision time is reach.
      * <p>
      * When the model gone busy, the component is instantly locked (can't be accessed anymore)
      * even if the progress bar is not yet visible.
@@ -286,8 +289,9 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      * This feature purpose is to prevent to show a progress bar for a very very short time.<br>
      * This {@link BusyLayerUI} wait few times (300ms by default) and decide to popup the progress bar or not.
      * <p>
-     * The decision was made by computing a predicted remaining time of the underlying task.<br>
-     * If the remaining time is long enough (>= 1200ms by default), the progress bar will shown.
+     * With a determinate model, the decision was made by computing a predicted remaining time of the underlying task.<br>
+     * If the remaining time is long enough (>= 1200ms by default), the progress bar will shown.<br>
+     * With an undeterminate model, this layer consider that it must render the busy state after the decision time is reach.
      * <p>
      * When the model gone busy, the component is instantly locked (can't be accessed anymore)
      * even if the progress bar is not yet visible.
@@ -532,33 +536,36 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
      * @return <code>true</code> if the component would be busy
      */
     protected boolean isComponentBusy() {
-        boolean isModelBusy   = isModelBusy();
-        boolean isDeterminate = isModelBusy && getBusyModel().isDeterminate();
-        
-        boolean triggerEnabled = getMillisToDecideToPopup() > 0 && getMillisToPopup() > 0;
-        if( isModelBusy && isDeterminate ) {
-            if( monitor == null && ( triggerEnabled || isRemainingTimeVisible() )  ) {
-                monitor = new RemainingTimeMonitor( getBusyModel() );
+        final boolean isModelBusy                    = isModelBusy();
+        final boolean isDeterminate                  = isModelBusy && getBusyModel().isDeterminate();
+        final boolean useDelayedBusyState            = getMillisToDecideToPopup() > 0;
+        final boolean useDeterminateDelayedBusyState = useDelayedBusyState && getMillisToPopup() > 0;
+        final boolean monitorRequired                = isModelBusy && isDeterminate && (isRemainingTimeVisible() || useDeterminateDelayedBusyState );
+
+        if( isModelBusy ) {
+            if( monitorStartTime <= 0 ) {
                 monitorStartTime = System.currentTimeMillis();
             }
-
+            if( monitor == null && monitorRequired ) {
+                monitor = new RemainingTimeMonitor( getBusyModel() );
+            }
             if( jXGlassPane.isVisible() ) {
                 // if the component is already busy, we will let it busy until the end
                 return true;
             }
-
-            if( triggerEnabled ) {
+            if( useDelayedBusyState ) {
                 long currentTime = System.currentTimeMillis();
                 if( currentTime - monitorStartTime >= getMillisToDecideToPopup() ) {
                     /** we must take a decision
                      */
-                    long remainingTime = monitor.getRemainingTime();
-                    return remainingTime < 0 || remainingTime > getMillisToPopup();
+                    if( isDeterminate && useDeterminateDelayedBusyState ) {
+                        long remainingTime = monitor.getRemainingTime();
+                        return remainingTime < 0 || remainingTime > getMillisToPopup();
+                    }
+                    return true; // Issue 12 : An undeterminate model can use delayed busy state if getMillisToDecideToPopup > 0
                 }
                 else {
-                    /** At this stage, the component is not shown as busy (just locked)
-                     */
-                    return false;
+                    return false; // delayed
                 }
             }
         }
@@ -566,8 +573,8 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
             if( monitor != null ) {
                 monitor.dispose();
                 monitor = null;
-                monitorStartTime = 0L;
             }
+            monitorStartTime = -1L;
         }
         return isModelBusy;
     }
