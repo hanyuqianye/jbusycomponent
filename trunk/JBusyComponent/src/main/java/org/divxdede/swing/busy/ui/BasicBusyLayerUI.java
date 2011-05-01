@@ -167,6 +167,8 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
 
     @Override
     public void uninstallUI(final JComponent c) {
+        // Issue 13 : Stop timer if the view is uninstalled
+        if( this.timer.isRunning() ) this.timer.stop();
         super.uninstallUI(c);
         final JXLayer layer = (JXLayer)c;
         layer.setGlassPane( null );
@@ -378,9 +380,9 @@ public class BasicBusyLayerUI extends AbstractBusyLayerUI {
         final BusyIcon  myIcon  = getBusyIcon();
         final boolean   isBusy  = isComponentBusy();
 
-        /** Ensure the timer is running when the model is busy
+        /** Ensure the timer is running when the model is busy (Issue 13 : add getLayer() != null)
          */
-        if( myModel != null && myModel.isBusy() && !this.timer.isRunning() ) {
+        if( myModel != null && myModel.isBusy() && !this.timer.isRunning() && getLayer() != null ) {
             this.timer.start();
         }
         repainted.set(true);
