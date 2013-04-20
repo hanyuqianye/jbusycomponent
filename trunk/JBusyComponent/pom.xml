@@ -3,7 +3,7 @@
     <groupId>org.divxdede</groupId>
     <artifactId>jbusycomponent</artifactId>
     <packaging>jar</packaging>
-    <version>1.2.3</version>
+    <version>1.2.4-SNAPSHOT</version>
     <name>JBusyComponent</name>
     <url>http://code.google.com/p/jbusycomponent</url>
 
