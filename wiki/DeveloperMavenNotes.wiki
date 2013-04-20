@@ -57,7 +57,7 @@ You need to do some pre-configurations of theses tools:
  * `%MAVEN_HOME%/conf/settings.xml` for configure repository access (required for deploy)
  * GnuPG ring keys required for sign artifacts (and `$GNUPGHOME` environment variable)
 
-The `settings.xml` must refer repository access like it:
+The `settings.xml` must refer repository access and GPG passphrase like it:
 {{{
 <settings>
     <servers>
@@ -72,6 +72,19 @@ The `settings.xml` must refer repository access like it:
             <password>your_sonatype_passwd</password>
         </server>
     </servers>
+
+    <profiles>
+      <profile>
+	 <id>sign-artifacts</id>
+         <properties>
+             <gpg.passphrase>XXXXXX</gpg.passphrase>
+         </properties>
+      </profile>
+   </profiles>
+   
+   <activeProfiles>
+    	<activeProfile>sign-artifacts</activeProfile>
+   </activeProfiles>
 </settings>
 }}}
 
