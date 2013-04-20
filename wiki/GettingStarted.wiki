@@ -12,7 +12,7 @@ JBusyComponent wrap any swing component (called `view`) and take place on the co
 You need to download independently theses libraries in order to use `JBusyComponent`
  * [http://swinglabs.org/ SwingX 1.6]
  * [http://jxlayer.dev.java.net/ JXLayer 3.0.4]
- * [http://code.google.com/p/jarvis-commons/ Jarvis-Commons 0.1]
+ * [http://code.google.com/p/jarvis-commons/ Jarvis-Commons 0.2.3]
 For maven users see [http://code.google.com/p/jbusycomponent/wiki/DeveloperMavenNotes DeveloperMavenNotes]
 
 == The first busy component ==
